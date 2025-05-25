@@ -4,20 +4,23 @@ import { Button } from "./components/Button"
 import { PlusIcon } from "./icons/PlusIcon"
 
 import { ShareIcon } from "./icons/ShareIcon"
+
 import {Card} from "./components/Card"
 
 import { useState } from "react"
+
 import { CreateContentModal } from "./components/CreateContentModal"
+import { Sidebar } from "./components/Sidebar"
 
 
 function App() {
     const [modelOpen, setModelOpen] = useState(false);
   return (
-   
-    <div className = "p-4">
-
+  <div>
+    {<Sidebar />}
+    <div className = "p-4 ml-72 min-h-screen bg-slate-100">
         <CreateContentModal open = {modelOpen} onClose = {setModelOpen}/>
-       <div className = "pt-1 flex  justify-end gap-4">
+       <div className = "pt-1 flex justify-end gap-4 position-fixed">
         <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = {"lg"}/>} size = "md" variant="primary"  text = {"Add Content"}></Button>
         <Button startIcon = {<ShareIcon size = {"md"}/>} size = "sm" variant="secondary" text = {"Share"}></Button>
         </div>
@@ -26,7 +29,7 @@ function App() {
              <Card type = "twitter" title="First tweet" link="https://x.com/sniperdotdev/status/1920107393083666702"/>
         </div>
     </div>
-
+   </div>
   )
 }
 
