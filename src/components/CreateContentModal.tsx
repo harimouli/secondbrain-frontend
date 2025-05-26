@@ -11,7 +11,7 @@ export const CreateContentModal = ({ open, onClose }: CreateContentModalProps) =
     return (
         <>
             {open && (
-                <div className="w-screen h-screen fixed bg-slate-500 opacity-60 flex justify-center items-center top-0 left-0 modal hide" id = "idModel" data-backdrop="static" data-keyboard ="false">
+                <div className="w-screen h-screen fixed bg-slate-300/60 flex justify-center items-center top-0 left-0 modal hide" id = "idModel" data-backdrop="static" data-keyboard ="false">
                     <div className = "flex flex-col justify-center bg-white opacity-100">
                         <span className = "bg-white rounded p-4">
                             <div className = "flex justify-end ">

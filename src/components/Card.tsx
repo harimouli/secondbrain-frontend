@@ -23,9 +23,10 @@ return (
 
                 </div>
                 <div className = "flex items-center text-slate-600">
-                    <div className = "pr-2" >   
-                        <a href = {link} target = "_blank"></a>
-                        <ShareIcon size= {"md"}/>
+                    <div className = "pr-2 cursor-pointer" >
+                         <a href = {link} target = "_blank">
+                                <ShareIcon size = "md"/>
+                        </a> 
                     </div>
                     <div>
                         <ShareIcon size = {"md"}/>
@@ -53,7 +54,7 @@ return (
             }
         </div>
     </div>
- </div>
+    </div>
     )
 }
 
