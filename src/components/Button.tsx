@@ -7,6 +7,8 @@ interface ButtonProps {
     startIcon?: ReactElement;
     endIcon?: ReactElement;   
     onClick?: () => void;
+    fullWidth?: boolean;
+    loading?: boolean;
 }
 
 /*interface VariantStylesType {
@@ -30,7 +32,10 @@ const sizeStyles = {
 }
 
 export const Button  = (props: ButtonProps) =>{
-   
-    return <button onClick={props.onClick} className = {`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]}`}>
-        {props.startIcon ? <div className = "pr-2">{props.startIcon}</div>: null}  {props.text} {props.endIcon ? <div className = "pl-2">{props.endIcon}</div>: null}</button>
+    console.log(props.loading);
+    return <button  disabled = {props.loading} 
+    onClick={props.onClick} 
+    className = {`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]} ${props.fullWidth ? "w-full flex justify-center" : ""} ${props.loading ? "opacity-50" : ""} ${props.loading ? "cursor-progress" : "cursor-pointer"}`}>
+        {props.startIcon ? <div className = "pr-2">{props.startIcon}</div> : null}  {props.text} {props.endIcon ? <div className = "pl-2">{props.endIcon}</div> : null}
+    </button>
 }

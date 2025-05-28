@@ -2,6 +2,8 @@ import { CrossIcon } from "../icons/CrossIcon";
 
 import { Button } from "./Button";
 
+import { Input } from "./Input";
+
 interface CreateContentModalProps {
     open: boolean;
     onClose: (open: boolean) => void;
@@ -33,15 +35,4 @@ export const CreateContentModal = ({ open, onClose }: CreateContentModalProps) =
             )}
         </>
     );
-}
-
-interface InputProps {
-    placeholder : string;
-    type: string;
-
-}
-export const Input = (props: InputProps) => {
-    return (
-        <input placeholder= {props.placeholder} type = {props.type} className = "py-3 px-3 border rounded-md m-2"></input>
-    )
 }
