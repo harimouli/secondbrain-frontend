@@ -32,7 +32,6 @@ const sizeStyles = {
 }
 
 export const Button  = (props: ButtonProps) =>{
-    console.log(props.loading);
     return <button  disabled = {props.loading} 
     onClick={props.onClick} 
     className = {`${variantStyles[props.variant]} ${defaultStyles} ${sizeStyles[props.size]} ${props.fullWidth ? "w-full flex justify-center" : ""} ${props.loading ? "opacity-50" : ""} ${props.loading ? "cursor-progress" : "cursor-pointer"}`}>

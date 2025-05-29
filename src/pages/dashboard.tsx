@@ -9,14 +9,26 @@ import { ShareIcon } from "../icons/ShareIcon"
 
 import {Card} from "../components/Card"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { CreateContentModal } from "../components/CreateContentModal"
-import { Sidebar } from "../components/Sidebar"
+import { Sidebar } from "../components/Sidebar";
+
+import {useContent} from "../hooks/useContent";
+
+
+
 
 
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
+    const {allContent, refreshContent} = useContent();
+
+    useEffect(() => {
+        refreshContent();
+    }, [modelOpen])
+    
+
   return (
   <div>
     {<Sidebar />}
@@ -26,9 +38,8 @@ export function Dashboard() {
         <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = {"lg"}/>} size = "md" variant="primary"  text = {"Add Content"}></Button>
         <Button startIcon = {<ShareIcon size = {"md"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
         </div>
-        <div className = "flex gap-4">
-             <Card type = "youtube" title="First video" link="https://www.youtube.com/watch?v=JuBBIJ7adjM"/>
-             <Card type = "twitter" title="First tweet" link="https://x.com/sniperdotdev/status/1920107393083666702"/>
+        <div className = "flex flex-wrap gap-4 mt-4">
+              {allContent.map(({title, type, link})=> <Card title = {title} link={link} type={type} />)}
         </div>
     </div>
    </div>
