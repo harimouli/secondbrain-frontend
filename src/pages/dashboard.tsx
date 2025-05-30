@@ -39,7 +39,7 @@ export function Dashboard() {
         <Button startIcon = {<ShareIcon size = {"md"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
         </div>
         <div className = "flex flex-wrap gap-4 mt-4">
-              {allContent.map(({title, type, link})=> <Card title = {title} link={link} type={type} />)}
+              {allContent.map(({title, type, link, _id})=> <Card key={_id}  title={title} link={link} type={type} />)}
         </div>
     </div>
    </div>

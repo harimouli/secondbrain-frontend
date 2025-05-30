@@ -1,6 +1,13 @@
 
-import { ShareIcon } from "../icons/ShareIcon"
+import { OpenIcon } from "../icons/OpenIcon";
 
+import { DeleteIcon } from "../icons/DeleteIcon";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
+
+
+import  {YoutubeTypeIcon} from "../icons/YoutubeTypeIcon"
+import { XtypeIcon } from "../icons/XtypeIcon";
 
 
 interface CardProps {
@@ -9,29 +16,53 @@ interface CardProps {
     link: string
 }
 
+
 export const Card = ({title, type, link}: CardProps) => {
+
+   const deleteCard =  async () => {
+
+        console.log("iam triggerred!");
+        await axios.delete(`${BACKEND_URL}/api/v1/content`, {
+            data: {
+                link
+            },  
+            headers: {
+                authorization: localStorage.getItem("token")
+            }
+        })
+    }
+
 return (
- <div>
+ 
+   <div className = "hover:transition ease-in-out hover:scale-105 duration-600">
     <div className = "p-4 bg-white shadow-md max-w-72 rounded-md border-[#e9ebed]  border min-w-48 min-h-48">
             <div className = "flex justify-between items-center">
                 <div className = "flex items-center text-md">
                     <div className = "text-slate-600 pr-2">
-                        
-                        {<ShareIcon size = {"md"}/>}
+                        {type === "youtube" && 
+                             <YoutubeTypeIcon/> 
+                        }
+                        { type === "twitter" && 
+                            <XtypeIcon/>
+                        }
                     </div>
-                    {title} 
+                    <h2 className = "font-normal">{title}</h2>
 
                 </div>
                 <div className = "flex items-center text-slate-600">
                     <div className = "pr-2 cursor-pointer" >
                          <a href = {link} target = "_blank">
-                                <ShareIcon size = "md"/>
+                                <OpenIcon size = "md"/>
                         </a> 
                     </div>
-                    <div>
-                        <ShareIcon size = {"md"}/>
+                    <div onClick={deleteCard}>
+                        <DeleteIcon size = {"md"}/>
                     </div>
                 </div>
+            </div>
+            <div>
+
+                <p></p>
             </div>
          <div className = "pt-4 ">
 
@@ -55,6 +86,7 @@ return (
         </div>
     </div>
     </div>
+ 
     )
 }
 
