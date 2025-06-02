@@ -23,6 +23,7 @@ import {useContent} from "../hooks/useContent";
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
     const {allContent, refreshContent} = useContent();
+    //const [activeNeuron, setNeuron] = useState("")
 
     useEffect(() => {
         refreshContent();
@@ -45,3 +46,4 @@ export function Dashboard() {
    </div>
   )
 }
+

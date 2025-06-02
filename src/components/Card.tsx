@@ -20,22 +20,31 @@ interface CardProps {
 export const Card = ({title, type, link}: CardProps) => {
 
    const deleteCard =  async () => {
-
-        console.log("iam triggerred!");
-        await axios.delete(`${BACKEND_URL}/api/v1/content`, {
-            data: {
-                link
-            },  
-            headers: {
-                authorization: localStorage.getItem("token")
-            }
-        })
+        try {
+                const response =    await axios.delete(`${BACKEND_URL}/api/v1/content`, {
+                    data: {
+                        link
+                    },  
+                    headers: {
+                        authorization: localStorage.getItem("token")
+                    }
+                })
+                if(response.statusText === "OK"){
+                    alert(`${<p>deleted successufully!</p>}`);
+                }
+                else{
+                    alert(`${<h1>backend is down!</h1>}`);
+                }
+        }catch(err)    {
+            console.log(err);
+        }
+        
     }
 
 return (
  
    <div className = "hover:transition ease-in-out hover:scale-105 duration-600">
-    <div className = "p-4 bg-white shadow-md max-w-72 rounded-md border-[#e9ebed]  border min-w-48 min-h-48">
+    <div className = "p-4 bg-white shadow-md max-w-72 rounded-md border-[#d3d4d5]  border min-w-48 min-h-48">
             <div className = "flex justify-between items-center">
                 <div className = "flex items-center text-md">
                     <div className = "text-slate-600 pr-2">
@@ -89,4 +98,7 @@ return (
  
     )
 }
+
+
+
 

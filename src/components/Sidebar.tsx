@@ -11,9 +11,9 @@ export const Sidebar = () => {
                 <div className = "text-[#4D44E4] pr-4 ">
                     {<Logo/>}
                 </div>
-                     Brainly 
+                     <h2 className = "font-medium">Second Brain</h2>
                 </div>
-                <div className = "pl-4 pt-4">
+                <div className = "pl-4 pt-6">
 
                   <SidebarItem text = "Twitter" icon = {<TwitterIcon />}/>
                   <SidebarItem text = "Youtube" icon = {<YoutubeIcon/>}/>

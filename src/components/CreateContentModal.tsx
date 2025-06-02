@@ -52,8 +52,8 @@ export const CreateContentModal = ({ open, onClose }: CreateContentModalProps) =
     return (
         <>
             {open && (
-                <div className="w-screen h-screen fixed bg-slate-300/60 flex justify-center items-center top-0 left-0 modal hide" id = "idModel" data-backdrop="static" data-keyboard ="false">
-                    <div className = "flex flex-col justify-center bg-white opacity-100">
+                <div className="w-screen h-screen fixed bg-black/50 flex justify-center items-center top-0 left-0" >
+                    <div className = "flex flex-col justify-center bg-white opacity-100 rounded-lg shadow-xl">
                         <span className = "bg-white rounded p-4">
                             <div className = "flex justify-end ">
                                 <div onClick = {() => onClose(false)}>
@@ -63,7 +63,7 @@ export const CreateContentModal = ({ open, onClose }: CreateContentModalProps) =
                             <div className = "flex flex-col">
                                 <Input reference = {titleRef} type= {"text"} placeholder=  {"Title"}/>
                                 <Input reference={linkRef} type = {"text"} placeholder={"Link"} />
-                                <div className = "flex flex-wrap">
+                                <div className = "flex flex-wrap gap-3 items-center justify-center">
                                         <Button onClick={()=> {
                                             setType(ContentType.Youtube)
                                         }}  variant= {type == ContentType.Youtube ? "primary": "secondary"} 
@@ -73,9 +73,10 @@ export const CreateContentModal = ({ open, onClose }: CreateContentModalProps) =
                                             setType(ContentType.Twitter)
                                         }}
                                          variant= {type == ContentType.Twitter ? "primary": "secondary"} text="twitter" size = "sm"/>
+                                          
                                 </div>
                             </div>
-                            <div className = "flex justify-center">
+                            <div className = "flex justify-center pt-4">
                                 <Button onClick={addContent} variant = {"primary"} size = {"md"} text = {"Submit"} />
                             </div>
                         </span>
