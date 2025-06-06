@@ -9,16 +9,18 @@ import { BACKEND_URL } from "../config";
 import  {YoutubeTypeIcon} from "../icons/YoutubeTypeIcon"
 import { XtypeIcon } from "../icons/XtypeIcon";
 
+//import { useEffect } from "react";
+
 
 interface CardProps {
     title: string;
     type: "document" | "youtube" | "twitter" | "linkedin";
     link: string
+    refreshContent: () => void;
 }
 
 
-export const Card = ({title, type, link}: CardProps) => {
-
+export const Card = ({title, type, link, refreshContent}: CardProps) => {
    const deleteCard =  async () => {
         try {
                 const response =    await axios.delete(`${BACKEND_URL}/api/v1/content`, {
@@ -29,12 +31,15 @@ export const Card = ({title, type, link}: CardProps) => {
                         authorization: localStorage.getItem("token")
                     }
                 })
-                if(response.statusText === "OK"){
-                    alert(`${<p>deleted successufully!</p>}`);
+                if(response.status === 200){
+                    alert("deleted successufully!");
+                    refreshContent();
+
                 }
                 else{
-                    alert(`${<h1>backend is down!</h1>}`);
+                    alert("Something wrong bhai!");
                 }
+
         }catch(err)    {
             console.log(err);
         }
@@ -43,7 +48,7 @@ export const Card = ({title, type, link}: CardProps) => {
 
 return (
  
-   <div className = "hover:transition ease-in-out hover:scale-105 duration-600">
+   <div className = "hover:transition ease-in-out hover:scale-104 duration-500">
     <div className = "p-4 bg-white shadow-md max-w-72 rounded-md border-[#d3d4d5]  border min-w-48 min-h-48">
             <div className = "flex justify-between items-center">
                 <div className = "flex items-center text-md">

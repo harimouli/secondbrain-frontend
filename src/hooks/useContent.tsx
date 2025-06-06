@@ -7,6 +7,7 @@ export const useContent = () => {
     const [allContent, setContent] = useState([]);
      
         const refreshContent = async () => {
+            console.log("ima trigrered");
             const response = await axios.get(`${BACKEND_URL}/api/v1/content`, {
                 headers: {
                     authorization: localStorage.getItem("token")
@@ -17,7 +18,7 @@ export const useContent = () => {
 
 
      useEffect(() => {
-        refreshContent()
+        refreshContent();
         const  interval = setInterval(()=> {
             refreshContent()
         }, 10* 1000)
