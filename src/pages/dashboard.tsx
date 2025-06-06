@@ -1,6 +1,4 @@
 
-
-
 import { Button } from "../components/Button"
 
 import { PlusIcon } from "../icons/PlusIcon"
@@ -12,6 +10,7 @@ import {Card} from "../components/Card"
 import { useEffect, useState } from "react"
 
 import { CreateContentModal } from "../components/CreateContentModal"
+
 import { Sidebar } from "../components/Sidebar";
 
 import {useContent} from "../hooks/useContent";
@@ -27,7 +26,7 @@ export function Dashboard() {
 
     useEffect(() => {
         refreshContent();
-    }, [modelOpen])
+    }, [modelOpen, refreshContent])
     
   const isNoContent: number = allContent.length;
 
