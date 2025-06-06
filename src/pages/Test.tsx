@@ -1,0 +1,10 @@
+
+
+export const Test = () => {
+    return (
+        <div>
+
+            <h1>HOME</h1>
+        </div>
+    )
+} 
