@@ -14,6 +14,7 @@ import { CreateContentModal } from "../components/CreateContentModal"
 import { Sidebar } from "../components/Sidebar";
 
 import {useContent} from "../hooks/useContent";
+//import { useNavigate, type NavigateFunction } from "react-router-dom"
 
 
 
@@ -24,13 +25,12 @@ export function Dashboard() {
     const {allContent, refreshContent} = useContent();
     const [activeNeuron, setNeuron] = useState("");
 
+
     useEffect(() => {
         refreshContent();
     }, [modelOpen, refreshContent])
     
   const isNoContent: number = allContent.length;
-
-
 
   return (
   <div>
