@@ -28,7 +28,7 @@ export const Signup = () => {
                     <div className = " flex flex-col items-center bg-white rounded-md shadow-lg p-4">
                                 <Input reference = {usernameRef} type = {"text"} placeholder="username" />
                                 <Input reference = {passwordRef} type = {"password"} placeholder="Password"/>
-                                <div  className = "flex justify-center pt-4 w-full">
+                                      <div  className = "flex justify-center pt-4 w-full">
                                         <Button onClick={signup}   variant="primary" text = "Signup" size = "md" fullWidth = {true} loading={false}/>
                                 </div>
         
