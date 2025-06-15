@@ -6,6 +6,8 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 
+import { BrainIntro } from "../components/BrainIntro";
+
 
 export const Signin = () => {
         const [nameError, setNameError] = useState("");
@@ -62,22 +64,36 @@ export const Signin = () => {
         }
 
     return (
-        <div className = "h-screen w-screen bg-slate-100 flex flex-col  justify-center items-center">
-                    <div className = " flex flex-col  bg-white rounded-md shadow-lg p-4 md:w-md">
+       <div className="bg-white h-screen w-screen flex justify-center items-center">
+  <div className="flex w-[90%] max-w-6xl h-[90%] bg-[#D4D4D8] rounded-2xl overflow-hidden shadow-lg">
+    
+   
+        {<BrainIntro/>}
+  
+    <div className="flex flex-1 flex-col justify-center items-center bg-white p-10">
+      <div className="mb-6 text-center">
+        <p className="text-slate-500 text-lg">Welcome to</p>
+        <h2 className="text-2xl font-extrabold text-[#6258DC]">Second Brain</h2>
+      </div>
 
-                                <div className = "">
-                                     <p className = "text-black text-lg">Welcome  to</p>
-                                     <h2 className = "text-2xl  font-extrabold text-[#6258DC]">Second Brain</h2>
-                                </div>
-                            <div className="flex flex-col align-middle p-2">
-                                <Input reference={usernameRef} type = {"text"} placeholder="username" />
-                                <Input reference={passwordRef} type = {"password"} placeholder="Password"/>
-                                <div className = "flex justify-center pt-4 w-full">
-                                        <Button onClick ={signin}  variant="primary" text = "Signin" size = "md" fullWidth = {true} loading={false}/>
-                                </div>
-                            </div>
-            
-                    </div>
+      <div className="flex flex-col justify-center w-full max-w-xs space-y-4">
+        <Input reference={usernameRef} type="text" placeholder="Username" />
+        <Input reference={passwordRef} type="password" placeholder="Password" />
+        <div className="pt-2">
+          <Button
+            onClick={signin}
+            variant="primary"
+            text="Sign In"
+            size="md"
+            fullWidth={true}
+            loading={false}
+          />
         </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
     )
 }
