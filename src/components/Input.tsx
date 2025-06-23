@@ -1,13 +1,23 @@
-
-interface InputProps {
+import React from "react";
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     placeholder : string;
     type: string;
     reference: React.RefObject<HTMLInputElement>;
+    width?:string;
+    id?:string
 
 }
 
 export const Input = (props: InputProps) => {
+    const { id, placeholder, type, reference, width, ...rest } = props;
     return (
-        <input  ref = {props.reference} placeholder= {props.placeholder} type = {props.type} className = "py-3 px-3 border rounded-md m-2  outline-slate-500" required></input>
-    )
+        <input
+            id={id}
+            ref={reference}
+            placeholder={placeholder}
+            type={type}
+            className={`py-3 px-3 border mr-2 border-slate-300  shadow-lg  rounded-md outline-slate-500 ${width ? ` ${width}` : ""}`}
+            {...rest}
+        />
+    );
 }
