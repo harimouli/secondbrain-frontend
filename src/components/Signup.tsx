@@ -34,9 +34,6 @@ export const Signup = () => {
             }catch(error){
                  console.error("Signin failed", error);
             }
-            const response = await axios.post(`${BACKEND_URL}/api/v1/signup`, userData);
-            navigate("/signin");
-            alert(response.data.message + "!");
 
     }
     return(

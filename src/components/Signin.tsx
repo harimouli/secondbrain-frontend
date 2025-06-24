@@ -29,9 +29,6 @@ export const Signin = () => {
         const passwordRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
         const  navigate = useNavigate();
 
-     
-        
-       
        const signin = async() => {
 
             
@@ -75,7 +72,6 @@ export const Signin = () => {
          setPasswordError("");
          setErrorStatus(false);
            try{
-
                 const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, userData);
                 const token = response.data.token;
                 localStorage.setItem("token", token);
@@ -84,9 +80,6 @@ export const Signin = () => {
                 console.error("Signin failed", error);
                 setPasswordError("Invalid credentials or server error");
            }
-            
-        
-
         }
 
 
