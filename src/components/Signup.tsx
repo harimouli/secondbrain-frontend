@@ -1,5 +1,5 @@
 
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import  axios  from "axios"
 import { BACKEND_URL } from "../config"
 import { Input } from "./Input"
@@ -27,7 +27,13 @@ export const Signup = () => {
             
 
     const navigate = useNavigate();
-
+     useEffect(()=> {
+                    const token = localStorage.getItem("token");
+                    if(token){
+                        navigate("/dashboard");
+                        return;
+                    }
+            },[])
 
 
     const signup = async () => {

@@ -1,4 +1,4 @@
-import {useRef, useState } from "react"
+import {useRef, useState, useEffect } from "react"
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +28,15 @@ export const Signin = () => {
         const usernameRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
         const passwordRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
         const  navigate = useNavigate();
+
+        useEffect(()=> {
+                const token = localStorage.getItem("token");
+                if(token){
+                    navigate("/dashboard");
+                    return;
+                }
+        },[])
+       
 
        const signin = async() => {
 
