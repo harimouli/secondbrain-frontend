@@ -8,18 +8,31 @@ import { z } from "zod";
 
 import { Button } from "./Button";
 
-import { AuthBody } from "./AuthBody";
+import { AuthBody } from "../ui/AuthBody";
 
 import { InputLabel } from "./InputLabel";
+
+import { InputWrapper } from "../ui/InputWrapper";
+
+
+import { ErrorText } from "../ui/ErrorText";
+
+import { AuthButtonBody } from "../ui/AuthButtonBody";
+
 export const Signin = () => {
         const [nameError, setNameError] = useState("");
         const [passwordError, setPasswordError] = useState("");
+        const [errorStatus, setErrorStatus] = useState(false);
+        
         console.log(nameError, passwordError);
         const usernameRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
         const passwordRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
         const  navigate = useNavigate();
-       // to get rid of these typo errors
-        const signin = async() => {
+
+     
+        
+       
+       const signin = async() => {
 
             
             const username = usernameRef.current?.value;
@@ -44,22 +57,35 @@ export const Signin = () => {
             const parsedData = userSchema.safeParse(userData);
 
             if(!parsedData.success) {
-                if(parsedData.error.issues[0]){
-                    console.log(parsedData.error.issues[0])
-                    setNameError(parsedData.error.issues[0].message);
-                }
-                if(parsedData.error.issues[1]){
-                    setPasswordError(parsedData.error.issues[1].message);
-                }
+                parsedData.error.issues.forEach(issue => {
+                    if (issue.path[0] === "username") {
+                        setNameError(issue.message);
+                        setErrorStatus(!errorStatus);
+                    }
+                    if (issue.path[0] === "password") {
+                        setPasswordError(issue.message);
+                        setErrorStatus(!errorStatus);
+                    }
+                 });
+                return;
             }
+             
 
+         setNameError("");
+         setPasswordError("");
+         setErrorStatus(false);
+           try{
 
-            const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, userData);
+                const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, userData);
+                const token = response.data.token;
+                localStorage.setItem("token", token);
+                navigate("/dashboard");
+           }catch(error){
+                console.error("Signin failed", error);
+                setPasswordError("Invalid credentials or server error");
+           }
             
-            const token = response.data.token;
-            localStorage.setItem("token", token);
-            console.log(response);
-            navigate("/dashboard");
+        
 
         }
 
@@ -70,21 +96,27 @@ export const Signin = () => {
 
                 <AuthBody>
 
-                            <div className = "flex flex-col gap-2  w-80">
+                           <InputWrapper>
                                    <InputLabel htmlfor="username" labelText="Enter your username" />
                                  <Input  id = "username" width="w-80" reference={usernameRef} type="text" placeholder="Username" />
-                            </div>
+                                 {errorStatus && 
+                                      <ErrorText message= {nameError}/>
+                                 }
+                          </InputWrapper>
                         
                                 
-                            <div className = "flex flex-col gap-2 w-80">
+                          <InputWrapper>
                                  <InputLabel htmlfor="password" labelText="Enter your password"/>
                                  <Input id = "password" width="w-80" reference={passwordRef} type="password" placeholder="Password" />
-                       
-                            </div>  
+                                 {errorStatus && 
+                                       <ErrorText message= {passwordError}/>
+                                 }
+                         </InputWrapper>
+                              
                     
 
-                            <div className="flex pt-1">
-                                <Button
+                          <AuthButtonBody>
+                                    <Button
                                 onClick={signin}
                                 variant="primary"
                                 text="Sign In"
@@ -92,7 +124,9 @@ export const Signin = () => {
                                 fullWidth={false}
                                 loading={false}
                                 />
-                            </div>
+
+                          </AuthButtonBody>
+                            
             </AuthBody>
 
         )

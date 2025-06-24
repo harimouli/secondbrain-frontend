@@ -16,7 +16,7 @@ export const Input = (props: InputProps) => {
             ref={reference}
             placeholder={placeholder}
             type={type}
-            className={`py-3 px-3 border mr-2 border-slate-300  shadow-lg  rounded-md outline-slate-500 ${width ? ` ${width}` : ""}`}
+            className={`py-3 px-3 border mr-2 border-slate-300  shadow  rounded-md outline-slate-500 ${width ? ` ${width}` : ""}`}
             {...rest}
         />
     );

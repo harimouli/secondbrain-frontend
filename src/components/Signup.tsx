@@ -7,7 +7,7 @@ import { Input } from "./Input"
 import {Button} from "./Button"
 import { useNavigate } from "react-router-dom"
 
-import { AuthBody } from "./AuthBody"
+import { AuthBody } from "../ui/AuthBody"
 
 export const Signup = () => {
     const usernameRef =  useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
