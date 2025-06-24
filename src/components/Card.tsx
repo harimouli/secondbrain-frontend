@@ -57,7 +57,7 @@ return (
                              <YoutubeTypeIcon/> 
                         }
                         { type === "twitter" && 
-                            <XtypeIcon/>
+                            <XtypeIcon/> 
                         }
                     </div>
                     <h2 className = "font-normal">{title}</h2>

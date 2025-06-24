@@ -9,6 +9,11 @@ import { useNavigate } from "react-router-dom"
 
 import { AuthBody } from "../ui/AuthBody"
 
+import { AuthButtonBody } from "../ui/AuthButtonBody"
+import { InputWrapper } from "../ui/InputWrapper";
+
+import { InputLabel } from "./InputLabel"
+
 export const Signup = () => {
     const usernameRef =  useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
     const passwordRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
@@ -20,6 +25,15 @@ export const Signup = () => {
                 username,
                 password
             };
+
+
+            try{
+                const response = await axios.post(`${BACKEND_URL}/api/v1/signup`, userData);
+                navigate("/signin");
+                alert(response.data.message + "!");
+            }catch(error){
+                 console.error("Signin failed", error);
+            }
             const response = await axios.post(`${BACKEND_URL}/api/v1/signup`, userData);
             navigate("/signin");
             alert(response.data.message + "!");
@@ -27,16 +41,20 @@ export const Signup = () => {
     }
     return(
                 <AuthBody>
-                   <div className = "gap-2 p-2">
-                        <div className = "flex flex-col gap-1 w-80">
-                                <Input reference = {usernameRef} type = {"text"} placeholder="username" />
-                                <Input reference = {passwordRef} type = {"password"} placeholder="Password"/>
-                                      <div  className = "flex justify-center pt-4 w-full">
-                                        <Button onClick={signup}   variant="primary" text = "Signup" size = "md" fullWidth = {false} loading={false}/>
-                                    </div>
-                        </div>
-        
-                    </div>
+                 
+                               <InputWrapper>
+                                           <InputLabel htmlfor="username" labelText="Enter your username" />
+                                            <Input reference = {usernameRef} type = {"text"} placeholder="username" /> 
+                                           </InputWrapper>
+                              <InputWrapper>
+                                         <InputLabel htmlfor="password" labelText="Enter your password"/>
+                                         <Input reference = {passwordRef} type = {"password"} placeholder="Password"/>
+                              </InputWrapper>
+                             <AuthButtonBody>
+                                   <Button onClick={signup}   variant="primary" text = "Signup" size = "md" fullWidth = {false} loading={false}/>
+                             </AuthButtonBody>
+                                    
+                       
                 </AuthBody>
         
     );
