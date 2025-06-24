@@ -24,7 +24,7 @@ export const Signin = () => {
         const [passwordError, setPasswordError] = useState("");
         const [errorStatus, setErrorStatus] = useState(false);
         
-        console.log(nameError, passwordError);
+       
         const usernameRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
         const passwordRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
         const  navigate = useNavigate();
