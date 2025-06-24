@@ -35,7 +35,7 @@ export const Signin = () => {
                     navigate("/dashboard");
                     return;
                 }
-        },[])
+        },[navigate])
        
 
        const signin = async() => {

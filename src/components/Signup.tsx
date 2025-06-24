@@ -33,7 +33,7 @@ export const Signup = () => {
                         navigate("/dashboard");
                         return;
                     }
-            },[])
+            },[navigate])
 
 
     const signup = async () => {
