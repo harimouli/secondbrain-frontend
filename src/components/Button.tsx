@@ -9,6 +9,7 @@ interface ButtonProps {
     onClick?: () => void;
     fullWidth?: boolean;
     loading?: boolean;
+     
 }
 
 /*interface VariantStylesType {

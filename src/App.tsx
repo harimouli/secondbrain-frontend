@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Dashboard } from "./pages/dashboard";
-import { Signup } from "./components/Signup";
-import { Signin } from "./components/Signin";
+
 import { ProtectedRoute } from "./ProtectedRoute";
+import  {AuthMain} from "./components/AuthMain"
 
 
 const App = () => {
@@ -16,9 +16,9 @@ const App = () => {
             </ProtectedRoute>  
             } />
   
-          <Route path = "/signin" element = {<Signin/>}/>
-          <Route path = "/signup" element = {<Signup/>}/>
-
+          <Route path = "/auth" element = {<AuthMain/>}/>
+        
+       
           <Route path = "/dashboard" element = {
             <ProtectedRoute>
                 <Dashboard/>

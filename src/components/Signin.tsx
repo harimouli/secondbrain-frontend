@@ -1,4 +1,4 @@
-import {useRef, useState, useEffect } from "react"
+import {useRef, useState} from "react"
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
@@ -8,34 +8,35 @@ import { z } from "zod";
 
 import { Button } from "./Button";
 
-import { AuthBody } from "../ui/AuthBody";
+
 
 import { InputLabel } from "./InputLabel";
 
-import { InputWrapper } from "../ui/InputWrapper";
+import { InputWrapper } from "../ui/auth/InputWrapper";
 
 
-import { ErrorText } from "../ui/ErrorText";
+import { ErrorText } from "../ui/auth/ErrorText";
 
-import { AuthButtonBody } from "../ui/AuthButtonBody";
+import { AuthButtonBody } from "../ui/auth/AuthButtonBody";
 
 export const Signin = () => {
         const [nameError, setNameError] = useState("");
         const [passwordError, setPasswordError] = useState("");
         const [errorStatus, setErrorStatus] = useState(false);
+        const [signinError, setSigninError] = useState("");
         
        
         const usernameRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
         const passwordRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
         const  navigate = useNavigate();
 
-        useEffect(()=> {
+        /*useEffect(()=> {
                 const token = localStorage.getItem("token");
                 if(token){
                     navigate("/dashboard");
                     return;
                 }
-        },[navigate])
+        },[navigate])*/
        
 
        const signin = async() => {
@@ -85,9 +86,9 @@ export const Signin = () => {
                 const token = response.data.token;
                 localStorage.setItem("token", token);
                 navigate("/dashboard");
-           }catch(error){
-                console.error("Signin failed", error);
-                setPasswordError("Invalid credentials or server error");
+           }catch{
+                setSigninError("Invalid credentials or server error");
+                setErrorStatus(!errorStatus)
            }
         }
 
@@ -96,7 +97,10 @@ export const Signin = () => {
         return (
 
 
-                <AuthBody>
+                <>
+                
+                
+            
 
                            <InputWrapper>
                                    <InputLabel htmlfor="username" labelText="Enter your username" />
@@ -114,14 +118,16 @@ export const Signin = () => {
                                        <ErrorText message= {passwordError}/>
                                  }
                          </InputWrapper>
-                              
-                    
+                                {errorStatus && 
+                                     <ErrorText message={signinError}/>
+                                 }
+                        
 
                           <AuthButtonBody>
                                     <Button
                                 onClick={signin}
                                 variant="primary"
-                                text="Sign In"
+                                text="Signin"
                                 size="md"
                                 fullWidth={false}
                                 loading={false}
@@ -129,7 +135,7 @@ export const Signin = () => {
 
                           </AuthButtonBody>
                             
-            </AuthBody>
+            </>
 
         )
     }

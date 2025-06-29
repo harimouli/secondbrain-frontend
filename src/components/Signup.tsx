@@ -1,21 +1,21 @@
 
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState} from "react"
 import  axios  from "axios"
 import { BACKEND_URL } from "../config"
 import { Input } from "./Input"
 
 import {Button} from "./Button"
-import { useNavigate } from "react-router-dom"
 
-import { AuthBody } from "../ui/AuthBody"
 
-import { AuthButtonBody } from "../ui/AuthButtonBody"
-import { InputWrapper } from "../ui/InputWrapper";
+
+
+import { AuthButtonBody } from "../ui/auth/AuthButtonBody"
+import { InputWrapper } from "../ui/auth/InputWrapper";
 
 import { InputLabel } from "./InputLabel"
 import {z} from "zod"
 
-import { ErrorText } from "../ui/ErrorText"
+import { ErrorText } from "../ui/auth/ErrorText"
 
 export const Signup = () => {
     const usernameRef =  useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
@@ -26,14 +26,14 @@ export const Signup = () => {
      const [errorStatus, setErrorStatus] = useState(false);
             
 
-    const navigate = useNavigate();
+    /*const navigate = useNavigate();
      useEffect(()=> {
                     const token = localStorage.getItem("token");
                     if(token){
                         navigate("/dashboard");
                         return;
                     }
-            },[navigate])
+            },[navigate]) */
 
 
     const signup = async () => {
@@ -81,7 +81,6 @@ export const Signup = () => {
 
             try{
                 const response = await axios.post(`${BACKEND_URL}/api/v1/signup`, userData);
-                navigate("/signin");
                 alert(response.data.message + "!");
             }catch(error){
                  console.error("Signin failed", error);
@@ -89,7 +88,7 @@ export const Signup = () => {
 
     }
     return(
-                <AuthBody>
+                <>
                  
                                <InputWrapper>
                                            <InputLabel htmlfor="username" labelText="Enter your username" />
@@ -110,7 +109,7 @@ export const Signup = () => {
                              </AuthButtonBody>
                                     
                        
-                </AuthBody>
+                </>
         
     );
 }
