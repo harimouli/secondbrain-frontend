@@ -8,14 +8,14 @@ interface LogoBodyProps {
 
 export const SideContainer = ({children}: {children: ReactNode}) => {
         return (
-            <div className = "w-72 h-screen  bg-white border-r-2 border-r-[#e9ebed] fixed left-0 top-0 pl-6">
+            <div className = "w-72 h-screen  bg-white border-r-2 border-r-[#e9ebed] fixed left-0 top-0 pl-6 transition-all ease-in-out  duration-100">
                     {children}
             </div>
         )
 }
 export const MainLogoBody = (props: LogoBodyProps) => {
     return (
-        <div className = "flex text-2xl  items-center pt-4">
+        <div className = "flex text-2xl  items-center pt-4 transition-all duration-1000">
             {props.children}
         </div>
     )
