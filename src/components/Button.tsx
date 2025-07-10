@@ -19,10 +19,12 @@ interface ButtonProps {
 type VariantStylesType = {
     primary: string;
     secondary: string;
+
 }
 const variantStyles: VariantStylesType = {
     "primary": "bg-[#6258DC] text-white",
-    "secondary": "bg-[#E0E7FF] text-[#5046E3]"
+    "secondary": "bg-[#E0E7FF] text-[#5046E3]",
+
 }
 const defaultStyles = "rounded-md flex items-center  font-light"
 

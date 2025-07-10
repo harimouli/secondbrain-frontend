@@ -6,12 +6,12 @@ import { MdDashboard } from "react-icons/md";
 import {SideContainer ,MainLogoBody, LogoInnerChild1, BrandName, DashboardItemsContainer} from "../ui/sidebar/Sidebarui";
 import { LuPanelLeftClose } from "react-icons/lu";
 interface SidebarProps {
-    activeNeuron: string;
-    setNeuron: (activeNeuron: string) => void;
+    activeBar: string;
+    setActiveBar: (active: string) => void;
     isSidebarOpen: boolean;
     setSidebar: (isSidebarOpen: boolean) => void;
 }
-export const Sidebar = ({isSidebarOpen,setNeuron, setSidebar}: SidebarProps) => {
+export const Sidebar = ({isSidebarOpen,setActiveBar, setSidebar}: SidebarProps) => {
     return (
        <SideContainer>
 
@@ -34,9 +34,9 @@ export const Sidebar = ({isSidebarOpen,setNeuron, setSidebar}: SidebarProps) => 
        
 
              <DashboardItemsContainer>
-                   <SidebarItem setNeuron={setNeuron} text = "Dashboard" icon = {<MdDashboard/>}/>
-                  <SidebarItem setNeuron = {setNeuron} text = "Twitter" icon = {<TwitterIcon />}/>
-                  <SidebarItem setNeuron = {setNeuron} text = "Youtube" icon = {<YoutubeIcon/>}/>
+                   <SidebarItem setActivebar={setActiveBar} text = "Dashboard" icon = {<MdDashboard/>}/>
+                  <SidebarItem setActivebar = {setActiveBar} text = "Twitter" icon = {<TwitterIcon />}/>
+                  <SidebarItem setActivebar = {setActiveBar} text = "Youtube" icon = {<YoutubeIcon/>}/>
              </DashboardItemsContainer> 
       </SideContainer>
     ) 

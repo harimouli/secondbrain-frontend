@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { useState , useEffect} from "react";
+import { useState } from "react";
 import { BACKEND_URL } from "../config";
 
 export const useContent = () => {
@@ -16,17 +16,7 @@ export const useContent = () => {
         }
 
 
-     useEffect(() => {
-        refreshContent();
-        const  interval = setInterval(()=> {
-            refreshContent()
-        }, 10* 1000)
-
-        return (
-            clearInterval(interval)
-        )
-     }, []);
-
+     
      return {allContent, refreshContent};
 
 

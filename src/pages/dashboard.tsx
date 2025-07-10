@@ -27,22 +27,35 @@ import { IoMenuSharp } from "react-icons/io5";
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
     const {allContent, refreshContent} = useContent();
-    const [activeNeuron, setNeuron] = useState("");
+    const [activeBar, setActiveBar] = useState("");
 
     const [isSidebarOpen , setSidebar] = useState(true);
 
-
+    
 
     useEffect(() => {
         refreshContent();
     }, [modelOpen, refreshContent])
-    
-  const isNoContent: number = allContent.length;
+    function lowercaseFirstLetter(str: string) : string {
+      if(str === "Dashboard") return "";
+     return str.charAt(0).toLowerCase() + str.slice(1);
+  } 
 
+  type ContentType = { title: string; type: string; link: string; _id: string };
+  let filteredContent: ContentType[] = [];
+
+  const active: string = lowercaseFirstLetter(activeBar);  
+  if(active === ""){
+    filteredContent = allContent;
+  }
+  else{
+    filteredContent = allContent.filter((eachEle: ContentType) => eachEle.type === active);
+  }
+  const isNoContent: number = filteredContent.length;
   return (
   <div>
 
-    {isSidebarOpen &&  <Sidebar  isSidebarOpen = {isSidebarOpen} setSidebar={setSidebar} activeNeuron = {activeNeuron} setNeuron = {setNeuron} />}
+    {isSidebarOpen &&  <Sidebar  isSidebarOpen = {isSidebarOpen} setSidebar={setSidebar} activeBar= {activeBar} setActiveBar = {setActiveBar} />}
     <div className = {`p-4 min-h-screen bg-slate-100 ${isSidebarOpen ? "ml-72" : ""}`} >
         
 
@@ -57,7 +70,7 @@ export function Dashboard() {
              </div>   
 
         }
-        <CreateContentModal open = {modelOpen} onClose = {setModelOpen}/>
+        <CreateContentModal refreshContent = {refreshContent} open = {modelOpen} onClose = {setModelOpen}/>
        <div className = "flex pt-1 justify-end top-0 right-1 gap-4">
         <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = {"lg"}/>} size = "md" variant="primary"  text = {"Add Content"}></Button>
         <Button startIcon = {<ShareIcon size = {"md"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
@@ -74,8 +87,10 @@ export function Dashboard() {
 
         ) : (
                <div className = "flex flex-wrap gap-4 mt-4">
-                   {allContent.map(({title, type, link, _id})=> <Card key={_id}  title={title} link={link} type={type} refreshContent={ refreshContent} />)}
+                   {filteredContent.map(({title, type, link, _id})=> <Card key={_id}  title={title} link={link} type={type as "document" | "youtube" | "twitter" | "linkedin"} refreshContent={ refreshContent} />)}
+
               </div>
+              
         )
 
         }

@@ -8,7 +8,7 @@ import { BACKEND_URL } from "../config";
 
 import  {YoutubeTypeIcon} from "../icons/YoutubeTypeIcon"
 import { XtypeIcon } from "../icons/XtypeIcon";
-
+import { TweetEmbed } from "./TweetEmbed";
 //import { useEffect } from "react";
 
 
@@ -93,9 +93,7 @@ return (
             </iframe> }
 
             {type == "twitter" &&
-                    <blockquote className="twitter-tweet">
-                        <a href= {link.replace("x", "twitter")}></a> 
-                    </blockquote>
+                   <TweetEmbed link= {link}/>
             }
         </div>
     </div>

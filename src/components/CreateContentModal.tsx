@@ -12,6 +12,7 @@ import { InputLabel } from "./InputLabel";
 interface CreateContentModalProps {
     open: boolean;
     onClose: (open: boolean) => void;
+    refreshContent: () => void
 }
 
 const ContentType = {
@@ -20,7 +21,7 @@ const ContentType = {
 } as const;
 type ContentType = typeof ContentType[keyof typeof ContentType];
 
-export const CreateContentModal = ({ open, onClose }: CreateContentModalProps) => {
+export const CreateContentModal = ({ open, onClose, refreshContent }: CreateContentModalProps) => {
 
 
     const titleRef = useRef<HTMLInputElement>(null!);
@@ -46,6 +47,7 @@ export const CreateContentModal = ({ open, onClose }: CreateContentModalProps) =
             });
             
             onClose(false);
+            refreshContent()
 
             
             
@@ -57,8 +59,8 @@ export const CreateContentModal = ({ open, onClose }: CreateContentModalProps) =
                     <div className = "flex flex-col justify-center bg-white opacity-100 rounded-lg shadow-xl">
                         <span className = "bg-white rounded p-8 ">
                             <div className = "flex justify-end ">
-                                <div onClick = {() => onClose(false)}>
-                                    {<CrossIcon  size = {"lg"}/>}
+                                <div className = "cursor-pointer" onClick = {() => onClose(false)}>
+                                    {<CrossIcon   size = {"lg"}/>}
                                 </div>  
                             </div>
                             <div className = "flex flex-col items-center">
