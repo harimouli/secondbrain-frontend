@@ -9,8 +9,7 @@ import { BACKEND_URL } from "../config";
 import  {YoutubeTypeIcon} from "../icons/YoutubeTypeIcon"
 import { XtypeIcon } from "../icons/XtypeIcon";
 import { TweetEmbed } from "./TweetEmbed";
-//import { useEffect } from "react";
-
+import { YoutubeEmbed } from "./YoutubeEmbed";
 
 interface CardProps {
     title: string;
@@ -81,18 +80,11 @@ return (
          <div className = "pt-4 ">
 
             {type === "youtube" && 
-            <iframe 
-            className = "w-full"
-            src= {`http://www.youtube.com/embed/${link.split("?v=")[1]}`} 
-            title="YouTube video player" 
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerPolicy="strict-origin-when-cross-origin" 
-            allowFullScreen> 
 
-            </iframe> }
+                <YoutubeEmbed link={link} />
+            }  
 
-            {type == "twitter" &&
+            {type == "twitter" &&    
                    <TweetEmbed link= {link}/>
             }
         </div>
