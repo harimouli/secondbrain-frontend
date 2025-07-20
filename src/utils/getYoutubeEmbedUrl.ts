@@ -1,4 +1,4 @@
-// utils/getYoutubeLink.ts
+
 export const getYouTubeEmbedUrl = (link: string): string | null => {
   try {
     const url = new URL(link);
@@ -14,7 +14,7 @@ export const getYouTubeEmbedUrl = (link: string): string | null => {
     }
 
     if (url.pathname.includes("/embed/")) {
-      return link; // already embed URL
+      return link; 
     }
 
   } catch (err) {
