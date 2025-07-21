@@ -12,10 +12,7 @@ interface ButtonProps {
      
 }
 
-/*interface VariantStylesType {
-    primary: string;
-    secondary: string;
-} */
+
 type VariantStylesType = {
     primary: string;
     secondary: string;

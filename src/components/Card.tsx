@@ -10,7 +10,7 @@ import  {YoutubeTypeIcon} from "../icons/YoutubeTypeIcon"
 import { XtypeIcon } from "../icons/XtypeIcon";
 import { TweetEmbed } from "./TweetEmbed";
 import { YoutubeEmbed } from "./YoutubeEmbed";
-
+import { toast } from "react-toastify";
 interface CardProps {
     title: string;
     type: "document" | "youtube" | "twitter" | "linkedin";
@@ -31,15 +31,15 @@ export const Card = ({title, type, link, refreshContent}: CardProps) => {
                     }
                 })
                 if(response.status === 200){
-                    alert("deleted successufully!");
+                    toast.success("deleted successfully!");
                     refreshContent();
 
                 }
                 else{
-                    alert("Something wrong bhai!");
+                    toast.error("something went wrong!");  
                 }
 
-        }catch(err)    {
+        }catch(err)    { 
             console.log(err);
         }
         

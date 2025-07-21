@@ -7,6 +7,7 @@ import { Input } from "./Input";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { InputLabel } from "./InputLabel";
+import { toast } from "react-toastify";
 
 
 interface CreateContentModalProps {
@@ -32,7 +33,9 @@ export const CreateContentModal = ({ open, onClose, refreshContent }: CreateCont
 
 
     const addContent = async () => {
-            const title = titleRef.current?.value;
+
+        try {
+             const title = titleRef.current?.value;
             const link = linkRef.current?.value;
             const contentData = {
                 title,
@@ -44,10 +47,15 @@ export const CreateContentModal = ({ open, onClose, refreshContent }: CreateCont
                 headers: {
                     authorization: token 
                 }
-            });
+            });  
             
             onClose(false);
+            toast.success("link added succesfully!");
             refreshContent()
+        }catch {
+            toast.warning("backend is down mouli is working hard!")
+        }
+           
 
             
             

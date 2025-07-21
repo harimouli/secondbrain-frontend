@@ -65,7 +65,7 @@ export const Signup = () => {
       setSignupMsg(response.data.message )
     } catch  {
     
-     setSignupError("Signup Failed");
+      setSignupError("Signup Failed");
 
     }
   };    
