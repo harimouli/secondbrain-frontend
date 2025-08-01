@@ -11,6 +11,7 @@ export const useContent = () => {
                 headers: {
                     authorization: localStorage.getItem("token")
                 }
+                
             })
             setContent(response.data.content);
         }

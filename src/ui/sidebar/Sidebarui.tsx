@@ -8,7 +8,7 @@ interface LogoBodyProps {
 
 export const SideContainer = ({children}: {children: ReactNode}) => {
         return (
-            <div className = "w-72 h-screen  bg-white border-r-2 border-r-[#e9ebed] fixed left-0 top-0 pl-6 transition-all ease-in-out  duration-100">
+            <div className = "w-72 h-screen flex flex-col justify-between   bg-white border-r-2 border-r-[#e9ebed] fixed left-0 top-0 pl-6 transition-all ease-in-out  duration-100">
                     {children}
             </div>
         )

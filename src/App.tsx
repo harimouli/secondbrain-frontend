@@ -6,6 +6,7 @@ import  {AuthMain} from "./components/AuthMain"
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
+import { Profile } from "./components/Profile";
 const App = () => {
   return (
     <BrowserRouter> 
@@ -25,6 +26,11 @@ const App = () => {
             <ProtectedRoute>
                 <Dashboard/>
             </ProtectedRoute>        
+            }/>
+            <Route path = "/profile" element = {
+              <ProtectedRoute>
+                  <Profile/>
+              </ProtectedRoute> 
             }/>
       </Routes>
     </BrowserRouter>

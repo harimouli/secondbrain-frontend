@@ -22,12 +22,12 @@ import { IoMenuSharp } from "react-icons/io5";
 
 
 
-
-
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
     const {allContent, refreshContent} = useContent();
     const [activeBar, setActiveBar] = useState("");
+   
+
 
     const [isSidebarOpen , setSidebar] = useState(true);
 
@@ -41,22 +41,24 @@ export function Dashboard() {
      return str.charAt(0).toLowerCase() + str.slice(1);
   } 
 
-  type ContentType = { title: string; type: string; link: string; _id: string };
-  let filteredContent: ContentType[] = [];
+    type ContentType = { title: string; type: string; link: string; _id: string };
+    let filteredContent: ContentType[] = [];
 
-  const active: string = lowercaseFirstLetter(activeBar);  
-  if(active === ""){
-    filteredContent = allContent;
-  }
-  else{
-    filteredContent = allContent.filter((eachEle: ContentType) => eachEle.type === active);
-  }
-  const isNoContent: number = filteredContent.length;
+    const active: string = lowercaseFirstLetter(activeBar);  
+    if(active === ""){
+      filteredContent = allContent;
+    }
+    else{
+      filteredContent = allContent.filter((eachEle: ContentType) => eachEle.type === active);
+    }
+    const isNoContent: number = filteredContent.length;
   return (
   <div>
 
     {isSidebarOpen &&  <Sidebar  isSidebarOpen = {isSidebarOpen} setSidebar={setSidebar} activeBar= {activeBar} setActiveBar = {setActiveBar} />}
-    <div className = {`p-4 min-h-screen bg-slate-100 ${isSidebarOpen ? "ml-72" : ""}`} >
+
+   
+        <div className = {`p-4 min-h-screen bg-slate-100 ${isSidebarOpen ? "ml-72" : ""}`} >
         
 
 
@@ -94,12 +96,7 @@ export function Dashboard() {
         )
 
         }
-
-        
-       
-
-
-    </div>
+      </div>
    </div>
   )
 }

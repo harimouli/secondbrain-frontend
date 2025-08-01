@@ -11,7 +11,12 @@ import { z } from "zod";
 import { ErrorText } from "../ui/auth/ErrorText";
 import { SuccessText } from "../ui/auth/SuccesText";
 
-export const Signup = () => {
+
+interface SignUpProps {
+
+  setAuthMode: (authMode: string) => void;
+}
+export const Signup = ({setAuthMode}: SignUpProps) => {
   const usernameRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
   const passwordRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
 
@@ -24,7 +29,7 @@ export const Signup = () => {
   const signup = async () => {
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
-
+        
     const userSchema = z.object({
       username: z.string().min(3, "username is too small"),
       password: z.string().min(8)
@@ -63,6 +68,8 @@ export const Signup = () => {
       const response = await axios.post(`${BACKEND_URL}/api/v1/signup`, userData);
       
       setSignupMsg(response.data.message )
+      setAuthMode("Signin");
+
     } catch  {
     
       setSignupError("Signup Failed");
