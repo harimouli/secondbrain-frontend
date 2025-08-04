@@ -19,7 +19,7 @@ import {useContent} from "../hooks/useContent";
 import { IoMenuSharp } from "react-icons/io5";
 
 
-
+import emptyImage from "../../assets/empty.png"
 
 
 export function Dashboard() {
@@ -82,13 +82,13 @@ export function Dashboard() {
 
             <div className = "flex  items-center justify-center h-screen text-4xl text-[#5d5e60]">
                  
-                    Add cool stuff bhai!
                   
+                  <img src = {emptyImage}  width={800}/>
             </div>
 
 
         ) : (
-               <div className = "flex flex-wrap gap-4 mt-4">
+               <div className = "flex flex-wrap gap-3 mt-4">
                    {filteredContent.map(({title, type, link, _id})=> <Card key={_id}  title={title} link={link} type={type as "document" | "youtube" | "twitter" | "linkedin"} refreshContent={ refreshContent} />)}
 
               </div>

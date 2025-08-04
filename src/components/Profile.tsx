@@ -7,13 +7,16 @@ import { BACKEND_URL } from "../config";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { Input } from "./Input";
 import { LogoutButton } from "./LogoutButton";
+import { Button } from "./Button";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 export const Profile = () => {
         const oldPasswordRef = useRef<HTMLInputElement>(null!);
         const newPasswordRef = useRef<HTMLInputElement>(null!);
-
+        const navigate = useNavigate();
         
         const [userName, setUsername] = useState("");
-        //const [totalLinks, setTotalLinks] = useState(0);
+        //const [totalLinks, setTotalLinks] = useState(0);  /// will be addeed soooon.....................
         const [dateOfJoined, setDateJoined] = useState("");
         useEffect(()=> {
             fetchUserData()
@@ -31,16 +34,33 @@ export const Profile = () => {
                 }
             }
         );
-        console.log(response.data);
+        
         setUsername(response.data.username);
         setDateJoined(response.data.dateOfJoined);
        
     }  
 
+    const backToHome = () => {
+        navigate("/dashboard")
+    }
+
 
     return (
 
-        <div className = "flex flex-col items-center  bg-slate-100 h-screen w-screen">
+        <div className = "flex flex-col items-center justify-center md:justify-start bg-slate-100 h-screen w-screen">
+
+
+            <div className = "absolute top-0 left-0 p-4">
+
+                <Button  
+                 text = {"Back"} 
+                 variant = {"primary"} 
+                 size = "md" 
+                 startIcon = {<IoArrowBackCircleOutline 
+                 size ={25}/>}
+                 onClick={backToHome}
+                 />
+            </div>
             <div>
                 <IoPersonCircleSharp size = "md"/>
             </div>

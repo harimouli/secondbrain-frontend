@@ -41,7 +41,7 @@ export const BrandName = ({ children }: { children: string }) => {
 
 export const DashboardItemsContainer = ({children}: {children: ReactNode}) => {
         return (
-                <div className = "pl-4 pt-6">
+                <div className = "pt-6">
                         {children}
                 </div>
         )

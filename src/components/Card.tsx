@@ -1,12 +1,12 @@
 
-import { OpenIcon } from "../icons/OpenIcon";
 
-import { DeleteIcon } from "../icons/DeleteIcon";
+
+import { GrShare } from "react-icons/gr";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 
-
-import  {YoutubeTypeIcon} from "../icons/YoutubeTypeIcon"
+import { AiOutlineDelete } from "react-icons/ai";
+import { FaYoutube } from "react-icons/fa";
 import { XtypeIcon } from "../icons/XtypeIcon";
 import { TweetEmbed } from "./TweetEmbed";
 import { YoutubeEmbed } from "./YoutubeEmbed";
@@ -47,29 +47,30 @@ export const Card = ({title, type, link, refreshContent}: CardProps) => {
 
 return (
  
-   <div className = "hover:transition ease-in-out hover:scale-104 duration-500">
-    <div className = "p-4 bg-white shadow-md max-w-72 rounded-md border-[#d3d4d5]  border min-w-48 min-h-48">
+   <div className = {`hover:transition  hover:scale-104 duration-300 w-[290px] h-auto`}>
+
+    <div className = {`p-4 bg-white shadow-md  rounded-md border-[#d3d4d5]  border`}>
             <div className = "flex justify-between items-center">
                 <div className = "flex items-center text-md">
-                    <div className = "text-slate-600 pr-2">
+                    <div className = "pr-2">
                         {type === "youtube" && 
-                             <YoutubeTypeIcon/> 
+                            <FaYoutube color="red" size = {25}/>
                         }
                         { type === "twitter" && 
                             <XtypeIcon/> 
                         }
                     </div>
-                    <h2 className = "font-normal">{title}</h2>
+                    <h2 className = "font-medium">{title}</h2>
 
                 </div>
                 <div className = "flex items-center text-slate-600">
                     <div className = "pr-2 cursor-pointer" >
                          <a href = {link} target = "_blank">
-                                <OpenIcon size = "md"/>
+                                <GrShare  size = {20}/>
                         </a> 
                     </div>
-                    <div onClick={deleteCard}>
-                        <DeleteIcon size = {"md"}/>
+                    <div className = "cursor-pointer" onClick={deleteCard}>
+                        <AiOutlineDelete size = {23}/>
                     </div>
                 </div>
             </div>
@@ -77,7 +78,7 @@ return (
 
                 <p></p>
             </div>
-         <div className = "pt-4 ">
+         <div className={`aspect-video w-full rounded  pt-4 ${type === "twitter" ? "h-[250px] overflow-y-scroll": ""}`}>
 
             {type === "youtube" && 
 
