@@ -67,7 +67,7 @@ export const Profile = () => {
             <div className = "text-center">
 
                <h2>Username: {userName}</h2>
-               <h3>Joined at : {dateOfJoined}</h3>
+               <h3>Joined at : {dateOfJoined ? new Date(dateOfJoined).toLocaleDateString() : ""}</h3>
             </div>
             <div className = "flex flex-col p-5 gap-4">
                 <div>

@@ -33,13 +33,27 @@ export function Dashboard() {
 
     
 
+
+
+
     useEffect(() => {
         refreshContent();
     }, [modelOpen, refreshContent])
+
     function lowercaseFirstLetter(str: string) : string {
       if(str === "Dashboard") return "";
      return str.charAt(0).toLowerCase() + str.slice(1);
   } 
+
+   
+
+  
+
+  
+  
+
+
+
 
     type ContentType = { title: string; type: string; link: string; _id: string };
     let filteredContent: ContentType[] = [];
