@@ -1,13 +1,11 @@
 
 
-import emptyImage from "../../assets/empty.png"
+import NoContent from "../../assets/noContent.png";
 export const NoContentView = () => {
     return (
         
             <div className = "flex  items-center justify-center h-screen text-4xl text-[#5d5e60]">
-                 
-                  
-                  <img src = {emptyImage}  width={800}/>
+                  <img src = {NoContent}  width={350}/>
             </div>
     )
 }

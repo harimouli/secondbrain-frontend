@@ -1,11 +1,11 @@
 
-import ReactLoading from "react-loading";
+import { ClipLoader } from "react-spinners";
 
 
 export const LoadingView = () => {
     return (
         <div>
-            <ReactLoading type="bubbles" color="#000" />
+           <ClipLoader color="#6258DC" size={60} />
         </div>
     )
 }

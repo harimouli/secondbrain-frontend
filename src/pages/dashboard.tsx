@@ -13,18 +13,20 @@ import { CreateContentModal } from "../components/CreateContentModal"
 
 import { Sidebar } from "../components/Sidebar";
 
-import {useContent} from "../hooks/useContent";
+import {useContent} from "../hooks/useContent";  
 //import { useNavigate, type NavigateFunction } from "react-router-dom"
 
 import { IoMenuSharp } from "react-icons/io5";
 
 
-import emptyImage from "../../assets/empty.png"
-
+//import emptyImage from "../../assets/empty.png"
+//import { LoadingView } from "../components/LoadingView"
+import { NoContentView } from "../components/NoContentView"
+import { LoadingView } from "../components/LoadingView"
 
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
-    const {allContent, refreshContent} = useContent();
+    const {allContent, refreshContent, isLoading} = useContent();
     const [activeBar, setActiveBar] = useState("");
    
 
@@ -38,7 +40,7 @@ export function Dashboard() {
 
     useEffect(() => {
         refreshContent();
-    }, [modelOpen, refreshContent])
+    }, [])
 
     function lowercaseFirstLetter(str: string) : string {
       if(str === "Dashboard") return "";
@@ -48,9 +50,8 @@ export function Dashboard() {
    
 
   
+  
 
-  
-  
 
 
 
@@ -59,14 +60,18 @@ export function Dashboard() {
     let filteredContent: ContentType[] = [];
 
     const active: string = lowercaseFirstLetter(activeBar);  
+    const safeAllContent: ContentType[] = Array.isArray(allContent) ? allContent : [];
     if(active === ""){
-      filteredContent = allContent;
+      filteredContent = safeAllContent;
     }
     else{
-      filteredContent = allContent.filter((eachEle: ContentType) => eachEle.type === active);
+      filteredContent = safeAllContent.filter((eachEle: ContentType) => eachEle.type === active);
     }
     const isNoContent: number = filteredContent.length;
   return (
+
+
+
   <div>
 
     {isSidebarOpen &&  <Sidebar  isSidebarOpen = {isSidebarOpen} setSidebar={setSidebar} activeBar= {activeBar} setActiveBar = {setActiveBar} />}
@@ -91,25 +96,28 @@ export function Dashboard() {
         <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = {"lg"}/>} size = "md" variant="primary"  text = {"Add Content"}></Button>
         <Button startIcon = {<ShareIcon size = {"md"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
         </div>
-
-        { isNoContent === 0  ? (
-
-            <div className = "flex  items-center justify-center h-screen text-4xl text-[#5d5e60]">
-                 
-                  
-                  <img src = {emptyImage}  width={800}/>
-            </div>
-
-
+        {isLoading ? (
+          <div className="flex justify-center items-center min-h-[80vh]">
+            <LoadingView />
+          </div>
+        ) : isNoContent === 0 ? (
+          <NoContentView />
         ) : (
-               <div className = "flex flex-wrap gap-3 mt-4">
-                   {filteredContent.map(({title, type, link, _id})=> <Card key={_id}  title={title} link={link} type={type as "document" | "youtube" | "twitter" | "linkedin"} refreshContent={ refreshContent} />)}
+          <div className="flex flex-wrap gap-3 mt-4">
+            {filteredContent.map(({ title, type, link, _id }) => (
+              <Card
+                key={_id}
+                title={title}
+                link={link}
+                type={type as "document" | "youtube" | "twitter" | "linkedin"}
+                refreshContent={refreshContent}
+              />
+            ))}
+          </div>
+        )}
+        
+                   
 
-              </div>
-              
-        )
-
-        }
       </div>
    </div>
   )

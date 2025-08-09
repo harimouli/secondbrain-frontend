@@ -11,6 +11,7 @@ import { XtypeIcon } from "../icons/XtypeIcon";
 import { TweetEmbed } from "./TweetEmbed";
 import { YoutubeEmbed } from "./YoutubeEmbed";
 import { toast } from "react-toastify";
+
 interface CardProps {
     title: string;
     type: "document" | "youtube" | "twitter" | "linkedin";
@@ -31,9 +32,8 @@ export const Card = ({title, type, link, refreshContent}: CardProps) => {
                     }
                 })
                 if(response.status === 200){
+                     refreshContent();
                     toast.success("deleted successfully!");
-                    refreshContent();
-
                 }
                 else{
                     toast.error("something went wrong!");  
@@ -44,6 +44,8 @@ export const Card = ({title, type, link, refreshContent}: CardProps) => {
         }
         
     }
+
+
 
 return (
  
@@ -69,7 +71,7 @@ return (
                                 <GrShare  size = {20}/>
                         </a> 
                     </div>
-                    <div className = "cursor-pointer" onClick={deleteCard}>
+                    <div className = "cursor-pointer text-gray-400 hover:text-red-500 transition ml-3" onClick={deleteCard}>
                         <AiOutlineDelete size = {23}/>
                     </div>
                 </div>
