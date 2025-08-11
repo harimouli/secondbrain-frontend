@@ -7,7 +7,7 @@ import { ShareIcon } from "../icons/ShareIcon"
 
 import {Card} from "../components/Card"
 
-import { useEffect, useState } from "react"
+import {  useEffect, useState } from "react"
 
 import { CreateContentModal } from "../components/CreateContentModal"
 
@@ -19,21 +19,33 @@ import {useContent} from "../hooks/useContent";
 import { IoMenuSharp } from "react-icons/io5";
 
 
-//import emptyImage from "../../assets/empty.png"
-//import { LoadingView } from "../components/LoadingView"
 import { NoContentView } from "../components/NoContentView"
 import { LoadingView } from "../components/LoadingView"
+import { ShareModel } from "../components/ShareModel"
 
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
     const {allContent, refreshContent, isLoading} = useContent();
     const [activeBar, setActiveBar] = useState("");
-   
+    const [openShareModel, setOpenShareModel] = useState(false);
 
 
     const [isSidebarOpen , setSidebar] = useState(true);
 
-    
+    useEffect(()=> {
+      const handleResize = () => {
+        if(window.innerWidth < 768) {
+          setSidebar(false);
+        } else {
+          setSidebar(true);
+        }
+      }
+
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      }
+    }, [])
 
 
 
@@ -77,7 +89,7 @@ export function Dashboard() {
     {isSidebarOpen &&  <Sidebar  isSidebarOpen = {isSidebarOpen} setSidebar={setSidebar} activeBar= {activeBar} setActiveBar = {setActiveBar} />}
 
    
-        <div className = {`p-4 min-h-screen bg-slate-100 ${isSidebarOpen ? "ml-72" : ""}`} >
+        <div className = {`p-4 min-h-screen bg-slate-200 ${isSidebarOpen ? "ml-72" : ""}`} >
         
 
 
@@ -91,15 +103,16 @@ export function Dashboard() {
              </div>   
 
         }
+        <ShareModel open = {openShareModel} onClose = {() => setOpenShareModel(false)} />
         <CreateContentModal refreshContent = {refreshContent} open = {modelOpen} onClose = {setModelOpen}/>
        <div className = "flex pt-1 justify-end top-0 right-1 gap-4">
         <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = {"lg"}/>} size = "md" variant="primary"  text = {"Add Content"}></Button>
-        <Button startIcon = {<ShareIcon size = {"md"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
+        <Button onClick={() => setOpenShareModel(true)} startIcon = {<ShareIcon size = {"md"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
         </div>
         {isLoading ? (
-          <div className="flex justify-center items-center min-h-[80vh]">
+        
             <LoadingView />
-          </div>
+        
         ) : isNoContent === 0 ? (
           <NoContentView />
         ) : (

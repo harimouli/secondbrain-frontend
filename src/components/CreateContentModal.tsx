@@ -8,13 +8,8 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { InputLabel } from "./InputLabel";
 import { toast } from "react-toastify";
-
-
-interface CreateContentModalProps {
-    open: boolean;
-    onClose: (open: boolean) => void;
-    refreshContent: () => void
-}
+import { ModelContainer, ModelContentContainer, ModelCrossContainer, ModelMainInnerContainer } from "../ui/contentModelUI/CreateModel";
+import type { ModalProps } from "../utils/Globaltypes";
 
 const ContentType = {
     Youtube: "youtube",
@@ -22,7 +17,7 @@ const ContentType = {
 } as const;
 type ContentType = typeof ContentType[keyof typeof ContentType];
 
-export const CreateContentModal = ({ open, onClose, refreshContent }: CreateContentModalProps) => {
+export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProps) => {
 
 
     const titleRef = useRef<HTMLInputElement>(null!);
@@ -51,7 +46,9 @@ export const CreateContentModal = ({ open, onClose, refreshContent }: CreateCont
             
             onClose(false);
             toast.success("link added succesfully!");
-            refreshContent()
+            if (refreshContent) {
+                refreshContent();
+            }
         }catch {
             toast.warning("backend is down mouli is working hard!")
         }
@@ -63,14 +60,12 @@ export const CreateContentModal = ({ open, onClose, refreshContent }: CreateCont
     return (
         <>
             {open && (
-                <div className="w-screen h-screen fixed bg-black/50 flex justify-center items-center top-0 left-0" >
-                    <div className = "flex flex-col justify-center bg-white opacity-100 rounded-lg shadow-xl">
-                        <span className = "bg-white rounded p-8 ">
-                            <div className = "flex justify-end ">
-                                <div className = "cursor-pointer" onClick = {() => onClose(false)}>
+                <ModelContainer>
+                    <ModelContentContainer>
+                        <ModelMainInnerContainer>
+                           <ModelCrossContainer onClose={onClose}>
                                     {<CrossIcon   size = {"lg"}/>}
-                                </div>  
-                            </div>
+                            </ModelCrossContainer>
                             <div className = "flex flex-col items-center">
                                 <div className = "p-2 flex flex-col">
                                      <InputLabel labelText="Enter the Title:" htmlfor = "title"/>
@@ -103,10 +98,10 @@ export const CreateContentModal = ({ open, onClose, refreshContent }: CreateCont
                             <div className = "flex justify-center pt-4">
                                 <Button onClick={addContent} variant = {"primary"} size = {"md"} text = {"Submit"} />
                             </div>
-                        </span>
+                       </ModelMainInnerContainer>
 
-                    </div>
-                </div>
+                    </ModelContentContainer>
+                </ModelContainer>
             )}
         </>
     );

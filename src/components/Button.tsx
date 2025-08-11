@@ -20,7 +20,7 @@ type VariantStylesType = {
 }
 const variantStyles: VariantStylesType = {
     "primary": "bg-[#6258DC] text-white",
-    "secondary": "bg-[#E0E7FF] text-[#5046E3]",
+    "secondary": "bg-[#E0E7FF] text-[#5046E3] border-1 border-[#5046E3]  hover:text-medium  transition-all duration-300",
 
 }
 const defaultStyles = "rounded-md flex items-center  font-light"
