@@ -9,8 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { Profile } from "./components/Profile";
 const App = () => {
   return (
-    <BrowserRouter> 
-       <ToastContainer position="top-right" autoClose={3000} />
+    <BrowserRouter>        
+       <ToastContainer position="top-right" autoClose={3000}  toastStyle={{maxWidth: "w-[100px] md:w-[300px]"}} />
       <Routes>
           <Route path ="/" element = {
             <ProtectedRoute >

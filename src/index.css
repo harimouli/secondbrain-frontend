@@ -1,1 +1,11 @@
 @import "tailwindcss";  
+
+
+@media (max-width: 767px) {
+  .Toastify__toast {
+    font-size: 14px;       
+    padding: 8px;         
+    min-height: 40px;      
+      max-width: 90%;   
+    }
+  }
