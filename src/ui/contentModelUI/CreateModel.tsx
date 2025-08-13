@@ -14,7 +14,7 @@ export const ModelContainer = (props: ChildrenType) => {
 
 export const ModelContentContainer = (props: ChildrenType) => {
     return (
-       <div className = " w-[80%] md:w-full flex flex-col justify-center bg-white opacity-100 rounded-lg shadow-xl">
+       <div className = "position-sticky w-[90%] md:w-full flex flex-col justify-center bg-white opacity-100 rounded-lg shadow-xl">
             {props.children}
         </div>
     );
