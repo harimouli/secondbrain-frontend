@@ -14,7 +14,6 @@ import { CreateContentModal } from "../components/CreateContentModal"
 import { Sidebar } from "../components/Sidebar";
 
 import {useContent} from "../hooks/useContent";  
-//import { useNavigate, type NavigateFunction } from "react-router-dom"
 
 import { IoMenuSharp } from "react-icons/io5";
 
@@ -30,7 +29,7 @@ export function Dashboard() {
     const [openShareModel, setOpenShareModel] = useState(false);
 
 
-    const [isSidebarOpen , setSidebar] = useState(true);
+    const [isSidebarOpen , setSidebar] = useState(false);
 
     useEffect(()=> {
       const handleResize = () => {
@@ -95,7 +94,7 @@ export function Dashboard() {
 
         
         {!isSidebarOpen && 
-            <div className = "fixed top-0 left-0 p-5 text-slate-600" onClick={()=> {
+            <div className = "hidden md:block fixed top-0 left-0 p-5 text-slate-600" onClick={()=> {
                 setSidebar(!isSidebarOpen)
             }}>
                     <IoMenuSharp size = "30" />
@@ -105,9 +104,17 @@ export function Dashboard() {
         }
         <ShareModel open = {openShareModel} onClose = {() => setOpenShareModel(false)} />
         <CreateContentModal refreshContent = {refreshContent} open = {modelOpen} onClose = {setModelOpen}/>
-       <div className = "flex pt-1 justify-end top-0 right-1 gap-4">
-        <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = {"lg"}/>} size = "md" variant="primary"  text = {"Add Content"}></Button>
-        <Button onClick={() => setOpenShareModel(true)} startIcon = {<ShareIcon size = {"md"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
+       <div className = "flex items-center gap-2 justify-between md:flex pt-1 md:justify-end top-0 right-1 md:gap-4 md:bg-transparent">
+        <div className = "md:hidden">
+
+          <IoMenuSharp color="grey" size = {"40"}/>
+        </div>
+        <div className = "flex items-center gap-2 md:gap-6">
+           <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = { "lg"}/>} size = "md" variant="primary"  text = {"Add Content"}></Button>
+           <Button onClick={() => setOpenShareModel(true)} startIcon = {<ShareIcon size = {"lg"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
+
+        </div>
+       
         </div>
         {isLoading ? (
         
@@ -116,7 +123,8 @@ export function Dashboard() {
         ) : isNoContent === 0 ? (
           <NoContentView />
         ) : (
-          <div className="flex flex-wrap gap-3 mt-4">
+          <div className="flex flex-col items-center md:flex-wrap md:flex-row md:items-start gap-3 mt-4">
+
             {filteredContent.map(({ title, type, link, _id }) => (
               <Card
                 key={_id}
