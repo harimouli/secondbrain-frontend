@@ -14,7 +14,7 @@ export const ModelContainer = (props: ChildrenType) => {
 
 export const ModelContentContainer = (props: ChildrenType) => {
     return (
-       <div className = "flex flex-col justify-center bg-white opacity-100 rounded-lg shadow-xl">
+       <div className = " w-[80%] md:w-full flex flex-col justify-center bg-white opacity-100 rounded-lg shadow-xl">
             {props.children}
         </div>
     );
@@ -37,7 +37,7 @@ type ModelCrossContainerProps = ChildrenType & {
 
 export const ModelCrossContainer = (props: ModelCrossContainerProps) => {
     return (
-        <div className="flex justify-end">
+        <div className="flex justify-end w-[80%] md:w-full">
             <div className="cursor-pointer" onClick={() => props.onClose(false)}>
                 {props.children}
             </div>
