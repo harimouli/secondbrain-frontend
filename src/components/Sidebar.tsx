@@ -1,14 +1,19 @@
-import {LuBrain } from "react-icons/lu";
+
+import {Brain} from "lucide-react"
 import { TwitterIcon } from "../icons/TwitterIcon"
 import { SidebarItem } from "./SidebarItem"
-import { YoutubeIcon } from "../icons/YoutubeIcon"
+import { CgYoutube } from "react-icons/cg";
 import { MdDashboard } from "react-icons/md";
-import {SideContainer ,MainLogoBody, LogoInnerChild1, BrandName, DashboardItemsContainer} from "../ui/sidebar/Sidebarui";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+
+
 import { useNavigate} from "react-router-dom";
 
 import { ProfileSidebar } from "./ProfileSidebar";
 
-import { BiLogOut } from "react-icons/bi";
+import { type ChildrenType } from "../utils/Globaltypes";
+import type { ReactNode } from "react";
+
 interface SidebarProps {
     activeBar: string;
     setActiveBar: (active: string) => void;
@@ -17,7 +22,7 @@ interface SidebarProps {
     isSidebarOpen: boolean;
     setSidebar: (isSidebarOpen: boolean) => void;
 }
-export const Sidebar = ({isSidebarOpen,setActiveBar, setSidebar}: SidebarProps) => {
+export const Sidebar = ({isSidebarOpen,setActiveBar, setSidebar, activeBar}: SidebarProps) => {
 
     const navigate = useNavigate();
 
@@ -26,35 +31,68 @@ export const Sidebar = ({isSidebarOpen,setActiveBar, setSidebar}: SidebarProps) 
         return;
     }
 
+
+    const SideContainer = ({children}: ChildrenType) => {
+            return (
+                <div className = "w-72 h-screen flex flex-col justify-between   bg-[#F8F9FA] border-r-1 border-r-[#cfd5dd] fixed left-0 top-0 pl-6 transition-all ease-in-out  duration-100">
+                        {children}
+                </div>
+            )
+    }
+    const MainLogoBody = (props: ChildrenType) => {
+            return (
+                <div className = "flex text-xl  items-center">
+                    {props.children}
+                </div>
+            )
+    }
+    
+    const BrandName = ({ children }: { children: string }) => {
+            return (
+                <h1 className="font-semibold text-xl text-foreground text-pretty pl-2">
+                    {children}
+                </h1>
+            );
+   }
+   const DashboardItemsContainer = ({children}: {children: ReactNode}) => {
+           return (
+                   <div className = "pt-3 w-[95%]">
+                           {children}
+                   </div>
+           )
+   }
+
     return (
        <SideContainer>
         <div>
-        <div className = "flex items-center justify-between">
+        <div className = "flex  items-center justify-between w-[95%] pt-4">
              <MainLogoBody>
-                     <LogoInnerChild1>
-                         <LuBrain size={45}/>
-                     </LogoInnerChild1>
-                     <BrandName>Second Brain</BrandName>
+                         <div className="flex  items-center justify-center rounded-md bg-blue-600 text-white">
+                                <Brain className="size-9" aria-hidden="true" />
+                        </div> 
+                <BrandName>Second Brain</BrandName>
                     
              </MainLogoBody>
 
-             <div className = "text-slate-500 font-light cursor-pointer" onClick = {()=> {
+             <button className = "flex items-center text-slate-500 font-light cursor-pointer ml-auto transition-all duration-300 rounded-md  hover:bg-[#4ADE80]" onClick = {()=> {
                 setSidebar(!isSidebarOpen)
              }}>
-                     <BiLogOut size = "30"/>   
+                    <MdOutlineKeyboardArrowRight  size = "30"/>   
 
-             </div>
+             </button>
         </div>
        
 
              <DashboardItemsContainer>
-                   <SidebarItem setActivebar={setActiveBar} text = "Dashboard" icon = {<MdDashboard/>}/>
-                  <SidebarItem setActivebar = {setActiveBar} text = "Twitter" icon = {<TwitterIcon />}/>
-                  <SidebarItem setActivebar = {setActiveBar} text = "Youtube" icon = {<YoutubeIcon/>}/>
+                   <SidebarItem isActive = {activeBar === "Dashboard"} setActivebar={setActiveBar} text = "Dashboard" icon = {<MdDashboard/>}/>
+                  <SidebarItem isActive = {activeBar === "Twitter"} setActivebar={setActiveBar} text = "Twitter" icon = {<TwitterIcon />}/>
+                  <SidebarItem isActive = {activeBar === "Youtube"} setActivebar={setActiveBar} text = "Youtube" icon = {<CgYoutube />}/>
+                   <ProfileSidebar onclick = {navigateToProfile}/>
              </DashboardItemsContainer> 
-        </div> 
-        
-              <ProfileSidebar onclick = {navigateToProfile}/>
+            
+       
+         </div>
+           
       </SideContainer>
     ) 
 }

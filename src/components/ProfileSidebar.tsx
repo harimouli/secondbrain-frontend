@@ -1,6 +1,6 @@
 
-import { IoPersonCircleSharp } from "react-icons/io5";
-import { IoIosArrowDropright } from "react-icons/io";
+import { IoPersonCircleOutline } from "react-icons/io5";
+
 
 
 interface ProfileSidebarProp { 
@@ -9,14 +9,17 @@ interface ProfileSidebarProp {
 export const ProfileSidebar = ({onclick}: ProfileSidebarProp) => {
     return (
 
-        <div className = "flex items-center justify-evenly align-start gap-2 cursor-pointer w-full mb-3 hover:bg-slate-200 rounded-xl" onClick={() => {
+        <div className = "flex items-center w-[94%] p-4 pl-4  py-2 mt-4 border-slate-300  border-1 rounded" onClick={() => {
             onclick()
         }}>
-            <IoPersonCircleSharp size = {60}/>
-
-                <p>My Profile</p> 
-             
-                <IoIosArrowDropright size = {30}/>
+            <IoPersonCircleOutline size = {20}/>
+            <div className="min-w-0 ml-2">
+                    <p className="truncate text-xs font-medium">My Profile</p>
+                    <p className="truncate text-xs text-muted-foreground">user@secondbrain..</p>
+            </div>
+            <button className = "ml-auto bg-transparent text-sm border-slate-300 border-1 px-2 rounded">
+                Manage
+            </button>
         </div>
     )
 }
