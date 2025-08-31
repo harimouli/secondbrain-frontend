@@ -14,36 +14,38 @@ export const Profile = () => {
         const oldPasswordRef = useRef<HTMLInputElement>(null!);
         const newPasswordRef = useRef<HTMLInputElement>(null!);
         const navigate = useNavigate();
-        
+         const token: string | null = localStorage.getItem("token");
         const [userName, setUsername] = useState("");
         //const [totalLinks, setTotalLinks] = useState(0);  /// will be addeed soooon.....................
         const [dateOfJoined, setDateJoined] = useState("");
-        useEffect(()=> {
-            fetchUserData()
-        }, [])
+        useEffect(() => {
+             if (!token) return;
 
-    const fetchUserData = async () => {
+                const fetchUserData = async () => {
+                    try {
+                    const response = await axios.post(
+                        `${BACKEND_URL}/api/v1/user-meta-data`,
+                        {},
+                        {
+                        headers: {
+                            authorization: token,
+                        },
+                        }
+                    );
 
-        
-        const response = await axios.post(
-            `${BACKEND_URL}/api/v1/user-meta-data`,
-            {},
-            {
-                headers: {
-                    authorization: localStorage.getItem("token")
-                }
-            }
-        );
-        
-        setUsername(response.data.username);
-        setDateJoined(response.data.dateOfJoined);
-       
-    }  
+                    setUsername(response.data.username);
+                    setDateJoined(response.data.dateOfJoined);
+                    } catch (error) {
+                    console.error("Error fetching user data:", error);
+                    }
+                };
+
+          fetchUserData();
+        }, [token]);
 
     const backToHome = () => {
         navigate("/dashboard")
     }
-
 
     return (
 

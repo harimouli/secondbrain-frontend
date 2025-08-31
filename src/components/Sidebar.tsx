@@ -34,7 +34,7 @@ export const Sidebar = ({isSidebarOpen,setActiveBar, setSidebar, activeBar}: Sid
 
     const SideContainer = ({children}: ChildrenType) => {
             return (
-                <div className = "w-72 h-screen flex flex-col justify-between   bg-[#F8F9FA] border-r-1 border-r-[#cfd5dd] fixed left-0 top-0 pl-6 transition-all ease-in-out  duration-100">
+                <div className = "w-72 h-screen flex flex-col justify-between  bg-slate-100 border-r-1 border-r-[#cfd5dd] fixed left-0 top-0 pl-6 transition-all ease-in-out  duration-100">
                         {children}
                 </div>
             )
@@ -70,11 +70,11 @@ export const Sidebar = ({isSidebarOpen,setActiveBar, setSidebar, activeBar}: Sid
                          <div className="flex  items-center justify-center rounded-md bg-blue-600 text-white">
                                 <Brain className="size-9" aria-hidden="true" />
                         </div> 
-                <BrandName>Second Brain</BrandName>
+                <BrandName>Mind Space</BrandName>
                     
              </MainLogoBody>
 
-             <button className = "flex items-center text-slate-500 font-light cursor-pointer ml-auto transition-all duration-300 rounded-md  hover:bg-[#4ADE80]" onClick = {()=> {
+             <button className = "flex items-center text-slate-500 font-light cursor-pointer ml-auto transition-all duration-300 rounded-md  hover:bg-slate-300" onClick = {()=> {
                 setSidebar(!isSidebarOpen)
              }}>
                     <MdOutlineKeyboardArrowRight  size = "30"/>   

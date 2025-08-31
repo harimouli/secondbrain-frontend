@@ -14,7 +14,7 @@ export const ModelContainer = (props: ChildrenType) => {
 
 export const ModelContentContainer = (props: ChildrenType) => {
     return (
-       <div className = "position-sticky flex flex-col justify-center bg-white opacity-100 rounded-lg shadow-xl">
+       <div className = "position-sticky flex flex-col justify-center bg-white opacity-100 rounded-lg shadow-xl transition-all ease-in-out duration-1000">
             {props.children}
         </div>
     );

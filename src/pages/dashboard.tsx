@@ -16,7 +16,7 @@ import { Sidebar } from "../components/Sidebar";
 import {useContent} from "../hooks/useContent";  
 
 import { IoMenuSharp } from "react-icons/io5";
-
+import { IoIosSearch } from "react-icons/io";
 
 import { NoContentView } from "../components/NoContentView"
 import { LoadingView } from "../components/LoadingView"
@@ -25,7 +25,7 @@ import { ShareModel } from "../components/ShareModel"
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
     const {allContent, refreshContent, isLoading} = useContent();
-    const [activeBar, setActiveBar] = useState("");
+    const [activeBar, setActiveBar] = useState("Dashboard");
     const [openShareModel, setOpenShareModel] = useState(false);
 
 
@@ -88,42 +88,47 @@ export function Dashboard() {
     {isSidebarOpen &&  <Sidebar  isSidebarOpen = {isSidebarOpen} setSidebar={setSidebar} activeBar= {activeBar} setActiveBar = {setActiveBar} />}
 
    
-        <div className = {`p-4 min-h-screen bg-slate-200 ${isSidebarOpen ? "ml-72" : ""}`} >
-        
-
-
-        
-        {!isSidebarOpen && 
-            <div className = "hidden md:block fixed top-0 left-0 p-5 text-slate-600" onClick={()=> {
-                setSidebar(!isSidebarOpen)
-            }}>
-                    <IoMenuSharp size = "30" />
-
-             </div>   
-
-        }
-        <ShareModel open = {openShareModel} onClose = {() => setOpenShareModel(false)} />
-        <CreateContentModal refreshContent = {refreshContent} open = {modelOpen} onClose = {setModelOpen}/>
-       <div className = "flex items-center gap-2 justify-between md:flex pt-1 md:justify-end top-0 right-1 md:gap-4 md:bg-transparent">
-        <div className = "md:hidden">
-
-          <IoMenuSharp color="grey" size = {"40"}/>
-        </div>
-        <div className = "flex items-center gap-2 md:gap-6">
-           <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = { "lg"}/>} size = "md" variant="primary"  text = {"Add Content"}></Button>
-           <Button onClick={() => setOpenShareModel(true)} startIcon = {<ShareIcon size = {"lg"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
-
-        </div>
+        <div className = {`min-h-screen bg-white ${isSidebarOpen ? "ml-72" : ""}`} >     
+                
        
-        </div>
-        {isLoading ? (
+          {/*menu  when sidebar is closed*/} 
+                    {!isSidebarOpen && 
+                        <div className = "hidden md:block fixed top-0 left-0 p-5 text-slate-600" onClick={()=> {
+                            setSidebar(!isSidebarOpen)
+                        }}>
+                                <IoMenuSharp size = "30" />
+
+                        </div>   
+
+                    }
+                    <ShareModel open = {openShareModel} onClose = {() => setOpenShareModel(false)} />
+                    <CreateContentModal refreshContent = {refreshContent} open = {modelOpen} onClose = {setModelOpen}/>
+        {/*Header*/}
+       <header  className = "flex items-center   justify-between md:flex pt-1 md:justify-end top-0 right-1 md:gap-4 md:bg-transparent border-b-1 border-b-slate-300 pb-2 p-4">
         
-            <LoadingView />
-        
+                {/* Header buttons ADDCONTENT &&  SHARE*/}
+                  <div className = {`flex items-center justify-between md:gap-4  md:bg-transparent  ${isSidebarOpen ? "w-[98%]" : "w-[50%]"}`}>
+                          <div className = "relative hidden md:flex items-center max-w-xl gap-4 w-[50%]">
+                              <div className = "flex items-center w-full border rounded-md ">
+                                <IoIosSearch size = "25"/>
+                                <input type  = "search" placeholder = "Search..." className = "border-none  text-base  rounded-md p-2 w-[90%] md:text-sm  outline-none"/>
+                              </div>
+                          </div>  
+                          <div className = "flex items-center gap-2 md:gap-6 p-4">
+                               <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = { "lg"}/>} size = "md" variant="primary"  text = {"Add Content"}></Button>
+                               <Button onClick={() => setOpenShareModel(true)} startIcon = {<ShareIcon size = {"lg"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
+                          </div>
+                  </div>
+             
+      </header>
+
+
+        {/*Rending the Links of user*/}
+        {isLoading ? (   <LoadingView />
         ) : isNoContent === 0 ? (
           <NoContentView />
         ) : (
-          <div className="flex flex-col items-center md:flex-wrap md:flex-row md:items-start gap-3 mt-4">
+          <div className="flex flex-col items-center md:flex-wrap md:flex-row md:items-start gap-3 mt-4 p-3">
 
             {filteredContent.map(({ title, type, link, _id }) => (
               <Card
