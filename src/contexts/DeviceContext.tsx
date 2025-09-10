@@ -2,7 +2,7 @@
 
 
 import  {useMediaQuery} from 'react-responsive';
-import React, {createContext, type ReactNode, useContext} from 'react';
+import {createContext, type ReactNode, useContext} from 'react';
 
 type DeviceType = 'mobile' | 'tablet' | 'desktop';
 
