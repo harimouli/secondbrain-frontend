@@ -25,7 +25,10 @@ import { LoadingView } from "../components/LoadingView"
 import { ShareModel } from "../components/ShareModel"
 
 import { useDevice } from "../contexts/DeviceContext";
+import { MainLogoBody } from "../ui/sidebar/sidebar"
 
+
+import {Brain} from "lucide-react"
 
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
@@ -143,6 +146,24 @@ export function Dashboard() {
                   </div>
       </header>
 
+
+      <nav className = "md:hidden flex items-center justify-between p-4 border-b border-b-slate-300">
+                   <MainLogoBody>
+                         <div className="flex  items-center justify-center rounded-md bg-blue-600 text-white">
+                                <Brain className="size-9" aria-hidden="true" />
+                        </div> 
+                 </MainLogoBody>
+               <div>
+                        <div className = "flex items-center w-full border rounded-md ">
+                            <IoIosSearch size = "20"/>
+                            <input type  = "search" placeholder = "Search..." className = "border-none  text-base  rounded-md p-1   outline-none"/>
+                     </div>
+                </div> 
+            <div className = "flex items-center gap-2">
+                <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = { "lg"}/>} size = {"sm"} variant="primary"  text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
+                <Button onClick={() => setOpenShareModel(true)} startIcon = {<ShareIcon size = {"lg"}/>} size = "sm" variant="secondary" text = {isDesktop || isTablet ?  "Share" : ""}></Button>
+            </div>
+      </nav>  
 
         {/*Rending the Links of user*/}
         {isLoading ? (   <LoadingView />

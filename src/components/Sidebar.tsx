@@ -6,7 +6,7 @@ import { CgYoutube } from "react-icons/cg";
 import { MdDashboard } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
-
+import { MainLogoBody , BrandName} from "../ui/sidebar/sidebar";
 import { useNavigate} from "react-router-dom";
 
 import { ProfileSidebar } from "./ProfileSidebar";
@@ -39,21 +39,9 @@ export const Sidebar = ({isSidebarOpen,setActiveBar, setSidebar, activeBar}: Sid
                 </div>
             )
     }
-    const MainLogoBody = (props: ChildrenType) => {
-            return (
-                <div className = "flex text-xl  items-center">
-                    {props.children}
-                </div>
-            )
-    }
     
-    const BrandName = ({ children }: { children: string }) => {
-            return (
-                <h1 className="font-semibold text-xl text-foreground text-pretty pl-2">
-                    {children}
-                </h1>
-            );
-   }
+    
+    
    const DashboardItemsContainer = ({children}: {children: ReactNode}) => {
            return (
                    <div className = "pt-3 w-[95%]">
