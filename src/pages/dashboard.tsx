@@ -1,9 +1,11 @@
 
 import { Button } from "../components/Button"
 
-import { PlusIcon } from "../icons/PlusIcon"
+import {Menu, Plus, Share2} from "lucide-react";
 
-import { ShareIcon } from "../icons/ShareIcon"
+
+
+
 
 import {Card} from "../components/Card"
 
@@ -25,10 +27,7 @@ import { LoadingView } from "../components/LoadingView"
 import { ShareModel } from "../components/ShareModel"
 
 import { useDevice } from "../contexts/DeviceContext";
-import { MainLogoBody } from "../ui/sidebar/sidebar"
 
-
-import {Brain} from "lucide-react"
 
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
@@ -137,8 +136,8 @@ export function Dashboard() {
                           
 
                           <div className = "flex md:flex items-center gap-2 md:gap-6 p-4">
-                               <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = { "lg"}/>} size = {"md"} variant="primary"  text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
-                               <Button onClick={() => setOpenShareModel(true)} startIcon = {<ShareIcon size = {"lg"}/>} size = "md" variant="secondary" text = {isDesktop || isTablet ?  "Share" : ""}></Button>
+                               <Button onClick={() => setModelOpen(true)}  startIcon = {<Plus size = { "20px"}/>} size = {"md"} variant="primary"  text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
+                               <Button onClick={() => setOpenShareModel(true)} startIcon = {<Share2 size = {"20px"}/>} size = "md" variant="secondary" text = {isDesktop || isTablet ?  "Share" : ""}></Button>
                           </div>
 
 
@@ -147,22 +146,24 @@ export function Dashboard() {
       </header>
 
 
-      <nav className = "md:hidden flex items-center justify-between p-4 border-b border-b-slate-300">
-                   <MainLogoBody>
-                         <div className="flex  items-center justify-center rounded-md bg-blue-600 text-white">
-                                <Brain className="size-9" aria-hidden="true" />
-                        </div> 
-                 </MainLogoBody>
-               <div>
-                        <div className = "flex items-center w-full border rounded-md ">
-                            <IoIosSearch size = "20"/>
-                            <input type  = "search" placeholder = "Search..." className = "border-none  text-base  rounded-md p-1   outline-none"/>
-                     </div>
-                </div> 
-            <div className = "flex items-center gap-2">
-                <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = { "lg"}/>} size = {"sm"} variant="primary"  text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
-                <Button onClick={() => setOpenShareModel(true)} startIcon = {<ShareIcon size = {"lg"}/>} size = "sm" variant="secondary" text = {isDesktop || isTablet ?  "Share" : ""}></Button>
-            </div>
+      <nav className = "md:hidden flex items-center justify-between p-3  border-b border-b-slate-300">
+                   <div>
+                      <Menu size = "35" onClick={()=> {
+                        setSidebar(!isSidebarOpen)
+                      }} className = "text-slate-400"/>
+                   </div>
+              <div className = "flex items-center gap-3 w-[86%] justify-end">
+                  <div className = "relative flex items-center  w-[75%] border border-slate-300 rounded-md px-2 py-2">
+                          <IoIosSearch size = "20" className = "text-slate-300" />
+                        <input   type  = "search" placeholder = "Search..." className = "border-none  text-base  rounded-md  outline-none"/>
+                    </div>
+                
+                <div className = "flex items-center gap-3 w-[25%] justify-end">
+                    <Button onClick={() => setModelOpen(true)}  startIcon = {<Plus size = { "20px"}/>} size = {"sm"} variant="primary"  text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
+                    <Button onClick={() => setOpenShareModel(true)} startIcon = {<Share2 size = {"18px"}/>} size = "sm" variant="secondary" text = {isDesktop || isTablet ?  "Share" : ""}></Button>
+                </div>
+              </div>
+                   
       </nav>  
 
         {/*Rending the Links of user*/}
