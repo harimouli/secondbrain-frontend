@@ -26,9 +26,9 @@ const variantStyles: VariantStylesType = {
 const defaultStyles = "rounded-md flex items-center  font-light"
 
 const sizeStyles = {
-    "sm": "py-1 px-2",
-    "md": "py-2 px-4",
-    "lg": "py-4 px-6"
+    "sm": "py-1 px-2 w-[60px] text-sm",
+    "md": "py-1 px-4 w-[150px] text-base",
+    "lg": "py-4 px-6 w-[100px] text-lg",
 }
 
 export const Button  = (props: ButtonProps) =>{

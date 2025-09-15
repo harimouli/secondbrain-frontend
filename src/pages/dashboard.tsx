@@ -19,8 +19,13 @@ import { IoMenuSharp } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 
 import { NoContentView } from "../components/NoContentView"
+
 import { LoadingView } from "../components/LoadingView"
+
 import { ShareModel } from "../components/ShareModel"
+
+import { useDevice } from "../contexts/DeviceContext";
+
 
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
@@ -29,9 +34,18 @@ export function Dashboard() {
     const [openShareModel, setOpenShareModel] = useState(false);
 
 
-    const [isSidebarOpen , setSidebar] = useState(false);
-
-    useEffect(()=> {
+    const [isSidebarOpen , setSidebar] = useState(true);
+    const {deviceType} = useDevice();
+    const isMobile = deviceType === "mobile";
+    const isTablet = deviceType === "tablet";
+    const isDesktop = deviceType === "desktop"; 
+    
+    if(isMobile){
+      if(isSidebarOpen){
+        setSidebar(false);
+      }
+    }
+    useEffect(() => {
       const handleResize = () => {
         if(window.innerWidth < 768) {
           setSidebar(false);
@@ -79,6 +93,8 @@ export function Dashboard() {
       filteredContent = safeAllContent.filter((eachEle: ContentType) => eachEle.type === active);
     }
     const isNoContent: number = filteredContent.length;
+
+
   return (
 
 
@@ -88,7 +104,7 @@ export function Dashboard() {
     {isSidebarOpen &&  <Sidebar  isSidebarOpen = {isSidebarOpen} setSidebar={setSidebar} activeBar= {activeBar} setActiveBar = {setActiveBar} />}
 
    
-        <div className = {`min-h-screen bg-white ${isSidebarOpen ? "ml-72" : ""}`} >     
+        <div  className = {`min-h-screen bg-white ${isSidebarOpen ? "ml-72" : ""}`} >     
                 
        
           {/*menu  when sidebar is closed*/} 
@@ -104,22 +120,27 @@ export function Dashboard() {
                     <ShareModel open = {openShareModel} onClose = {() => setOpenShareModel(false)} />
                     <CreateContentModal refreshContent = {refreshContent} open = {modelOpen} onClose = {setModelOpen}/>
         {/*Header*/}
-       <header  className = "flex items-center   justify-between md:flex pt-1 md:justify-end top-0 right-1 md:gap-4 md:bg-transparent border-b-1 border-b-slate-300 pb-2 p-4">
+       <header  className = "hidden md:flex pt-1 md:justify-end top-0 right-1 md:gap-4 md:bg-transparent border-b-1 border-b-slate-300 pb-2 p-4">
         
                 {/* Header buttons ADDCONTENT &&  SHARE*/}
-                  <div className = {`flex items-center justify-between md:gap-4  md:bg-transparent  ${isSidebarOpen ? "w-[98%]" : "w-[50%]"}`}>
-                          <div className = "relative hidden md:flex items-center max-w-xl gap-4 w-[50%]">
+                  <div className = {`hidden md:flex md:items-center md:justify-between md:gap-4  md:bg-transparent  ${isSidebarOpen && (isDesktop || isTablet) ? "w-[98%]" : "w-[60%]"}`}>
+                          <div className = "md:flex items-center max-w-xl gap-4 w-[60%]">
                               <div className = "flex items-center w-full border rounded-md ">
                                 <IoIosSearch size = "25"/>
-                                <input type  = "search" placeholder = "Search..." className = "border-none  text-base  rounded-md p-2 w-[90%] md:text-sm  outline-none"/>
+                                <input type  = "search" placeholder = "Search..." className = "border-none  text-base  rounded-md p-2 w-[95%] md:text-sm  outline-none"/>
                               </div>
                           </div>  
-                          <div className = "flex items-center gap-2 md:gap-6 p-4">
-                               <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = { "lg"}/>} size = "md" variant="primary"  text = {"Add Content"}></Button>
-                               <Button onClick={() => setOpenShareModel(true)} startIcon = {<ShareIcon size = {"lg"}/>} size = "md" variant="secondary" text = {"Share"}></Button>
+
+                          
+
+                          <div className = "flex md:flex items-center gap-2 md:gap-6 p-4">
+                               <Button onClick={() => setModelOpen(true)}  startIcon = {<PlusIcon size = { "lg"}/>} size = {"md"} variant="primary"  text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
+                               <Button onClick={() => setOpenShareModel(true)} startIcon = {<ShareIcon size = {"lg"}/>} size = "md" variant="secondary" text = {isDesktop || isTablet ?  "Share" : ""}></Button>
                           </div>
+
+
+                         
                   </div>
-             
       </header>
 
 
@@ -140,9 +161,7 @@ export function Dashboard() {
               />
             ))}
           </div>
-        )}
-        
-                   
+        )}   
 
       </div>
    </div>
