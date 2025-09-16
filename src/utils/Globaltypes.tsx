@@ -12,3 +12,8 @@ export interface ModalProps {
     onClose: (open: boolean) => void;
     refreshContent?: () => void
 }
+export const enum DeviceType {
+  Mobile = "mobile",
+  Tablet = "tablet",
+  Desktop = "desktop"
+}

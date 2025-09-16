@@ -5,7 +5,7 @@ import { type ChildrenType } from "../../utils/Globaltypes"
 
 export const ModelContainer = (props: ChildrenType) => {
     return (
-        <div className="w-screen h-screen fixed bg-black/50 flex justify-center items-center top-0 left-0" >
+        <div className="w-screen h-screen  fixed bg-black/50 flex justify-center items-center top-0 left-0" >
                 {props.children}
         </div>
     );

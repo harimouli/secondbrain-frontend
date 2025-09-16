@@ -1,5 +1,4 @@
-
-import {Brain} from "lucide-react"
+import {Brain, ChevronLeft} from "lucide-react"
 import { TwitterIcon } from "../icons/TwitterIcon"
 import { SidebarItem } from "./SidebarItem"
 import { CgYoutube } from "react-icons/cg";
@@ -32,9 +31,11 @@ export const Sidebar = ({isSidebarOpen,setActiveBar, setSidebar, activeBar}: Sid
     }
 
 
+       
+
     const SideContainer = ({children}: ChildrenType) => {
             return (
-                <div className = "fixed left-0 top-0 z-50  h-screen transition-all ease-in-out duration-300  md:w-72 flex flex-col justify-between  bg-slate-100 border-r-1 border-r-[#cfd5dd] md:fixed md:left-0 md:top-0 pl-6">
+                <div className = "fixed left-0 top-0 z-50  lg:z-0 h-screen transition-all transform ease-in-out duration-1000  lg:w-[16%] flex flex-col justify-between  bg-slate-100 border-r-1 border-r-[#cfd5dd] lg:fixed lg:left-0 lg:top-0 pl-6">
                         {children}
                 </div>
             )
@@ -59,18 +60,14 @@ export const Sidebar = ({isSidebarOpen,setActiveBar, setSidebar, activeBar}: Sid
                                 <Brain className="size-9" aria-hidden="true" />
                         </div> 
                 <BrandName>Mind Space</BrandName>
-                    
              </MainLogoBody>
-
              <button className = "flex items-center text-slate-500 font-light cursor-pointer ml-auto transition-all duration-300 rounded-md  hover:bg-slate-300" onClick = {()=> {
                 setSidebar(!isSidebarOpen)
              }}>
-                    <MdOutlineKeyboardArrowRight  size = "30"/>   
-
+                    {isSidebarOpen ? <ChevronLeft /> : <MdOutlineKeyboardArrowRight  size = "30"/>}
              </button>
         </div>
-       
-
+                {/*Dashboard Items*/}
              <DashboardItemsContainer>
                    <SidebarItem isActive = {activeBar === "Dashboard"} setActivebar={setActiveBar} text = "Dashboard" icon = {<MdDashboard/>}/>
                   <SidebarItem isActive = {activeBar === "Twitter"} setActivebar={setActiveBar} text = "Twitter" icon = {<TwitterIcon />}/>

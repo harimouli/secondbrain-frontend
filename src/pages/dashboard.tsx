@@ -28,6 +28,7 @@ import { ShareModel } from "../components/ShareModel"
 
 import { useDevice } from "../contexts/DeviceContext";
 
+import { DeviceType } from "../utils/Globaltypes";
 
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
@@ -36,25 +37,25 @@ export function Dashboard() {
     const [openShareModel, setOpenShareModel] = useState(false);
 
 
-    const [isSidebarOpen , setSidebar] = useState(true);
+    const [isSidebarOpen , setSidebar] = useState(false);
     const {deviceType} = useDevice();
-    //const sMobile = deviceType === "mobile";
-    const isTablet = deviceType === "tablet";
-    const isDesktop = deviceType === "desktop"; 
-    
-   
-    useEffect(() => {
-      const handleResize = () => {
-        if(window.innerWidth < 768) {
-          setSidebar(false);
-        } else {
-          setSidebar(true);
-        }
-      }
+    const isMobile = deviceType === DeviceType.Mobile;
+    const isTablet = deviceType === DeviceType.Tablet;
+    const isDesktop = deviceType === DeviceType.Desktop;
 
-      window.addEventListener("resize", handleResize);
-      return () => {
-        window.removeEventListener("resize", handleResize);
+   console.log("deviceType", deviceType);   
+    useEffect(() => {
+      if(isMobile) {
+      if(isSidebarOpen) {
+        setSidebar(false);
+      }
+    }
+      else if( isTablet) {
+        if(isSidebarOpen) {
+          setSidebar(false);
+        }
+      }else{
+        setSidebar(true);
       }
     }, [])
 
@@ -102,12 +103,19 @@ export function Dashboard() {
     {isSidebarOpen &&  <Sidebar  isSidebarOpen = {isSidebarOpen} setSidebar={setSidebar} activeBar= {activeBar} setActiveBar = {setActiveBar} />}
 
    
-        <div  className = {`min-h-screen bg-white ${isSidebarOpen && (isDesktop  || isDesktop)? "ml-72" : "w-[100%]"}`} >     
-                
-       
+        <div  className = {`min-h-screen bg-white ${isSidebarOpen && isDesktop ? "ml-72" : "w-[100%]"}`} >     
           {/*menu  when sidebar is closed*/} 
-                    {!isSidebarOpen && 
-                        <div className = "hidden md:block fixed top-0 left-0 p-5 text-slate-600" onClick={()=> {
+                  
+                    <ShareModel open = {openShareModel} onClose = {() => setOpenShareModel(false)} />
+                    <CreateContentModal refreshContent = {refreshContent} open = {modelOpen} onClose = {setModelOpen}/>
+        {/*Header*/}
+       <nav  className = "hidden lg:flex">
+        
+                
+                  <div className = {`flex w-full`}>
+                          
+                           {!isSidebarOpen && 
+                        <div className = "hidden md:block   p-5 text-slate-400" onClick={()=> {
                             setSidebar(!isSidebarOpen)
                         }}>
                                 <IoMenuSharp size = "30" />
@@ -115,13 +123,6 @@ export function Dashboard() {
                         </div>   
 
                     }
-                    <ShareModel open = {openShareModel} onClose = {() => setOpenShareModel(false)} />
-                    <CreateContentModal refreshContent = {refreshContent} open = {modelOpen} onClose = {setModelOpen}/>
-        {/*Header*/}
-       <header  className = "hidden md:flex pt-1 md:justify-end top-0 right-1 md:gap-4 md:bg-transparent border-b-1 border-b-slate-300 pb-2 p-4">
-        
-                {/* Header buttons ADDCONTENT &&  SHARE*/}
-                  <div className = {`hidden md:flex md:items-center md:justify-between md:gap-4  md:bg-transparent  ${isSidebarOpen && (isDesktop || isTablet) ? "w-[98%]" : "w-[60%]"}`}>
                           <div className = "md:flex items-center max-w-xl gap-4 w-[60%]">
                               <div className = "flex items-center w-full border rounded-md ">
                                 <IoIosSearch size = "25"/>
@@ -139,16 +140,16 @@ export function Dashboard() {
 
                          
                   </div>
-      </header>
+      </nav>
 
 
-      <nav className = "md:hidden flex items-center justify-between p-3  border-b border-b-slate-300">
-                   <div>
+      <nav className = " lg:hidden w-full flex items-center justify-between   p-3  border-b border-b-slate-300">
+                   <div className = "w-[10%]">
                       <Menu size = "35" onClick={()=> {
                         setSidebar(!isSidebarOpen)
                       }} className = "text-slate-400"/>
-                   </div>
-              <div className = "flex items-center gap-3 w-[86%] justify-end">
+                   </div> 
+              <div className = "flex items-center gap-3 w-[90%] justify-end">
                   <div className = "relative flex items-center  w-[75%] border border-slate-300 rounded-md px-2 py-2">
                           <IoIosSearch size = "20" className = "text-slate-300" />
                         <input   type  = "search" placeholder = "Search..." className = "border-none  text-base  rounded-md  outline-none"/>
@@ -180,7 +181,9 @@ export function Dashboard() {
             ))}
           </div>
         )}   
-
+     <div className = "fixed z-50 bottom-20 right-5 gap-1">
+          <button className = "text-2xl text-amber-300">Theme</button>
+      </div>
       </div>
    </div>
   )
