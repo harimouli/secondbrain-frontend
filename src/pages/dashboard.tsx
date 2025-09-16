@@ -38,7 +38,7 @@ export function Dashboard() {
 
     const [isSidebarOpen , setSidebar] = useState(true);
     const {deviceType} = useDevice();
-    const isMobile = deviceType === "mobile";
+    //const sMobile = deviceType === "mobile";
     const isTablet = deviceType === "tablet";
     const isDesktop = deviceType === "desktop"; 
     
