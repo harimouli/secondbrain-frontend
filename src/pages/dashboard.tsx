@@ -42,11 +42,7 @@ export function Dashboard() {
     const isTablet = deviceType === "tablet";
     const isDesktop = deviceType === "desktop"; 
     
-    if(isMobile){
-      if(isSidebarOpen){
-        setSidebar(false);
-      }
-    }
+   
     useEffect(() => {
       const handleResize = () => {
         if(window.innerWidth < 768) {
@@ -106,7 +102,7 @@ export function Dashboard() {
     {isSidebarOpen &&  <Sidebar  isSidebarOpen = {isSidebarOpen} setSidebar={setSidebar} activeBar= {activeBar} setActiveBar = {setActiveBar} />}
 
    
-        <div  className = {`min-h-screen bg-white ${isSidebarOpen ? "ml-72" : ""}`} >     
+        <div  className = {`min-h-screen bg-white ${isSidebarOpen && (isDesktop  || isDesktop)? "ml-72" : "w-[100%]"}`} >     
                 
        
           {/*menu  when sidebar is closed*/} 
