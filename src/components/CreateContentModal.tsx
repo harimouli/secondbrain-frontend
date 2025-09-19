@@ -10,7 +10,7 @@ import { InputLabel } from "./InputLabel";
 import { toast } from "react-toastify";
 import { ModelContainer, ModelContentContainer, ModelCrossContainer, ModelMainInnerContainer } from "../ui/contentModelUI/CreateModel";
 import type { ModalProps } from "../utils/Globaltypes";
-
+import { useNavigate } from "react-router-dom";
 const ContentType = {
     Youtube: "youtube",
     Twitter: "twitter"
@@ -25,10 +25,10 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
     const [type, setType] = useState<ContentType>(ContentType.Youtube);
 
 
-
+    const navigate = useNavigate();
 
     const addContent = async () => {
-
+            
         try {
              const title = titleRef.current?.value;
             const link = linkRef.current?.value;
@@ -38,23 +38,35 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
                 type
             }
             const token = localStorage.getItem("token");
-            await axios.post(`${BACKEND_URL}/api/v1/content`, contentData, {
+            if(!token) {
+                toast.error("Unauthorized access");
+                onClose(false);
+                navigate("/auth");
+                return;
+            }
+            const response =  await axios.post(`${BACKEND_URL}/api/v1/content`, contentData, {
                 headers: {
                     authorization: token 
                 }
             });  
-            
+            console.log(response);
+            if(response.status === 401 || response.status === 403) {
+                toast.error("Unauthorized access");
+                onClose(false); 
+                navigate("/auth");
+                return;
+            }
             onClose(false);
             toast.success("link added succesfully!");
             if (refreshContent) {
                 refreshContent();
             }
         }catch {
-            toast.warning("backend is down mouli is working hard!")
+            toast.warning("something  went wrong!");
+            onClose(false);
+            navigate("/auth");
+            return;
         }
-           
-
-            
             
     }
     return (

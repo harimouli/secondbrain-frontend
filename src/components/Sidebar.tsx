@@ -35,7 +35,7 @@ export const Sidebar = ({isSidebarOpen,setActiveBar, setSidebar, activeBar}: Sid
 
     const SideContainer = ({children}: ChildrenType) => {
             return (
-                <div className = "fixed left-0 top-0 z-50  lg:z-0 h-screen transition-all transform ease-in-out duration-1000  lg:w-[16%] flex flex-col justify-between  bg-slate-100 border-r-1 border-r-[#cfd5dd] lg:fixed lg:left-0 lg:top-0 pl-6">
+                <div className = "fixed left-0 top-0 z-50  lg:z-0 h-screen transition-all transform ease-in-out duration-1000  flex flex-col justify-between  bg-slate-100 border-r-1 border-r-[#cfd5dd]  pl-6">
                         {children}
                 </div>
             )

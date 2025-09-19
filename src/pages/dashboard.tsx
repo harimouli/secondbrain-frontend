@@ -42,8 +42,6 @@ export function Dashboard() {
     const isMobile = deviceType === DeviceType.Mobile;
     const isTablet = deviceType === DeviceType.Tablet;
     const isDesktop = deviceType === DeviceType.Desktop;
-
-   console.log("deviceType", deviceType);   
     useEffect(() => {
       if(isMobile) {
       if(isSidebarOpen) {
@@ -57,13 +55,8 @@ export function Dashboard() {
       }else{
         setSidebar(true);
       }
-    }, [])
-
-
-
-
-    useEffect(() => {
-        refreshContent();
+      refreshContent();
+        
     }, [])
 
     function lowercaseFirstLetter(str: string) : string {
