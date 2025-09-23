@@ -102,7 +102,7 @@ export function Dashboard() {
                     <ShareModel open = {openShareModel} onClose = {() => setOpenShareModel(false)} />
                     <CreateContentModal refreshContent = {refreshContent} open = {modelOpen} onClose = {setModelOpen}/>
         {/*Header*/}
-       <nav  className = "hidden lg:flex">
+       <nav  className = "hidden lg:flex  border-b border-b-slate-300  items-center justify-between">
         
                 
                   <div className = {`flex w-full`}>

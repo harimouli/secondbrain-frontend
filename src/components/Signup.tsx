@@ -9,7 +9,8 @@ import { InputWrapper } from "../ui/auth/InputWrapper";
 import { InputLabel } from "./InputLabel";
 import { z } from "zod";
 import { ErrorText } from "../ui/auth/ErrorText";
-import { SuccessText } from "../ui/auth/SuccesText";
+
+import { toast } from "react-toastify";
 
 
 interface SignUpProps {
@@ -17,16 +18,25 @@ interface SignUpProps {
   setAuthMode: (authMode: string) => void;
 }
 export const Signup = ({setAuthMode}: SignUpProps) => {
+
+
+
   const usernameRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
   const passwordRef = useRef<HTMLInputElement>(null) as React.RefObject<HTMLInputElement>;
 
   const [nameError, setNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [errorStatus, setErrorStatus] = useState(false);
-  const [signupMsg, setSignupMsg] = useState("");
-  const [signupError, setSignupError] = useState("");
+ 
 
   const signup = async () => {
+
+    setNameError("");
+    setPasswordError("");
+   if(usernameRef.current === null || usernameRef.current.value.trim() === "" &&  passwordRef.current === null || passwordRef.current.value.trim() === "") { 
+      toast.error("Input fields are empty");
+      return;
+    }
+
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
         
@@ -48,11 +58,11 @@ export const Signup = ({setAuthMode}: SignUpProps) => {
       parsedData.error.issues.forEach(issue => {
         if (issue.path[0] === "username") {
           setNameError(issue.message);
-          setErrorStatus(!errorStatus);
+          
         }
         if (issue.path[0] === "password") {
           setPasswordError(issue.message);
-          setErrorStatus(!errorStatus);
+          
         }
       });
       return;
@@ -60,19 +70,21 @@ export const Signup = ({setAuthMode}: SignUpProps) => {
 
     setNameError("");
     setPasswordError("");
-    setErrorStatus(false);
-    setSignupMsg("");
-    setSignupError("");
+   
 
     try {
       const response = await axios.post(`${BACKEND_URL}/api/v1/signup`, userData);
-      
-      setSignupMsg(response.data.message )
+      if(response.status === 201) {
+        toast.warning(response.data.message);
+      }
+      if (response.status === 401 || response.status === 403) {
+        toast.error(response.data.message);
+      }
       setAuthMode("Signin");
 
     } catch  {
     
-      setSignupError("Signup Failed");
+      toast.error("Signup failed. Please try again.");
 
     }
   };    
@@ -82,16 +94,15 @@ export const Signup = ({setAuthMode}: SignUpProps) => {
       <InputWrapper>
         <InputLabel htmlfor="username" labelText="Enter your username" />
         <Input width="w-80" reference={usernameRef} type={"text"} placeholder="username" />
-        {errorStatus && <ErrorText message={nameError} />}
+        {nameError !== "" && <ErrorText message={nameError} />}
       </InputWrapper>
 
       <InputWrapper>
         <InputLabel htmlfor="password" labelText="Enter your password" />
         <Input width="w-80" reference={passwordRef} type={"password"} placeholder="password" />
-        {errorStatus && <ErrorText message={passwordError} />}
+        {passwordError !== "" && <ErrorText message={passwordError} />}
       </InputWrapper>
-        {signupMsg !== "" && <SuccessText message={signupMsg} />}
-        {signupError !== "" && <ErrorText message= {signupError}/>}
+      {/* {signupError !=="" && <ErrorText message={signupError} />} */}
       <AuthButtonBody>
         <Button onClick={signup} variant="primary" text="Signup" size="md" fullWidth={false} loading={false} />
       </AuthButtonBody>

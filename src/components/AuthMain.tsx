@@ -1,16 +1,22 @@
-import { useState } from "react"
+import {useEffect, useState } from "react"
 import { Button } from "./Button"
 
 
 
-
+import { useNavigate } from "react-router-dom";
 import { Signin } from "./Signin"
 import { Signup } from "./Signup"
 
 export const AuthMain = () => {
     const [authMode, setAthMode] = useState("Signin");
+    const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(token) {
+            navigate("/dashboard");
+        }
+    }, [token, navigate]);
 
-    
     return (
         <div className = "bg-white flex justify-center items-center h-screen w-screen">
 

@@ -1,28 +1,57 @@
 
-import { type  ReactNode } from "react";
-import { Navigate } from "react-router-dom";
-import { type AxiosResponse } from "axios";
-import { BACKEND_URL } from "./config";
-import axios from "axios";
- export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-        const verifyToken = async () => {
-          const token = localStorage.getItem("token");
 
-          if(!token) {
-            <Navigate to = "/auth" />;
-            return;
-          }
-          const response: AxiosResponse = await axios.get(`${BACKEND_URL}/api/v1/verifylogin`, {
+import { useEffect, useState, type ReactNode } from "react";
+import { Navigate } from "react-router-dom";
+import axios, { type AxiosResponse } from "axios";
+import { BACKEND_URL } from "./config";
+
+export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+  const [isAuth, setIsAuth] = useState<boolean | null>(null); // null = loading
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        const token = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("token="))
+          ?.split("=")[1];
+
+        if (!token) {
+          setIsAuth(false);
+          return;
+        }
+
+        const response: AxiosResponse = await axios.get(
+          `${BACKEND_URL}/api/v1/verifylogin`,
+          {
             headers: {
-              authorization: token
-            }
-          });
-         
-          if (response.status === 403) {
-            <Navigate to = "/auth" />;
+              Authorization: `Bearer ${token}`,
+            },
           }
-        };
-        verifyToken();
-        
-        return children;
-}  
+        );
+
+        if (response.status === 200) {
+          setIsAuth(true);
+        } else {
+          setIsAuth(false);
+        }
+      } catch {
+        setIsAuth(false);
+      }
+    };
+
+    verifyToken();
+  }, []);
+
+  
+
+  if (isAuth === null) {
+    return <div>Loading...</div>; // Show loading while verifying
+  }
+
+  if (!isAuth) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <>{children}</>;
+};

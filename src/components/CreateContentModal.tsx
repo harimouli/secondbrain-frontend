@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
-import { CrossIcon } from "../icons/CrossIcon";
+
 
 import { Button } from "./Button";
-
+import { RxCross2 } from "react-icons/rx";
 import { Input } from "./Input";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
@@ -41,6 +41,7 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
             if(!token) {
                 toast.error("Unauthorized access");
                 onClose(false);
+                localStorage.removeItem("token");
                 navigate("/auth");
                 return;
             }
@@ -49,10 +50,11 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
                     authorization: token 
                 }
             });  
-            console.log(response);
+            
             if(response.status === 401 || response.status === 403) {
                 toast.error("Unauthorized access");
                 onClose(false); 
+                localStorage.removeItem("token");
                 navigate("/auth");
                 return;
             }
@@ -76,7 +78,7 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
                     <ModelContentContainer>
                         <ModelMainInnerContainer>
                            <ModelCrossContainer onClose={onClose}>
-                                    {<CrossIcon   size = {"lg"}/>}
+                                    {<RxCross2   size = {20}/>}
                             </ModelCrossContainer>
                             <div className = "flex flex-col items-center">
                                 <div className = "p-2 flex flex-col">

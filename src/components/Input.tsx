@@ -16,8 +16,12 @@ export const Input = (props: InputProps) => {
             ref={reference}
             placeholder={placeholder}
             type={type}
+            required
             className={`py-3 px-3 border mr-2 border-slate-300  shadow  rounded-md outline-slate-500 ${width ? ` ${width}` : ""}`}
             {...rest}
         />
     );
 }
+
+
+

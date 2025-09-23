@@ -10,23 +10,25 @@ export const useContent = () => {
     const refreshContent = async () => {
         try {
             setLoading(true);
-            const token = localStorage.getItem("token");
+            const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+
             if(!token) {
                 toast.error("Unauthorized access");
-                navigate("/auth");
+                navigate("/");
                 return;
             }
             const response = await axios.get(`${BACKEND_URL}/api/v1/content`, {
                 headers: {
-                    authorization:token
+                    authorization:`Bearer ${token}`
                 }
             });
             if (response.status === 401) {
                 toast.error("Unauthorized access");
-                navigate("/auth");
+                navigate("/");
                 return;
             }
             setContent(response.data.content);
+            toast.success("Content refreshed successfully!");
         } catch {
             toast.error("Something went wrong!")
         } finally {
