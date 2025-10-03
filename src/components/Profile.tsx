@@ -14,7 +14,8 @@ export const Profile = () => {
         const oldPasswordRef = useRef<HTMLInputElement>(null!);
         const newPasswordRef = useRef<HTMLInputElement>(null!);
         const navigate = useNavigate();
-         const token: string | null = localStorage.getItem("token");
+        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+        console.log("Token in profile page:", token);
         const [userName, setUsername] = useState("");
         //const [totalLinks, setTotalLinks] = useState(0);  /// will be addeed soooon.....................
         const [dateOfJoined, setDateJoined] = useState("");
@@ -28,7 +29,7 @@ export const Profile = () => {
                         {},
                         {
                         headers: {
-                            authorization: token,
+                            authorization: `Bearer ${token}`,
                         },
                         }
                     );

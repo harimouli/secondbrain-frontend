@@ -12,7 +12,7 @@ const App = () => {
     <BrowserRouter>        
        <ToastContainer position="top-right" autoClose={3000}  toastStyle={{maxWidth: "w-[100px] md:w-[300px]"}} />
       <Routes>
-          <Route path = "/" element = {<AuthMain/>}/>
+          <Route path = "/auth" element = {<AuthMain/>}/>
           <Route  path = "/dashboard" element = {
             <ProtectedRoute>
                 <Dashboard/>

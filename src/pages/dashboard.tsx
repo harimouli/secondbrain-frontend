@@ -30,6 +30,8 @@ import { useDevice } from "../contexts/DeviceContext";
 
 import { DeviceType } from "../utils/Globaltypes";
 
+import { type ContentType} from "../utils/Globaltypes";
+
 export function Dashboard() {
     const [modelOpen, setModelOpen] = useState(false);
     const {allContent, refreshContent, isLoading} = useContent();
@@ -73,13 +75,13 @@ export function Dashboard() {
 
 
 
-    type ContentType = { title: string; type: string; link: string; _id: string };
+   
     let filteredContent: ContentType[] = [];
 
     const active: string = lowercaseFirstLetter(activeBar);  
     const safeAllContent: ContentType[] = Array.isArray(allContent) ? allContent : [];
     if(active === ""){
-      filteredContent = safeAllContent;
+      filteredContent = safeAllContent; 
     }
     else{
       filteredContent = safeAllContent.filter((eachEle: ContentType) => eachEle.type === active);
@@ -102,13 +104,12 @@ export function Dashboard() {
                     <ShareModel open = {openShareModel} onClose = {() => setOpenShareModel(false)} />
                     <CreateContentModal refreshContent = {refreshContent} open = {modelOpen} onClose = {setModelOpen}/>
         {/*Header*/}
-       <nav  className = "hidden lg:flex  border-b border-b-slate-300  items-center justify-between">
-        
-                
+       <nav  className = "hidden lg:flex  border-b border-b-slate-300  items-center">
+
                   <div className = {`flex w-full`}>
                           
                            {!isSidebarOpen && 
-                        <div className = "hidden md:block   p-5 text-slate-400" onClick={()=> {
+                        <div className = "  p-5 text-slate-400" onClick={()=> {
                             setSidebar(!isSidebarOpen)
                         }}>
                                 <IoMenuSharp size = "30" />
@@ -116,16 +117,16 @@ export function Dashboard() {
                         </div>   
 
                     }
-                          <div className = "md:flex items-center max-w-xl gap-4 w-[60%]">
-                              <div className = "flex items-center w-full border rounded-md ">
-                                <IoIosSearch size = "25"/>
-                                <input type  = "search" placeholder = "Search..." className = "border-none  text-base  rounded-md p-2 w-[95%] md:text-sm  outline-none"/>
+                          <div className = "md:flex items-center max-w-xl gap-4 w-[50%] p-3">
+                              <div className = "flex items-center w-full border rounded-md outline-none  border-slate-300 px-1">
+                                <IoIosSearch className= "text-slate-400" size = "25"/>
+                                <input type  = "search" placeholder = "search your content" className = "border-none  text-base text-slate-600  rounded-md p-2 w-[100%]  md:text-md  outline-none"/>
                               </div>
                           </div>  
 
                           
 
-                          <div className = "flex md:flex items-center gap-2 md:gap-6 p-4">
+                          <div className = "flex md:flex items-center justify-end gap-6 p-4 ml-auto">
                                <Button onClick={() => setModelOpen(true)}  startIcon = {<Plus size = { "20px"}/>} size = {"md"} variant="primary"  text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
                                <Button onClick={() => setOpenShareModel(true)} startIcon = {<Share2 size = {"20px"}/>} size = "md" variant="secondary" text = {isDesktop || isTablet ?  "Share" : ""}></Button>
                           </div>
@@ -163,7 +164,8 @@ export function Dashboard() {
         ) : (
           <div className="flex flex-col items-center md:flex-wrap md:flex-row md:items-start gap-3 mt-4 p-3">
 
-            {filteredContent.map(({ title, type, link, _id }) => (
+            {filteredContent.map(({ title, type, link, _id }: ContentType) => (
+              console.log(typeof(_id)),
               <Card
                 key={_id}
                 title={title}

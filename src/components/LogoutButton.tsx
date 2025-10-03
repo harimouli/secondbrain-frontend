@@ -7,7 +7,7 @@ import { LiaSignOutAltSolid } from "react-icons/lia";
 export const LogoutButton = () => {
     const navigate = useNavigate();
     const logout = () => {
-        localStorage.removeItem("token");
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         navigate("/auth")
         return;
         

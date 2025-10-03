@@ -3,8 +3,9 @@ import { useState} from "react";
 import { BACKEND_URL } from "../config";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { type ContentType } from "../utils/Globaltypes";
 export const useContent = () => {
-    const [allContent, setContent] = useState([]);
+    const [allContent, setContent] = useState<ContentType[]>([]);
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate();
     const refreshContent = async () => {
@@ -14,7 +15,7 @@ export const useContent = () => {
 
             if(!token) {
                 toast.error("Unauthorized access");
-                navigate("/");
+                navigate("/auth");
                 return;
             }
             const response = await axios.get(`${BACKEND_URL}/api/v1/content`, {
@@ -28,7 +29,9 @@ export const useContent = () => {
                 return;
             }
             setContent(response.data.content);
-            toast.success("Content refreshed successfully!");
+            setLoading(false);
+            
+          
         } catch {
             toast.error("Something went wrong!")
         } finally {

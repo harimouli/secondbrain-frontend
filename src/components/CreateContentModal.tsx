@@ -37,17 +37,17 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
                 link,
                 type
             }
-            const token = localStorage.getItem("token");
+            const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
             if(!token) {
                 toast.error("Unauthorized access");
                 onClose(false);
-                localStorage.removeItem("token");
+                document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 navigate("/auth");
                 return;
             }
             const response =  await axios.post(`${BACKEND_URL}/api/v1/content`, contentData, {
                 headers: {
-                    authorization: token 
+                    authorization: `Bearer ${token}` 
                 }
             });  
             

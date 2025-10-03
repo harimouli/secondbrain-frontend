@@ -6,7 +6,7 @@ import axios, { type AxiosResponse } from "axios";
 import { BACKEND_URL } from "./config";
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const [isAuth, setIsAuth] = useState<boolean | null>(null); // null = loading
+  const [isAuth, setIsAuth] = useState<boolean>(true); 
 
   useEffect(() => {
     const verifyToken = async () => {
@@ -45,12 +45,10 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
 
   
 
-  if (isAuth === null) {
-    return <div>Loading...</div>; // Show loading while verifying
-  }
-
+  
+  
   if (!isAuth) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/auth" replace />;
   }
 
   return <>{children}</>;

@@ -17,3 +17,12 @@ export const enum DeviceType {
   Tablet = "tablet",
   Desktop = "desktop"
 }
+
+export interface ContentType {
+    _id: string;
+    title: string;
+    link: string;
+    type: string;
+    tags: string[];
+    userId: string;  
+} 
