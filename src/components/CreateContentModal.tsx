@@ -78,9 +78,23 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
                     <ModelContentContainer>
                         <ModelMainInnerContainer>
                            <ModelCrossContainer onClose={onClose}>
-                                    {<RxCross2   size = {20}/>}
-                            </ModelCrossContainer>
+                                    {<RxCross2  className = "cursor-pointer text-slate-500"  size = {20}/>}
+                            </ModelCrossContainer> 
                             <div className = "flex flex-col items-center">
+
+
+                                <div className = "flex flex-wrap gap-3 items-center justify-center">
+                                        <Button onClick={()=> {
+                                            setType(ContentType.Youtube)
+                                        }}  variant= {type == ContentType.Youtube ? "primary": "secondary"} 
+                                        text = "youtube" size="md"/>
+                                        <Button
+                                        onClick={() => {
+                                            setType(ContentType.Twitter)
+                                        }}
+                                         variant= {type == ContentType.Twitter ? "primary": "secondary"} text="twitter" size = "md"/>
+                                          
+                                </div>
                                 <div className = "p-2 flex flex-col">
                                      <InputLabel labelText="Enter the Title:" htmlfor = "title"/>
                                      <div className = "mt-1">
@@ -96,18 +110,7 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
                                     
                                 </div>
                                
-                                <div className = "flex flex-wrap gap-3 items-center justify-center">
-                                        <Button onClick={()=> {
-                                            setType(ContentType.Youtube)
-                                        }}  variant= {type == ContentType.Youtube ? "primary": "secondary"} 
-                                        text = "youtube" size="md"/>
-                                        <Button
-                                        onClick={() => {
-                                            setType(ContentType.Twitter)
-                                        }}
-                                         variant= {type == ContentType.Twitter ? "primary": "secondary"} text="twitter" size = "md"/>
-                                          
-                                </div>
+                               
                             </div>
                             <div className = "flex justify-center pt-4">
                                 <Button onClick={addContent} variant = {"primary"} size = {"md"} text = {"Submit"} />

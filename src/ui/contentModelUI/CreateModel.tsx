@@ -14,7 +14,7 @@ export const ModelContainer = (props: ChildrenType) => {
 
 export const ModelContentContainer = (props: ChildrenType) => {
     return (
-       <div className = "position-sticky flex flex-col justify-center bg-white opacity-100 rounded-lg shadow-xl transition-all ease-in-out duration-1000">
+       <div className = " flex flex-col items-center justify-center bg-white opacity-100 rounded-lg shadow-xl transition-all ease-in-out duration-700 w-[90%] h-[60%] md:h-[500px] lg:w-[500px] ">
             {props.children}
         </div>
     );
@@ -24,7 +24,7 @@ export const ModelContentContainer = (props: ChildrenType) => {
 
 export const ModelMainInnerContainer = (props: ChildrenType) => {
     return (
-       <span className = "bg-white rounded p-4 md:p-8">
+       <span className = "rounded  w-[100%]">
             {props.children}
         </span>
     );
