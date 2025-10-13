@@ -22,13 +22,17 @@ interface CardProps {
 
 export const Card = ({title, type, link, refreshContent}: CardProps) => {
    const deleteCard =  async () => {
-        try {
+        try { 
+              const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+              if(!token) {
+                return toast.error("Unauthorized access");
+              }
                 const response =    await axios.delete(`${BACKEND_URL}/api/v1/content`, {
                     data: {
                         link
                     },  
                     headers: {
-                        authorization: localStorage.getItem("token")
+                        authorization: `Bearer ${token}`,
                     }
                 })
                 if(response.status === 200){

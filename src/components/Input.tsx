@@ -17,7 +17,7 @@ export const Input = (props: InputProps) => {
             placeholder={placeholder}
             type={type}
             required
-            className={`py-3 px-3 border mr-2 border-slate-300  shadow  rounded-md outline-slate-500 ${width ? ` ${width}` : ""}`}
+            className={`py-3 px-3 border mr-2 border-slate-300  rounded-md outline-slate-500 ${width ? ` ${width}` : ""}`}
             {...rest}
         />
     );
