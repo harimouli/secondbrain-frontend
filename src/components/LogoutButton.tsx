@@ -1,4 +1,4 @@
-import { Button } from "./Button"
+import { Button, ButtonSize, ButtonVariant } from "./Button"
 import { useNavigate } from "react-router-dom";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 
@@ -16,8 +16,8 @@ export const LogoutButton = () => {
         <div>
             <Button 
             text="Logout" 
-            size="md"  
-            variant="primary" 
+            size={ButtonSize.Medium}  
+            variant={ButtonVariant.Primary} 
             endIcon={<LiaSignOutAltSolid/>}
             onClick={logout}
             />

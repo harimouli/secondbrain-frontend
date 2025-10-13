@@ -1,6 +1,6 @@
 import {useEffect, useState } from "react"
 import { Button } from "./Button"
-
+import { ButtonSize, ButtonVariant } from "./Button";
 
 
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ export const AuthMain = () => {
                        <div className = "p-2">
                                 <Button onClick={()=> {
                                     setAthMode("Signin");
-                                }} variant= {`${authMode === "Signin" ? "primary" : "secondary"}`} text = "Signin"  size = "md"/> 
+                                }} variant={authMode === "Signin" ? ButtonVariant.Primary : ButtonVariant.Secondary} text="Signin" size={ButtonSize.Medium} />
                        </div>
                         
                         <div className = "p-3">
@@ -33,7 +33,7 @@ export const AuthMain = () => {
                              onClick={()=>{
                                 setAthMode("Signup")
                              }}
-                            variant={`${authMode === "Signup" ? "primary" : "secondary"}`} text = "Signup"  size = "md"/>
+                            variant={authMode === "Signup" ? ButtonVariant.Primary : ButtonVariant.Secondary} text="Signup" size={ButtonSize.Medium}/>
                         </div>
                        
                     </div>

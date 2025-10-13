@@ -7,7 +7,7 @@ import { BACKEND_URL } from "../config";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { Input } from "./Input";
 import { LogoutButton } from "./LogoutButton";
-import { Button } from "./Button";
+import { Button, ButtonSize, ButtonVariant } from "./Button";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 export const Profile = () => {
@@ -57,8 +57,8 @@ export const Profile = () => {
 
                 <Button  
                  text = {"Back"} 
-                 variant = {"primary"} 
-                 size = "md" 
+                 variant = {ButtonVariant.Primary} 
+                 size =  {ButtonSize.Medium} 
                  startIcon = {<IoArrowBackCircleOutline 
                  size ={25}/>}
                  onClick={backToHome}

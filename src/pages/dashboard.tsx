@@ -1,5 +1,5 @@
 
-import { Button } from "../components/Button"
+import { Button, ButtonSize, ButtonVariant } from "../components/Button"
 
 import {Menu, Plus, Share2} from "lucide-react";
 
@@ -127,8 +127,8 @@ export function Dashboard() {
                           
 
                           <div className = "flex md:flex items-center justify-end gap-6 p-4 ml-auto">
-                               <Button onClick={() => setModelOpen(true)}  startIcon = {<Plus size = { "20px"}/>} size = {"md"} variant="primary"  text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
-                               <Button onClick={() => setOpenShareModel(true)} startIcon = {<Share2 size = {"20px"}/>} size = "md" variant="secondary" text = {isDesktop || isTablet ?  "Share" : ""}></Button>
+                               <Button onClick={() => setModelOpen(true)}  startIcon = {<Plus size = { "20px"}/>} size = {ButtonSize.Medium} variant={ButtonVariant.Primary} text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
+                               <Button onClick={() => setOpenShareModel(true)} startIcon = {<Share2 size = {"20px"}/>} size = {ButtonSize.Medium} variant={ButtonVariant.Secondary} text = {isDesktop || isTablet ?  "Share" : ""}></Button>
                           </div>
 
 
@@ -150,8 +150,8 @@ export function Dashboard() {
                     </div>
                 
                 <div className = "flex items-center gap-3 w-[25%] justify-end">
-                    <Button onClick={() => setModelOpen(true)}  startIcon = {<Plus size = { "20px"}/>} size = {"sm"} variant="primary"  text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
-                    <Button onClick={() => setOpenShareModel(true)} startIcon = {<Share2 size = {"18px"}/>} size = "sm" variant="secondary" text = {isDesktop || isTablet ?  "Share" : ""}></Button>
+                    <Button onClick={() => setModelOpen(true)}  startIcon = {<Plus size = { "20px"}/>} size = {ButtonSize.Small} variant={ButtonVariant.Primary} text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
+                    <Button onClick={() => setOpenShareModel(true)} startIcon = {<Share2 size = {"18px"}/>} size = {ButtonSize.Small} variant={ButtonVariant.Secondary} text = {isDesktop || isTablet ?  "Share" : ""}></Button>
                 </div>
               </div>
                    

@@ -4,7 +4,7 @@ import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { Input } from "./Input";
 import { z } from "zod";
-import { Button } from "./Button";
+import { Button, ButtonSize, ButtonVariant } from "./Button";
 import { InputLabel } from "./InputLabel";
 import { InputWrapper } from "../ui/auth/InputWrapper";
 import { ErrorText } from "../ui/auth/ErrorText";
@@ -99,9 +99,9 @@ export const Signin = () => {
       <AuthButtonBody>
         <Button
           onClick={signin}
-          variant="primary"
+          variant={ButtonVariant.Primary}
           text="Signin"
-          size="md"
+          size={ButtonSize.Medium}
           fullWidth={false}
           loading={false}
         />

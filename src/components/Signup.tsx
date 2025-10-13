@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { Input } from "./Input";
-import { Button } from "./Button";
+import { Button, ButtonSize, ButtonVariant } from "./Button";
 import { AuthButtonBody } from "../ui/auth/AuthButtonBody";
 import { InputWrapper } from "../ui/auth/InputWrapper";
 import { InputLabel } from "./InputLabel";
@@ -104,7 +104,7 @@ export const Signup = ({setAuthMode}: SignUpProps) => {
       </InputWrapper>
       {/* {signupError !=="" && <ErrorText message={signupError} />} */}
       <AuthButtonBody>
-        <Button onClick={signup} variant="primary" text="Signup" size="md" fullWidth={false} loading={false} />
+        <Button onClick={signup} variant={ButtonVariant.Primary} text="Signup" size={ButtonSize.Medium} fullWidth={false} loading={false} />
       </AuthButtonBody>
     </>
   );
