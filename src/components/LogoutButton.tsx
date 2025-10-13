@@ -1,4 +1,5 @@
-import { Button, ButtonSize, ButtonVariant } from "./Button"
+import { Button } from "./Button";
+import {ButtonVariant, ButtonSize} from "../types/button"
 import { useNavigate } from "react-router-dom";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 

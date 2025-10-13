@@ -7,7 +7,8 @@ import { BACKEND_URL } from "../config";
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { Input } from "./Input";
 import { LogoutButton } from "./LogoutButton";
-import { Button, ButtonSize, ButtonVariant } from "./Button";
+import { Button } from "./Button";
+import {ButtonVariant, ButtonSize} from "../types/button"
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 export const Profile = () => {

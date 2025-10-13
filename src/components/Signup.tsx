@@ -3,7 +3,8 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { Input } from "./Input";
-import { Button, ButtonSize, ButtonVariant } from "./Button";
+import { Button } from "./Button";
+import {ButtonVariant, ButtonSize} from "../types/button"
 import { AuthButtonBody } from "../ui/auth/AuthButtonBody";
 import { InputWrapper } from "../ui/auth/InputWrapper";
 import { InputLabel } from "./InputLabel";

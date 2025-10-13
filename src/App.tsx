@@ -2,7 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Dashboard } from "./pages/dashboard";
 
 import { ProtectedRoute } from "./ProtectedRoute";
-import  {AuthMain} from "./components/AuthMain"
+import  {AuthMain} from "./components/AuthMain";
+import  Landing  from "./components/Landing";
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
@@ -12,6 +13,7 @@ const App = () => {
     <BrowserRouter>        
        <ToastContainer position="top-right" autoClose={3000}  toastStyle={{maxWidth: "w-[100px] md:w-[300px]"}} />
       <Routes>
+          <Route path = "/" element = {<Landing/>}/>
           <Route path = "/auth" element = {<AuthMain/>}/>
           <Route  path = "/dashboard" element = {
             <ProtectedRoute>

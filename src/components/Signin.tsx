@@ -4,7 +4,8 @@ import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { Input } from "./Input";
 import { z } from "zod";
-import { Button, ButtonSize, ButtonVariant } from "./Button";
+import { Button } from "./Button";
+import {ButtonVariant, ButtonSize} from "../types/button"
 import { InputLabel } from "./InputLabel";
 import { InputWrapper } from "../ui/auth/InputWrapper";
 import { ErrorText } from "../ui/auth/ErrorText";

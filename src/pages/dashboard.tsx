@@ -1,6 +1,6 @@
 
-import { Button, ButtonSize, ButtonVariant } from "../components/Button"
-
+import { Button } from "../components/Button"
+import {ButtonVariant, ButtonSize} from "../types/button"
 import {Menu, Plus, Share2} from "lucide-react";
 
 
@@ -176,7 +176,7 @@ export function Dashboard() {
             ))}
           </div>
         )}   
-     <div className = "fixed z-50 bottom-20 right-5 gap-1">
+     <div className = "hidden fixed z-50 bottom-20 right-5 gap-1 ">
           <button className = "text-2xl text-amber-300">Theme</button>
       </div>
       </div>

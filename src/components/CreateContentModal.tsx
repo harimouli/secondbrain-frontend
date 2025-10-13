@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 
-import { ButtonSize, ButtonVariant } from "./Button";
+import {ButtonVariant, ButtonSize} from "../types/button"
 
 import { Button } from "./Button";
 import { RxCross2 } from "react-icons/rx";
