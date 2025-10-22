@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Brain, Bookmark, Search, Zap, Tag, Layout, Menu, X } from 'lucide-react';
 import dashboard from '../../assets/dashboard.png'; // Replace with your actual image path
-import card from '../../assets/card.png'; // Replace with your actual image path
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -189,63 +188,6 @@ const Features = () => {
     </section>
   );
 };
-
-const AppShowcase = () => {
-  
-  const screenshots = [
-    {
-      src:  dashboard,
-      alt: "Mind Space dashboard with organized collections",
-      title: "Dashboard"
-    },
-    {
-      src: "https://placehold.co/800x600/ddd6fe/7c3aed?text=Search+Interface&font=raleway",
-      alt: "Powerful search across all saved content",
-      title: "Search"
-    },
-    {
-      src: card,
-      alt: "Collection detail view with tags and filters",
-      title: "Collections"
-    }
-  ];
-
-  return (
-    <section className="bg-white px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            See Mind Space in action
-          </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            A powerful interface designed for clarity and speed.
-          </p>
-        </div>
-
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {screenshots.map((screenshot, index) => (
-            <div
-              key={index}
-              className="group overflow-hidden rounded-xl border border-gray-200 bg-white shadow-md transition-all hover:shadow-xl hover:-translate-y-1"
-            >
-              <img
-                src={screenshot.src}
-                alt={screenshot.alt}
-                className="w-full h-auto transition-transform group-hover:scale-105"
-              />
-              <div className="p-4 border-t border-gray-100">
-                <h3 className="text-base font-semibold text-gray-900">{screenshot.title}</h3>
-              </div>
-            </div>
-          ))}
-        </div>
-
-       
-      </div>
-    </section>
-  );
-};
-
 const HowItWorks = () => {
   const steps = [
     {
@@ -329,7 +271,6 @@ const Landing = () => {
       <main>
         <Hero />
         <Features />
-        <AppShowcase />
         <HowItWorks />
         <Footer />
       </main>

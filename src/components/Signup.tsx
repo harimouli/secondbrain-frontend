@@ -93,7 +93,7 @@ export const Signup = ({setAuthMode}: SignUpProps) => {
   return (
     <>
       <InputWrapper>
-        <InputLabel htmlfor="username" labelText="Enter your username" />
+        <InputLabel  htmlfor="username" labelText="Enter your username" />
         <Input width="w-80" reference={usernameRef} type={"text"} placeholder="username" />
         {nameError !== "" && <ErrorText message={nameError} />}
       </InputWrapper>
