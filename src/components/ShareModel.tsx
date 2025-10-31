@@ -12,13 +12,20 @@ export const ShareModel = (props: ModalProps) => {
             <ModelContainer>
                 <ModelContentContainer>
                   
-                        <ModelCrossContainer onClose={props.onClose}>
-                            {<RxCross2  size = {20}/>}
-                        </ModelCrossContainer>
-                        <h1>Share Content</h1>
-                        <p>Currently Working on Sharing Content</p>
-                        <p>due to time constraints, this feature is not yet implemented.</p>
-                 
+                        <div className = "flex flex-col justify-between  items-center">
+                               
+                             <div className = "flex items-center w-[90%] pt-4">
+                                   <div className = "w-[98%] gap-1">
+                                    <h1 className = "text-[18px] text-slate-800 font-semibold">Share your mind</h1>
+                                    <p className = "text-slate-600 text-[15px]">Generate a shareable link to  share your Mind Space.</p>
+                                </div>
+                                 <ModelCrossContainer onClose={props.onClose}>
+                                    {<RxCross2  size = {20}/>}
+                                </ModelCrossContainer>
+                             </div>
+                        </div>
+                        
+
                 </ModelContentContainer>
             </ModelContainer>
         ) : null

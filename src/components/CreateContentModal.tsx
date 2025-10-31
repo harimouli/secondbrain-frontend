@@ -1,11 +1,10 @@
-import { useRef, useState } from "react";
+import { useRef} from "react";
 
 import {ButtonVariant, ButtonSize} from "../types/button"
 import { z } from "zod";
 import { Button } from "./Button";
 import { RxCross2 } from "react-icons/rx";
-import { FaXTwitter } from "react-icons/fa6"; 
-import { AiFillYoutube } from "react-icons/ai";
+
 import { Input } from "./Input";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
@@ -28,7 +27,7 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
 
     const titleRef = useRef<HTMLInputElement>(null!);
     const linkRef = useRef<HTMLInputElement>(null!);
-    const [type, setType] = useState<ContentType>(ContentType.Youtube);
+    
 
 
     const navigate = useNavigate();
@@ -46,7 +45,16 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
             const title = titleRef.current?.value;
 
             const link = linkRef.current?.value;
+            let  linkType: string  = ContentType.Youtube;
 
+
+            if(link.includes("youtube.com") || link.includes("youtu.be")) {
+                linkType = ContentType.Youtube;
+            }
+
+            if(link.includes("twitter.com") || link.includes("x.com")) {
+                linkType = ContentType.Twitter;     
+            }
             if(!title || title.trim() === "")
             {
                titleRef.current?.focus();
@@ -66,16 +74,16 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
            
 
             const contentDataSchema =  z.object( {
-                title: z.string().min(2, "Title is required"),
+                title: z.string().min(2, "Title at least 2 characters long"),
                 link: z.string().url().refine((url)=> {
-                    if(type === ContentType.Youtube) {
-                        return url.includes("youtube.com") || url.includes("youtu.be");
+                    if(url.includes("youtube.com") || url.includes("youtu.be")) {
+                        return true;
                     }   
-                    if(type === ContentType.Twitter) {
-                        return url.includes("twitter.com") || url.includes("x.com");
+                    if(url.includes("twitter.com") || url.includes("x.com")) {
+                        return true;
                     }    
                     return false; 
-                }, {message: "Link does not match the selected content type"}),
+                }, {message: "we only support youtube and twitter links for now"}),
                 type: z.enum([ContentType.Youtube, ContentType.Twitter])
             });
             
@@ -84,7 +92,7 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
             const contentData: ContentData = {
                 title: title!,
                 link: link!,
-                type
+                type: linkType as ContentType
             }
             const parsedData = contentDataSchema.safeParse(contentData);
             if(!parsedData.success) {
@@ -133,7 +141,7 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
                 <ModelContainer>
                     <ModelContentContainer>
                         
-                            <div className = "flex flex-col justify-between items-center gap-2">  
+                            <div className = "flex flex-col  items-center gap-1">  
 
                                  <div className="flex items-center w-[90%] pt-5"> 
    
@@ -149,18 +157,7 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
                                      </ModelCrossContainer> 
                                     
                                 </div>                    
-                                <div className = "flex flex-wrap gap-3  items-center bg-slate-100 p-1 rounded-md w-[90%] mb-3">
-                                        <Button onClick={()=> { 
-                                            setType(ContentType.Youtube)
-                                        }}  variant= {type == ContentType.Youtube ? ButtonVariant.Tri: ButtonVariant.Default} 
-                                        text = "youtube" size={ButtonSize.MinSmall} startIcon={<AiFillYoutube size = "20"/>} />
-                                        <Button
-                                        onClick={() => {
-                                            setType(ContentType.Twitter)
-                                        }}
-                                         variant= {type == ContentType.Twitter ? ButtonVariant.Tri: ButtonVariant.Default} text="twitter" size={ButtonSize.MinSmall} startIcon={<FaXTwitter size = "20" />} />
-                                          
-                                </div>
+                               
                                 <div className = "p-1 flex flex-col w-[90%]">
                                      <InputLabel className = "text-slate-600 font-medium text-sm" labelText="Enter the Title:" htmlfor = "title"/>
                                      <div className = "mt-1">
@@ -179,7 +176,7 @@ export const CreateContentModal = ({ open, onClose, refreshContent }:  ModalProp
                                
                             </div>
             
-                            <div className = "flex pt-4 w-[90%] justify-end gap-3">
+                            <div className = "flex pt-2 w-[90%] justify-end gap-3">
                                 <Button onClick={() => onClose(false)} variant = {ButtonVariant.Cancel} size = {ButtonSize.Small} text = {"Cancel"} />
                                 <Button onClick={addContent} variant = {ButtonVariant.Primary} size = {ButtonSize.Small} text = {"Save"} />
                             </div>

@@ -149,9 +149,11 @@ export function Dashboard() {
                         <input   type  = "search" placeholder = "Search..." className = "border-none  text-base  rounded-md  outline-none"/>
                     </div>
                 
-                <div className = "flex items-center gap-3 w-[25%] justify-end">
+                <div className = "flex items-center gap-3 w-[25%] justify-end transition-all ease-in-out duration-1000">
                     <Button onClick={() => setModelOpen(true)}  startIcon = {<Plus size = { "20px"}/>} size = {ButtonSize.Small} variant={ButtonVariant.Primary} text = {isDesktop || isTablet ?  "Add Link" : ""}></Button>
                     <Button onClick={() => setOpenShareModel(true)} startIcon = {<Share2 size = {"18px"}/>} size = {ButtonSize.Small} variant={ButtonVariant.Secondary} text = {isDesktop || isTablet ?  "Share" : ""}></Button>
+                    
+   
                 </div>
               </div>
                    
@@ -175,7 +177,10 @@ export function Dashboard() {
               />
             ))}
           </div>
+          
         )}   
+        {/*<embed src="https://100xdevs.com/" className="w-[500px] h-[300px]"/>*/
+        }
      <div className = "hidden fixed z-50 bottom-20 right-5 gap-1 ">
           <button className = "text-2xl text-amber-300">Theme</button>
       </div>
