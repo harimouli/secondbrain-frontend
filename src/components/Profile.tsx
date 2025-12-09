@@ -1,6 +1,4 @@
-import axios from "axios";
-import { useEffect, useRef, useState } from "react";
-import { BACKEND_URL } from "../config";
+import { useRef } from "react";
 
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { Input } from "./Input";
@@ -12,40 +10,13 @@ import { useNavigate } from "react-router-dom";
 export const Profile = () => {
   const oldPasswordRef = useRef<HTMLInputElement>(null!);
   const newPasswordRef = useRef<HTMLInputElement>(null!);
+
+  const userName = localStorage.getItem("userName");
+  const dateOfJoined = localStorage.getItem("dateOfJoined");
+  const isShareEnabled = JSON.parse(
+    localStorage.getItem("isShareEnabled") || "false",
+  );
   const navigate = useNavigate();
-  const token = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("token="))
-    ?.split("=")[1];
-  console.log("Token in profile page:", token);
-  const [userName, setUsername] = useState("");
-  //const [totalLinks, setTotalLinks] = useState(0);  /// will be addeed soooon.....................
-  const [dateOfJoined, setDateJoined] = useState("");
-  useEffect(() => {
-    if (!token) return;
-
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.post(
-          `${BACKEND_URL}/api/v1/user-meta-data`,
-          {},
-          {
-            headers: {
-              authorization: `Bearer ${token}`,
-            },
-          },
-        );
-
-        setUsername(response.data.username);
-        setDateJoined(response.data.dateOfJoined);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-
-    fetchUserData();
-  }, [token]);
-
   const backToHome = () => {
     navigate("/dashboard");
   };
@@ -70,6 +41,7 @@ export const Profile = () => {
           Joined at :{" "}
           {dateOfJoined ? new Date(dateOfJoined).toLocaleDateString() : ""}
         </h3>
+        <h3>Sharing Enabled: {isShareEnabled === true ? "Yes" : "No"}</h3>
       </div>
       <div className="flex flex-col p-5 gap-4">
         <div>
