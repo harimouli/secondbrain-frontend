@@ -24,6 +24,7 @@ export const Signin = () => {
     null,
   ) as React.RefObject<HTMLInputElement>;
   const navigate = useNavigate();
+
   const signin = async () => {
     setNameError("");
     setPasswordError("");
@@ -77,10 +78,17 @@ export const Signin = () => {
       );
 
       const authToken = response.data.token;
-      if (response.status === 401 || response.status === 403) {
-        toast.error(response.data.message);
-      }
-      document.cookie = `token=${authToken}; max-age=86400`;
+
+      document.cookie = `token=${authToken}; max-age=86400; path=/; SameSite=Lax`;
+      localStorage.setItem("userName", response.data.userDetails.username);
+      localStorage.setItem(
+        "dateOfJoined",
+        response.data.userDetails.dateOfJoined,
+      );
+      localStorage.setItem(
+        "isShareEnabled",
+        JSON.stringify(response.data.userDetails.isShareEnabled),
+      );
       navigate("/dashboard");
       toast.success("Signin successful!");
     } catch {
