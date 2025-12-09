@@ -13,9 +13,13 @@ export const Profile = () => {
 
   const userName = localStorage.getItem("userName");
   const dateOfJoined = localStorage.getItem("dateOfJoined");
-  const isShareEnabled = JSON.parse(
-    localStorage.getItem("isShareEnabled") || "false",
-  );
+  const isShareEnabled = (() => {
+    try {
+      return JSON.parse(localStorage.getItem("isShareEnabled") || "false");
+    } catch {
+      return false;
+    }
+  })();
   const navigate = useNavigate();
   const backToHome = () => {
     navigate("/dashboard");
