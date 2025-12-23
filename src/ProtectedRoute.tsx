@@ -1,40 +1,18 @@
-
-
 import { useEffect, useState, type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
-import axios, { type AxiosResponse } from "axios";
+import axios from "axios";
 import { BACKEND_URL } from "./config";
 
 export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
-  const [isAuth, setIsAuth] = useState<boolean>(true); 
+  const [isAuth, setIsAuth] = useState<boolean | null>(null);
 
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const token = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("token="))
-          ?.split("=")[1];
-
-        if (!token) {
-          setIsAuth(false);
-          return;
-        }
-
-        const response: AxiosResponse = await axios.get(
-          `${BACKEND_URL}/api/v1/verifylogin`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          setIsAuth(true);
-        } else {
-          setIsAuth(false);
-        }
+        await axios.get(`${BACKEND_URL}/api/v1/auth/verifylogin`, {
+          withCredentials: true,
+        });
+        setIsAuth(true);
       } catch {
         setIsAuth(false);
       }
@@ -43,10 +21,9 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     verifyToken();
   }, []);
 
-  
-
-  
-  
+  if (isAuth === null) {
+    return <div></div>; // or a loading spinner
+  }
   if (!isAuth) {
     return <Navigate to="/auth" replace />;
   }
