@@ -14,10 +14,10 @@ import { AuthButtonBody } from "../ui/auth/AuthButtonBody";
 import { toast } from "react-toastify";
 
 export const Signin = () => {
-  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const usernameRef = useRef<HTMLInputElement>(
+  const emailRef = useRef<HTMLInputElement>(
     null,
   ) as React.RefObject<HTMLInputElement>;
   const passwordRef = useRef<HTMLInputElement>(
@@ -26,23 +26,23 @@ export const Signin = () => {
   const navigate = useNavigate();
 
   const signin = async () => {
-    setNameError("");
+    setEmailError("");
     setPasswordError("");
 
     if (
-      usernameRef.current === null ||
-      usernameRef.current.value.trim() === "" ||
+      emailRef.current === null ||
+      emailRef.current.value.trim() === "" ||
       passwordRef.current === null ||
       passwordRef.current.value.trim() === ""
     ) {
       toast.error("Input fields are empty");
       return;
     }
-    const username = usernameRef.current?.value;
+    const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
 
     const userSchema = z.object({
-      username: z.string().min(3, "*Username is too small"),
+      email: z.string().email("Invalid email address"),
       password: z
         .string()
         .min(8)
@@ -53,7 +53,7 @@ export const Signin = () => {
     type userDataType = z.infer<typeof userSchema>;
 
     const userData: userDataType = {
-      username,
+      email,
       password,
     };
 
@@ -61,8 +61,8 @@ export const Signin = () => {
 
     if (!parsedData.success) {
       parsedData.error.issues.forEach((issue) => {
-        if (issue.path[0] === "username") {
-          setNameError(issue.message);
+        if (issue.path[0] === "email") {
+          setEmailError(issue.message);
         }
         if (issue.path[0] === "password") {
           setPasswordError(issue.message);
@@ -73,14 +73,14 @@ export const Signin = () => {
 
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/api/v1/signin`,
+        `${BACKEND_URL}/api/v1/auth/signin`,
         userData,
+        {
+          withCredentials: true,
+        },
       );
 
-      const authToken = response.data.token;
-
-      document.cookie = `token=${authToken}; max-age=86400; path=/; SameSite=Lax`;
-      localStorage.setItem("userName", response.data.userDetails.username);
+      localStorage.setItem("username", response.data.userDetails.username);
       localStorage.setItem(
         "dateOfJoined",
         response.data.userDetails.dateOfJoined,
@@ -99,16 +99,16 @@ export const Signin = () => {
   return (
     <>
       <InputWrapper>
-        <InputLabel htmlfor="username" labelText="Enter your username" />
+        <InputLabel htmlfor="email" labelText="Enter your email" />
         <Input
-          id="username"
+          id="email"
           width="w-80"
-          reference={usernameRef}
+          reference={emailRef}
           type="text"
-          placeholder="username"
+          placeholder="email"
           required
         />
-        {nameError !== "" && <ErrorText message={nameError} />}
+        {emailError !== "" && <ErrorText message={emailError} />}
       </InputWrapper>
 
       <InputWrapper>

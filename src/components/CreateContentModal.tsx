@@ -113,32 +113,18 @@ export const CreateContentModal = ({
         });
         return;
       }
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("token="))
-        ?.split("=")[1];
-      if (!token) {
-        toast.error("Unauthorized access");
-        onClose(false);
-        document.cookie =
-          "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        navigate("/auth");
-        return;
-      }
+
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/content`,
         contentData,
         {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         },
       );
 
       if (response.status === 401 || response.status === 403) {
         toast.error("Unauthorized access");
         onClose(false);
-        localStorage.removeItem("token");
         navigate("/auth");
         return;
       }

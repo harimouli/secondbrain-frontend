@@ -1,5 +1,5 @@
 import { Switch, FormControlLabel, TextField } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { BACKEND_URL } from "../config";
 
@@ -10,37 +10,26 @@ const CopyField = () => {
   const isShareEnabled = JSON.parse(
     localStorage.getItem("isShareEnabled") || "false",
   );
+  const shareableLink = localStorage.getItem("shareableLink") || "";
   const [isPublic, setIsPublic] = useState(isShareEnabled || false);
   const [isLoading, setLoading] = useState(false);
-  const [linkValue, setLinkValue] = useState("");
+  const [linkValue, setLinkValue] = useState(shareableLink);
 
-  useEffect(() => {
-    if (isPublic) {
-      fetchUrl(isPublic);
-    }
-  }, []);
-
-  const fetchUrl = async (isPublicParam: boolean) => {
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token="))
-      ?.split("=")[1];
+  const fetchUrl = async () => {
     try {
+      if (isLoading) return;
       setLoading(true);
-
+      const nextValue = !isPublic;
       const response = await axios.post(
-        `${BACKEND_URL}/api/v1/brain/share-url`,
+        `${BACKEND_URL}/api/v1/mind/shareurl`,
         {
-          isPublic: isPublicParam,
+          isPublic: nextValue,
         },
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        },
+        { withCredentials: true },
       );
       setLinkValue(response.data.hash);
       setIsPublic(response.data.isShareEnabled);
+      localStorage.setItem("shareableLink", response.data.hash);
       localStorage.setItem(
         "isShareEnabled",
         JSON.stringify(response.data.isShareEnabled),
@@ -48,8 +37,8 @@ const CopyField = () => {
     } catch (e) {
       console.error("Error fetching shareable link:", e);
       setLinkValue("");
-      setIsPublic(isPublicParam);
-      localStorage.setItem("isShareEnabled", JSON.stringify(isPublicParam));
+      setIsPublic(isPublic);
+      localStorage.setItem("isShareEnabled", JSON.stringify(isPublic));
       toast.error("Failed to update sharing settings.");
     } finally {
       setLoading(false);
@@ -62,8 +51,7 @@ const CopyField = () => {
           control={
             <Switch
               onChange={() => {
-                setIsPublic(!isPublic);
-                fetchUrl(!isPublic);
+                fetchUrl();
               }}
               checked={isPublic}
               size="medium"

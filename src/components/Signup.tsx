@@ -16,10 +16,18 @@ interface SignUpProps {
   setAuthMode: (authMode: string) => void;
 }
 export const Signup = ({ setAuthMode }: SignUpProps) => {
+  const emailRef = useRef<HTMLInputElement>(
+    null,
+  ) as React.RefObject<HTMLInputElement>;
+
   const usernameRef = useRef<HTMLInputElement>(
     null,
   ) as React.RefObject<HTMLInputElement>;
   const passwordRef = useRef<HTMLInputElement>(
+    null,
+  ) as React.RefObject<HTMLInputElement>;
+
+  const confirmPasswordRef = useRef<HTMLInputElement>(
     null,
   ) as React.RefObject<HTMLInputElement>;
 
@@ -38,23 +46,39 @@ export const Signup = ({ setAuthMode }: SignUpProps) => {
       toast.error("Input fields are empty");
       return;
     }
-
+    const email = emailRef.current?.value;
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
+    const confirmPassword = confirmPasswordRef.current?.value;
+    console.log({ email, username, password, confirmPassword });
+    if (password.trim() !== confirmPassword?.trim()) {
+      toast.error("Passwords do not match");
+      return;
+    }
 
-    const userSchema = z.object({
-      username: z.string().min(3, "username is too small"),
-      password: z
-        .string()
-        .min(8)
-        .regex(/[A-Z]/, "Password must contain an uppercase letter")
-        .regex(/[a-z]/, "Password must contain a lowercase letter"),
-    });
+    const userSchema = z
+      .object({
+        email: z.string().email("Invalid email address"),
+        username: z.string().min(3, "username is too small"),
+        password: z
+          .string()
+          .min(8)
+          .regex(/[A-Z]/, "Password must contain an uppercase letter")
+          .regex(/[a-z]/, "Password must contain a lowercase letter"),
+
+        confirmPassword: z.string(),
+      })
+      .refine((data) => data.password === data.confirmPassword, {
+        message: "Passwords do not match",
+        path: ["confirmPassword"],
+      });
 
     type userDataType = z.infer<typeof userSchema>;
     const userData: userDataType = {
+      email,
       username,
       password,
+      confirmPassword,
     };
 
     const parsedData = userSchema.safeParse(userData);
@@ -75,9 +99,11 @@ export const Signup = ({ setAuthMode }: SignUpProps) => {
 
     try {
       const response = await axios.post(
-        `${BACKEND_URL}/api/v1/signup`,
+        `${BACKEND_URL}/api/v1/auth/signup`,
         userData,
       );
+
+      console.log(response);
       if (response.status === 201) {
         toast.warning(response.data.message);
       }
@@ -92,6 +118,17 @@ export const Signup = ({ setAuthMode }: SignUpProps) => {
 
   return (
     <>
+      <InputWrapper>
+        <InputLabel htmlfor="email" labelText="Email" />
+        <Input
+          id="email"
+          width="w-80"
+          reference={emailRef}
+          type={"text"}
+          placeholder="email"
+        />
+        {nameError !== "" && <ErrorText message={nameError} />}
+      </InputWrapper>
       <InputWrapper>
         <InputLabel htmlfor="username" labelText="Enter your username" />
         <Input
@@ -113,6 +150,20 @@ export const Signup = ({ setAuthMode }: SignUpProps) => {
         />
         {passwordError !== "" && <ErrorText message={passwordError} />}
       </InputWrapper>
+
+      <InputWrapper>
+        <InputLabel
+          htmlfor="confirmPassword"
+          labelText="Confirm your password"
+        />
+        <Input
+          width="w-80"
+          reference={confirmPasswordRef}
+          type={"password"}
+          placeholder="confirm password"
+        ></Input>
+      </InputWrapper>
+
       {/* {signupError !=="" && <ErrorText message={signupError} />} */}
       <AuthButtonBody>
         <Button
