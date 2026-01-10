@@ -139,7 +139,7 @@ export function Dashboard() {
             </div>
             <div className="flex items-center gap-2 flex-1 ml-3">
               <div className="flex items-center flex-1 border border-slate-300 rounded-md px-2 py-1.5">
-                <IoIosSearch size={16} className="text-slate-300" />
+                <IoIosSearch size={16} className="text-slate-400" />
                 <input
                   type="search"
                   placeholder="Search..."

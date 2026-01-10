@@ -1,9 +1,12 @@
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 
-
-
-import {createContext, type ReactNode, useContext, useState, useEffect} from 'react';
-
-type DeviceType = 'mobile' | 'tablet' | 'desktop';
+type DeviceType = "mobile" | "tablet" | "desktop";
 
 interface DeviceContextProps {
   deviceType: DeviceType;
@@ -19,27 +22,27 @@ interface DeviceProviderProps {
 }
 
 const DeviceProvider = ({ children }: DeviceProviderProps) => {
-  const [deviceType, setDeviceType] = useState<DeviceType>('desktop');
+  const [deviceType, setDeviceType] = useState<DeviceType>("desktop");
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      
+
       if (width <= 767) {
-        setDeviceType('mobile');
+        setDeviceType("mobile");
         setIsMobile(true);
         setIsTablet(false);
         setIsDesktop(false);
       } else if (width >= 768 && width <= 1024) {
-        setDeviceType('tablet');
+        setDeviceType("tablet");
         setIsMobile(false);
         setIsTablet(true);
         setIsDesktop(false);
       } else {
-        setDeviceType('desktop');
+        setDeviceType("desktop");
         setIsMobile(false);
         setIsTablet(false);
         setIsDesktop(true);
@@ -47,13 +50,15 @@ const DeviceProvider = ({ children }: DeviceProviderProps) => {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
-    
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <DeviceContext.Provider value={{ deviceType, isMobile, isTablet, isDesktop }}>
+    <DeviceContext.Provider
+      value={{ deviceType, isMobile, isTablet, isDesktop }}
+    >
       {children}
     </DeviceContext.Provider>
   );
@@ -62,7 +67,7 @@ const DeviceProvider = ({ children }: DeviceProviderProps) => {
 const useDevice = (): DeviceContextProps => {
   const context = useContext(DeviceContext);
   if (!context) {
-    throw new Error('useDevice must be used within a DeviceProvider');
+    throw new Error("useDevice must be used within a DeviceProvider");
   }
   return context;
 };
