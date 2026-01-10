@@ -1,5 +1,5 @@
 import { Switch, FormControlLabel, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { BACKEND_URL } from "../config";
 
@@ -15,13 +15,38 @@ const CopyField = () => {
   const [isLoading, setLoading] = useState(false);
   const [linkValue, setLinkValue] = useState(shareableLink);
 
+  useEffect(() => {
+    const fetchInitalState = async () => {
+      try {
+        setLoading(true);
+
+        const response = await axios.get(
+          `${BACKEND_URL}/api/v1/contentshare/status`,
+          {
+            withCredentials: true,
+          },
+        );
+        setLoading(false);
+        localStorage.setItem(
+          "isShareEnabled",
+          JSON.stringify(response.data.isShareEnabled),
+        );
+        setIsPublic(response.data.isShareEnabled);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchInitalState();
+  }, []);
+
   const fetchUrl = async () => {
     try {
       if (isLoading) return;
       setLoading(true);
       const nextValue = !isPublic;
       const response = await axios.post(
-        `${BACKEND_URL}/api/v1/mind/shareurl`,
+        `${BACKEND_URL}/api/v1/contentshare/shareurl`,
         {
           isPublic: nextValue,
         },

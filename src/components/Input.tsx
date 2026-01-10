@@ -10,14 +10,14 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = (props: InputProps) => {
   const { id, placeholder, type, reference, width, className, ...rest } = props;
-  return (
+return (
     <input
       id={id}
       ref={reference}
       placeholder={placeholder}
       type={type}
       required
-      className={`${className} py-3 px-3 mr-2 rounded-md  border border-slate-300  outline-slate-400 ${width ? ` ${width}` : ""}`}
+      className={`${className} py-2 sm:py-3 px-2 sm:px-3 mr-1 sm:mr-2 rounded-md border border-slate-300 outline-[#6258DC] text-sm sm:text-base ${width ? ` ${width}` : "w-full"}`}
       {...rest}
     />
   );

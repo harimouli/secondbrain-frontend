@@ -125,13 +125,14 @@ export const Signin = () => {
       </InputWrapper>
 
       <AuthButtonBody>
-        <Button
+<Button
           onClick={signin}
           variant={ButtonVariant.Primary}
           text="Signin"
           size={ButtonSize.Medium}
           fullWidth={false}
           loading={false}
+          type="submit"
         />
       </AuthButtonBody>
     </>

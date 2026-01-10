@@ -1,7 +1,7 @@
 import { Brain, ChevronLeft } from "lucide-react";
-import { TwitterIcon } from "../icons/TwitterIcon";
+import { FaTwitter } from "react-icons/fa";
 import { SidebarItem } from "./SidebarItem";
-import { CgYoutube } from "react-icons/cg";
+import { SiYoutube } from "react-icons/si";
 import { MdDashboard } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 
@@ -35,36 +35,36 @@ export const Sidebar = ({
 
   const SideContainer = ({ children }: ChildrenType) => {
     return (
-      <div className="fixed left-0 top-0 z-50  lg:z-0 h-screen transition-all transform ease-in-out duration-1000  flex flex-col justify-between  bg-slate-100 border-r-1 border-r-[#cfd5dd] p-2 pt-0  w-72">
+      <div className="fixed left-0 top-0 z-50 sm:z-50 lg:z-0 h-screen transition-all transform ease-in-out duration-300 flex flex-col justify-between bg-slate-100 border-r border-r-[#cfd5dd] p-2 sm:p-3 pt-0 w-64 sm:w-72">
         {children}
       </div>
     );
   };
 
   const DashboardItemsContainer = ({ children }: { children: ReactNode }) => {
-    return <div className="pt-3 w-[95%]">{children}</div>;
+    return <div className="pt-3 sm:pt-4 w-[95%] sm:w-full">{children}</div>;
   };
 
   return (
     <SideContainer>
       <div>
-        <div className="flex  items-center justify-between w-[95%] pt-4">
+        <div className="flex items-center justify-between w-[95%] sm:w-full pt-3 sm:pt-4">
           <MainLogoBody>
-            <div className="flex  items-center justify-center rounded-md bg-blue-600 text-white">
-              <Brain className="size-9" aria-hidden="true" />
+            <div className="flex items-center justify-center rounded-md bg-[#6258DC] text-white">
+              <Brain className="size-7 sm:size-9" aria-hidden="true" />
             </div>
-            <BrandName>Mind Space</BrandName>
+            <BrandName className="text-sm sm:text-base">MindSpace</BrandName>
           </MainLogoBody>
           <button
-            className="flex items-center text-slate-500 font-light cursor-pointer ml-auto transition-all duration-300 rounded-md  hover:bg-slate-300"
+            className="flex items-center text-slate-500 font-light cursor-pointer ml-auto transition-all duration-300 rounded-md hover:bg-[#6258DC]/10 p-1 sm:p-2"
             onClick={() => {
               setSidebar(!isSidebarOpen);
             }}
           >
             {isSidebarOpen ? (
-              <ChevronLeft />
+              <ChevronLeft size={20} />
             ) : (
-              <MdOutlineKeyboardArrowRight size="30" />
+              <MdOutlineKeyboardArrowRight size={20} />
             )}
           </button>
         </div>
@@ -77,16 +77,16 @@ export const Sidebar = ({
             icon={<MdDashboard />}
           />
           <SidebarItem
-            isActive={activeBar === "Twitter"}
+            isActive={activeBar === "X"}
             setActivebar={setActiveBar}
-            text="Twitter"
-            icon={<TwitterIcon />}
+            text="X"
+            icon={<FaTwitter />}
           />
           <SidebarItem
             isActive={activeBar === "Youtube"}
             setActivebar={setActiveBar}
             text="Youtube"
-            icon={<CgYoutube />}
+            icon={<SiYoutube />}
           />
           <ProfileSidebar onclick={navigateToProfile} />
         </DashboardItemsContainer>

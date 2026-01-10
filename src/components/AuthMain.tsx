@@ -1,37 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "./Button";
 import { ButtonVariant, ButtonSize } from "../types/button";
 
-import { useNavigate } from "react-router-dom";
 import { Signin } from "./Signin";
 import { Signup } from "./Signup";
 
 export const AuthMain = () => {
   const [authMode, setAuthMode] = useState("Signin");
-  const token = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("token="))
-    ?.split("=")[1];
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (token) {
-      navigate("/dashboard");
-    }
-  }, [token, navigate]);
 
-  return (
+return (
     <>
-      <div className="absolute top-4 right-4 p-4 text-gray-600 z-50 bg-white rounded shadow">
-        <h1>Demo Credentials</h1>
-        <p>Username: Demo</p>
-        <p>Password: Demo@12345</p>
-      </div>
-
-      <div className="flex justify-center items-center h-screen w-screen bg-gray-50">
-        <div className="flex flex-col bg-white shadow-lg p-5 rounded-lg border border-slate-300">
+      <div className="flex justify-center items-center min-h-screen w-full bg-gray-50 p-4">
+        <div className="flex flex-col bg-white shadow-lg p-4 sm:p-5 md:p-6 rounded-lg border border-slate-300 w-full max-w-md">
           {/* Toggle Buttons */}
-          <div className="flex justify-center mb-5 gap-x-2">
+          <div className="flex justify-center mb-4 sm:mb-5 gap-x-2">
             <Button
+              type="button"
               onClick={() => setAuthMode("Signin")}
               variant={
                 authMode === "Signin"
@@ -39,9 +23,10 @@ export const AuthMain = () => {
                   : ButtonVariant.Secondary
               }
               text="Signin"
-              size={ButtonSize.Medium}
+              size={ButtonSize.Small}
             />
             <Button
+              type="button"
               onClick={() => setAuthMode("Signup")}
               variant={
                 authMode === "Signup"
@@ -49,7 +34,7 @@ export const AuthMain = () => {
                   : ButtonVariant.Secondary
               }
               text="Signup"
-              size={ButtonSize.Medium}
+              size={ButtonSize.Small}
             />
           </div>
 

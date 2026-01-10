@@ -10,6 +10,7 @@ interface ButtonProps {
   onClick?: () => void;
   fullWidth?: boolean;
   loading?: boolean;
+  type: "button" | "submit" | "reset";
 }
 
 type VariantStylesType = {
@@ -45,6 +46,7 @@ export const Button = (props: ButtonProps) => {
         ${props.fullWidth ? "w-full" : "inline-flex"} 
         flex items-center justify-center ${props.size === "sm" ? "" : "gap-2"}
         ${props.loading ? "opacity-50 cursor-progress" : "cursor-pointer"}
+        font-normal
       `}
     >
       {props.startIcon && (

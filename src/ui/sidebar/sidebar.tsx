@@ -8,9 +8,9 @@
             )
     }
 
-export const BrandName = ({ children }: { children: string }) => {
+export const BrandName = ({ children, className = "" }: { children: string; className?: string }) => {
             return (
-                <h1 className="font-semibold text-xl text-foreground text-pretty pl-2">{children}</h1>          
-
+                <h1 className={`font-semibold text-xl text-foreground text-pretty pl-2 ${className}`}>{children}</h1>          
+ 
             );
-   }        
+   }

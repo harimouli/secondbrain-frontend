@@ -166,13 +166,14 @@ export const Signup = ({ setAuthMode }: SignUpProps) => {
 
       {/* {signupError !=="" && <ErrorText message={signupError} />} */}
       <AuthButtonBody>
-        <Button
+<Button
           onClick={signup}
           variant={ButtonVariant.Primary}
           text="Signup"
           size={ButtonSize.Medium}
           fullWidth={false}
           loading={false}
+          type="submit"
         />
       </AuthButtonBody>
     </>

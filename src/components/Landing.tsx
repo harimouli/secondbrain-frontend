@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Brain,
   Bookmark,
@@ -10,9 +11,25 @@ import {
   X,
 } from "lucide-react";
 import dashboard from "../../assets/dashboard.png"; // Replace with your actual image path
+import { BACKEND_URL } from "../config";
+import axios from "axios";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+useEffect(() => {
+    const verifyToken = async () => {
+      try {
+        await axios.get(`${BACKEND_URL}/api/v1/auth/verifylogin`, {
+          withCredentials: true,
+        });
+        navigate("/dashboard");
+      } catch {
+        navigate("/auth");
+      }
+    };
 
+    verifyToken();
+  }, [navigate]);
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">

@@ -1,15 +1,15 @@
 
 
 
-import  {useMediaQuery} from 'react-responsive';
-import {createContext, type ReactNode, useContext} from 'react';
+import {createContext, type ReactNode, useContext, useState, useEffect} from 'react';
 
 type DeviceType = 'mobile' | 'tablet' | 'desktop';
 
-
-
 interface DeviceContextProps {
   deviceType: DeviceType;
+  isMobile: boolean;
+  isTablet: boolean;
+  isDesktop: boolean;
 }
 
 const DeviceContext = createContext<DeviceContextProps | undefined>(undefined);
@@ -17,23 +17,43 @@ const DeviceContext = createContext<DeviceContextProps | undefined>(undefined);
 interface DeviceProviderProps {
   children: ReactNode;
 }
+
 const DeviceProvider = ({ children }: DeviceProviderProps) => {
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
-  const isDesktop = useMediaQuery({ minWidth: 1025 });
+  const [deviceType, setDeviceType] = useState<DeviceType>('desktop');
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
 
-  let deviceType: DeviceType = 'desktop';
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      
+      if (width <= 767) {
+        setDeviceType('mobile');
+        setIsMobile(true);
+        setIsTablet(false);
+        setIsDesktop(false);
+      } else if (width >= 768 && width <= 1024) {
+        setDeviceType('tablet');
+        setIsMobile(false);
+        setIsTablet(true);
+        setIsDesktop(false);
+      } else {
+        setDeviceType('desktop');
+        setIsMobile(false);
+        setIsTablet(false);
+        setIsDesktop(true);
+      }
+    };
 
-  if (isMobile) {
-    deviceType = 'mobile';
-  } else if (isTablet) {
-    deviceType = 'tablet';
-  } else if(isDesktop) {
-    deviceType = 'desktop';
-  }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
-    <DeviceContext.Provider value={{ deviceType }}>
+    <DeviceContext.Provider value={{ deviceType, isMobile, isTablet, isDesktop }}>
       {children}
     </DeviceContext.Provider>
   );
@@ -48,3 +68,5 @@ const useDevice = (): DeviceContextProps => {
 };
 
 export { DeviceProvider, useDevice };
+
+export const useDeviceContext = useDevice;

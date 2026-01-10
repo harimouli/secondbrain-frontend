@@ -23,7 +23,7 @@ export const ShareModel = (props: ModalProps) => {
               </p>
             </div>
             <ModelCrossContainer onClose={props.onClose}>
-              {<RxCross2 size={20} />}
+              {<RxCross2 size={16} />}
             </ModelCrossContainer>
           </div>
           <CopyField />

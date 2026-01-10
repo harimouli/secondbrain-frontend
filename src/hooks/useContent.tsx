@@ -12,10 +12,11 @@ export const useContent = () => {
     try {
       setLoading(true);
 
-      const response = await axios.get(`${BACKEND_URL}/api/v1/content`, {
+      const response = await axios.get(`${BACKEND_URL}/api/v1/mind/content`, {
         withCredentials: true,
       });
-      if (response.status === 401 || response.data.success === false) {
+
+if (response.data.success === false) {
         toast.error("Unauthorized access");
         navigate("/auth");
         return;

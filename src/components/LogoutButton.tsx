@@ -15,12 +15,13 @@ export const LogoutButton = () => {
   };
   return (
     <div>
-      <Button
+<Button
         text="Logout"
         size={ButtonSize.Medium}
         variant={ButtonVariant.Primary}
-        endIcon={<LiaSignOutAltSolid />}
+        endIcon={<LiaSignOutAltSolid size={16} />}
         onClick={logout}
+        type="button"
       />
     </div>
   );

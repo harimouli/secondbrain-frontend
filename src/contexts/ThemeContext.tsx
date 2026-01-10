@@ -35,3 +35,5 @@ const useTheme = (): ThemeContextProps => {
 };
 
 export { ThemeProvider, useTheme };
+
+export const useThemeContext = useTheme;
