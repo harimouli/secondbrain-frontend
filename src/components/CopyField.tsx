@@ -1,8 +1,13 @@
-import { Switch, FormControlLabel, TextField } from "@mui/material";
+import {
+  Switch,
+  FormControlLabel,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 
 import { BACKEND_URL } from "../config";
-
+import { MdOutlineContentCopy } from "react-icons/md";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -70,7 +75,7 @@ const CopyField = () => {
     }
   };
   return (
-    <div className="w-[90%] flex flex-col items-center gap-4 p-4">
+    <div className="w-[90%] flex flex-col items-center gap-4 p-4 transition-all duration-300 ease-in-out">
       <div className="flex align-center w-[65%] p-5 rounded-lg border-1 border-slate-300  hover:border-[#6258DC]  transition-all duration-300 ease-in-out mb-4 box-shadow-sm">
         <FormControlLabel
           control={
@@ -87,7 +92,7 @@ const CopyField = () => {
         />
       </div>
       <div
-        className={`transition-all  duration-400 ease-in-out w-full ${isPublic ? "" : "opacity-20 pointer-events-none"} `}
+        className={`transition-all  duration-400 ease-in-out md:w-[90%] ${isPublic ? "" : "hidden pointer-events-none"} flex items-center`}
       >
         <TextField
           fullWidth
@@ -95,9 +100,24 @@ const CopyField = () => {
           value={linkValue}
           InputProps={{
             readOnly: true,
-          }}
-          InputLabelProps={{
-            shrink: true,
+            startAdornment: (
+              <InputAdornment position="start">
+                <MdOutlineContentCopy
+                  size={35}
+                  className="cursor-pointer bg-slate-100 hover:bg-slate-200 rounded-md p-1"
+                  onClick={() => {
+                    navigator.clipboard.writeText(linkValue);
+                    toast.success("Link copied to clipboard!");
+                  }}
+                />
+              </InputAdornment>
+            ),
+            sx: {
+              fontSize: {
+                xs: "20px",
+                sm: "15px",
+              },
+            },
           }}
           variant="outlined"
         />
