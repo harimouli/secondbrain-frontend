@@ -13,6 +13,7 @@ type PublicContentItem = {
 
 export const PublicContent = () => {
   const { hash } = useParams<{ hash: string }>();
+  const [publicData, refreshPublicData, loading] = usePublicContent(hash || ""); // Custom hook to fetch public content based on hash
 
   if (!hash) {
     return (
@@ -21,8 +22,6 @@ export const PublicContent = () => {
       </div>
     );
   }
-
-  const [publicData, refreshPublicData, loading] = usePublicContent(hash); // Custom hook to fetch public content based on hash
   if (loading) {
     return (
       <div className="flex flex-col justify-center items-center h-screen">

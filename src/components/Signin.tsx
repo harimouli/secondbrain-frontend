@@ -80,7 +80,6 @@ export const Signin = () => {
         },
       );
 
-      console.log(response);
       localStorage.setItem("username", response.data.userDetails.username);
       localStorage.setItem(
         "dateOfJoined",
