@@ -92,7 +92,7 @@ export function Dashboard() {
                     setSidebar(!isSidebarOpen);
                   }}
                 >
-                  <IoMenuSharp size={20} />
+                  <IoMenuSharp size={25} />
                 </div>
               )}
               <div className="flex items-center flex-1 max-w-sm sm:max-w-xl lg:max-w-2xl gap-2 sm:gap-4 p-2 sm:p-3">
@@ -186,6 +186,7 @@ export function Dashboard() {
                     }
                     refreshContent={refreshContent}
                     share={share}
+                    isPublicView={false}
                   />
                 ),
               )}

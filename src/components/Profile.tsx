@@ -25,14 +25,14 @@ export const Profile = () => {
     navigate("/dashboard");
   };
 
-return (
+  return (
     <div className="flex flex-col items-center justify-center md:justify-start bg-slate-100 min-h-screen w-full p-4">
       <div className="absolute top-0 left-0 p-4">
         <Button
           text={"Back"}
           variant={ButtonVariant.Primary}
           size={ButtonSize.Small}
-          startIcon={<IoArrowBackCircleOutline size={18} className="sm:size-20" />}
+          startIcon={<IoArrowBackCircleOutline size={18} />}
           onClick={backToHome}
           type="button"
         />
@@ -41,16 +41,22 @@ return (
         <IoPersonCircleSharp size={48} className="sm:size-64" />
       </div>
       <div className="text-center mb-6">
-        <h2 className="text-lg sm:text-xl font-semibold">Username: {userName}</h2>
+        <h2 className="text-lg sm:text-xl font-semibold">
+          Username: {userName}
+        </h2>
         <h3 className="text-sm sm:text-base">
           Joined at :{" "}
           {dateOfJoined ? new Date(dateOfJoined).toLocaleDateString() : ""}
         </h3>
-        <h3 className="text-sm sm:text-base">Sharing Enabled: {isShareEnabled === true ? "Yes" : "No"}</h3>
+        <h3 className="text-sm sm:text-base">
+          Sharing Enabled: {isShareEnabled === true ? "Yes" : "No"}
+        </h3>
       </div>
       <div className="flex flex-col p-4 sm:p-5 gap-3 sm:gap-4 w-full max-w-sm">
         <div>
-          <h2 className="font-bold text-slate-700 text-sm sm:text-base">Change Password:</h2>
+          <h2 className="font-bold text-slate-700 text-sm sm:text-base">
+            Change Password:
+          </h2>
         </div>
         <div>
           <Input
@@ -71,7 +77,10 @@ return (
       </div>
 
       <div className="mt-4">
-        <LogoutButton />
+        <LogoutButton
+          oldPassword={oldPasswordRef.current.value}
+          newPassword={newPasswordRef.current.value}
+        />
       </div>
     </div>
   );

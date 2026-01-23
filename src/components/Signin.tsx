@@ -80,6 +80,7 @@ export const Signin = () => {
         },
       );
 
+      console.log(response);
       localStorage.setItem("username", response.data.userDetails.username);
       localStorage.setItem(
         "dateOfJoined",
@@ -90,6 +91,7 @@ export const Signin = () => {
         JSON.stringify(response.data.userDetails.isShareEnabled),
       );
       navigate("/dashboard");
+
       toast.success("Signin successful!");
     } catch {
       toast.error("Invalid credentials");
@@ -125,7 +127,7 @@ export const Signin = () => {
       </InputWrapper>
 
       <AuthButtonBody>
-<Button
+        <Button
           onClick={signin}
           variant={ButtonVariant.Primary}
           text="Signin"

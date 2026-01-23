@@ -8,13 +8,14 @@ import { toast } from "react-toastify";
 import { SquarePen } from "lucide-react";
 import { Switch, FormControlLabel } from "@mui/material";
 
-interface CardProps {
+export interface CardProps {
   contentId: string;
   title: string;
   type: "document" | "youtube" | "twitter" | "linkedin";
   link: string;
-  refreshContent: () => void;
-  share: boolean;
+  refreshContent?: () => void;
+  share?: boolean;
+  isPublicView?: boolean;
 }
 
 export const Card = ({
@@ -24,13 +25,14 @@ export const Card = ({
   refreshContent,
   contentId,
   share,
+  isPublicView,
 }: CardProps) => {
   const deleteCard = async () => {
     try {
       await axios.delete(`${BACKEND_URL}/api/v1/mind/content/${contentId}`, {
         withCredentials: true,
       });
-      refreshContent();
+      refreshContent?.();
       toast.success("deleted successfully!");
     } catch (err) {
       console.log(err);
@@ -47,7 +49,7 @@ export const Card = ({
         },
       );
 
-      refreshContent();
+      refreshContent?.();
       console.log(response.data);
     } catch (err) {
       console.log(err);
@@ -56,7 +58,7 @@ export const Card = ({
 
   return (
     <div
-      className={`hover:transition w-full sm:w-64 md:w-72 lg:w-80 xl:w-[290px] h-auto`}
+      className={`hover:transition w-full sm:w-64 md:w-72 lg:w-80 xl:w-[290px]`}
     >
       <div
         className={`bg-slate-50 shadow-md rounded-md border border-[#d3d4d5]`}
@@ -83,23 +85,24 @@ export const Card = ({
                 className="text-gray-400 hover:text-blue-500 cursor-pointer"
               />
             </a>
-
-            <div title="edit">
-              <SquarePen
-                size={18}
-                className="text-gray-400 hover:text-blue-500 cursor-pointer"
-              />
-            </div>
-            <div title="delete" onClick={deleteCard}>
-              <Trash
-                size={18}
-                className="cursor-pointer text-gray-400 hover:text-blue-500"
-              />
-            </div>
+            {!isPublicView && (
+              <div title="edit">
+                <SquarePen
+                  size={18}
+                  className="cursor-pointer text-gray-400 hover:text-blue-500"
+                />
+              </div>
+            )}
+            {!isPublicView && (
+              <div title="delete">
+                <Trash
+                  size={18}
+                  className="cursor-pointer text-gray-400 hover:text-red-500"
+                  onClick={deleteCard}
+                />
+              </div>
+            )}
           </div>
-        </div>
-        <div>
-          <p></p>
         </div>
         <div
           className={`aspect-h-9  w-full rounded pt-2 sm:pt-4 ${type === "twitter" ? "h-[200px] sm:h-[300px] overflow-y-scroll" : ""}`}
@@ -116,15 +119,21 @@ export const Card = ({
             <Sparkles size={10} className="mr-0.5 sm:mr-1" />
             <span className="font-medium">AI</span>
           </button>
-          <div className="flex items-center p-1 mr-1 sm:mr-2">
+          {!isPublicView && (
             <FormControlLabel
               control={
-                <Switch size="small" checked={share} onChange={makeShareable} />
+                <Switch
+                  checked={share}
+                  onChange={makeShareable}
+                  color="primary"
+                  size="small"
+                />
               }
-              label={<span className="text-xs sm:text-sm">Share</span>}
-              labelPlacement="start"
+              label={
+                <span className="text-xs sm:text-sm font-medium">Share</span>
+              }
             />
-          </div>
+          )}
         </div>
       </div>
     </div>

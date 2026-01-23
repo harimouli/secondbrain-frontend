@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../config";
 
 export const usePublicContent = (hash: string) => {
-  const [publicData, setPublicData] = useState<object | null>(null);
+  const [publicData, setPublicData] = useState<Array<object> | null>(null);
 
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -16,7 +16,7 @@ export const usePublicContent = (hash: string) => {
       const response = await axios.get(
         `${BACKEND_URL}/api/v1/public-content/${hash}`,
       );
-      setPublicData(response.data);
+      setPublicData(response.data.sharedContent);
     } catch (error) {
       console.error("Error fetching public content:", error);
     } finally {
