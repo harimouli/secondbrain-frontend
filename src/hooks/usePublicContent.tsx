@@ -9,8 +9,7 @@ export const usePublicContent = (hash: string) => {
 
   useEffect(() => {
     refreshPublicData();
-  }, []);
-
+  }, [hash]);
   const refreshPublicData = async () => {
     try {
       setLoading(true);
