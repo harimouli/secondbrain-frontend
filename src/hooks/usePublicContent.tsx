@@ -16,7 +16,7 @@ export const usePublicContent = (hash: string) => {
       const response = await axios.get(
         `${BACKEND_URL}/api/v1/public-content/${hash}`,
       );
-      setPublicData(response.data.sharedContent);
+      setPublicData(response.data.sharedContent ?? null);
     } catch (error) {
       console.error("Error fetching public content:", error);
     } finally {
