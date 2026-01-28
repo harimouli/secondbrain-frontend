@@ -106,7 +106,7 @@ export const Signin = () => {
           width="w-80"
           reference={emailRef}
           type="text"
-          placeholder="email"
+          placeholder="Demo1234@gmail.com"
           required
         />
         {emailError !== "" && <ErrorText message={emailError} />}
@@ -119,7 +119,7 @@ export const Signin = () => {
           width="w-80"
           reference={passwordRef}
           type="password"
-          placeholder="password"
+          placeholder="Demo@1234"
           required
         />
         {passwordError !== "" && <ErrorText message={passwordError} />}
