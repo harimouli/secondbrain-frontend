@@ -77,9 +77,9 @@ export const Sidebar = ({
             icon={<MdDashboard />}
           />
           <SidebarItem
-            isActive={activeBar === "X"}
+            isActive={activeBar === "Twitter"}
             setActivebar={setActiveBar}
-            text="X"
+            text="Twitter"
             icon={<FaTwitter />}
           />
           <SidebarItem

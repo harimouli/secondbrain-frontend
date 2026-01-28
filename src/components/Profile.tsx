@@ -11,7 +11,7 @@ export const Profile = () => {
   const oldPasswordRef = useRef<HTMLInputElement>(null!);
   const newPasswordRef = useRef<HTMLInputElement>(null!);
 
-  const userName = localStorage.getItem("userName");
+  const userName = localStorage.getItem("username");
   const dateOfJoined = localStorage.getItem("dateOfJoined");
   const isShareEnabled = (() => {
     try {
@@ -78,8 +78,8 @@ export const Profile = () => {
 
       <div className="mt-4">
         <LogoutButton
-          oldPassword={oldPasswordRef.current.value}
-          newPassword={newPasswordRef.current.value}
+          oldPassword={oldPasswordRef.current?.value}
+          newPassword={newPasswordRef.current?.value}
         />
       </div>
     </div>
