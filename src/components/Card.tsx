@@ -16,6 +16,7 @@ export interface CardProps {
   refreshContent?: () => void;
   share?: boolean;
   isPublicView?: boolean;
+  toggleShare?: (contentId: string) => void;
 }
 
 export const Card = ({
@@ -26,6 +27,7 @@ export const Card = ({
   contentId,
   share,
   isPublicView,
+  toggleShare,
 }: CardProps) => {
   const deleteCard = async () => {
     try {
@@ -41,16 +43,14 @@ export const Card = ({
 
   const makeShareable = async () => {
     try {
-      const response = await axios.patch(
+      await axios.patch(
         `${BACKEND_URL}/api/v1/mind/content/share/${contentId}`,
         { share: !share },
         {
           withCredentials: true,
         },
       );
-
-      refreshContent?.();
-      console.log(response.data);
+      toggleShare?.(contentId);
     } catch (err) {
       console.log(err);
     }

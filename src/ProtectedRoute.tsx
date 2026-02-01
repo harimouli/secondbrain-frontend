@@ -9,7 +9,7 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        await axios.get(`${BACKEND_URL}/api/v1/auth/verifylogin`, {
+        await axios.get(`${BACKEND_URL}/api/v1/auth/verify-login`, {
           withCredentials: true,
         });
         setIsAuth(true);
@@ -21,7 +21,7 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
     verifyToken();
   }, []);
 
-if (isAuth === null) {
+  if (isAuth === null) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>

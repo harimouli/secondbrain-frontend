@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BACKEND_URL } from "../config";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,10 @@ export const useContent = () => {
   const [allContent, setContent] = useState<ContentType[]>([]);
   const [isLoading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    refreshContent();
+  }, []);
   const refreshContent = async () => {
     try {
       setLoading(true);
@@ -16,7 +20,10 @@ export const useContent = () => {
         withCredentials: true,
       });
 
-if (response.data.success === false) {
+      if (
+        response.data.success === false &&
+        response.data.message === "Unauthorized"
+      ) {
         toast.error("Unauthorized access");
         navigate("/auth");
         return;

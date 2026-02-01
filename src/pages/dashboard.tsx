@@ -24,35 +24,32 @@ import { ShareModel } from "../components/ShareModel";
 
 import { type ContentType } from "../utils/Globaltypes";
 
+import { Input } from "@mui/material";
+
 export function Dashboard() {
   const [modelOpen, setModelOpen] = useState(false);
   const { allContent, refreshContent, isLoading } = useContent();
+
   const [activeBar, setActiveBar] = useState("Dashboard");
   const [openShareModel, setOpenShareModel] = useState(false);
-
+  const [content, setContent] = useState<ContentType[]>([]);
+  const [searchValue, setSearchValue] = useState("");
   const [isSidebarOpen, setSidebar] = useState(false);
+  const isNoContent: number = content.length;
+
   useEffect(() => {
-    refreshContent();
-  }, []);
-  function lowercaseFirstLetter(str: string): string {
-    if (str === "Dashboard") return "";
-    return str.charAt(0).toLowerCase() + str.slice(1);
-  }
+    setContent(allContent);
+  }, [allContent]);
 
-  let filteredContent: ContentType[] = [];
-
-  const active: string = lowercaseFirstLetter(activeBar);
-  const safeAllContent: ContentType[] = Array.isArray(allContent)
-    ? allContent
-    : [];
-  if (active === "") {
-    filteredContent = safeAllContent;
-  } else {
-    filteredContent = safeAllContent.filter(
-      (eachEle: ContentType) => eachEle.type === active,
-    );
-  }
-  const isNoContent: number = filteredContent.length;
+  const toggleShare = (contentId: string) => {
+    const updatedContent = content.map((item: ContentType) => {
+      if (item._id === contentId) {
+        return { ...item, share: !item.share };
+      }
+      return item;
+    });
+    setContent(updatedContent);
+  };
 
   return (
     <main>
@@ -98,10 +95,15 @@ export function Dashboard() {
               <div className="flex items-center flex-1 max-w-sm sm:max-w-xl lg:max-w-2xl gap-2 sm:gap-4 p-2 sm:p-3">
                 <div className="flex items-center w-full border rounded-md border-slate-300 px-2 sm:px-3">
                   <IoIosSearch className="text-slate-400" size={16} />
-                  <input
+                  <Input
+                    onChange={(event) => {
+                      setSearchValue(event.target.value);
+                      console.log(searchValue);
+                    }}
+                    value={searchValue}
                     type="search"
-                    placeholder="search your content"
-                    className="border-none text-sm sm:text-base text-slate-600 rounded-md p-2 w-full outline-none"
+                    placeholder="find your content..."
+                    className="border-none text-sm sm:text-base rounded-md p-2 w-full outline-none border-0"
                   />
                 </div>
               </div>
@@ -174,22 +176,19 @@ export function Dashboard() {
             <NoContentView />
           ) : (
             <div className="flex flex-col items-center sm:flex-row sm:flex-wrap sm:items-start gap-2 sm:gap-3 mt-3 sm:mt-4 p-2 sm:p-3">
-              {filteredContent.map(
-                ({ title, type, link, _id, share }: ContentType) => (
-                  <Card
-                    key={_id}
-                    title={title}
-                    link={link}
-                    contentId={_id}
-                    type={
-                      type as "document" | "youtube" | "twitter" | "linkedin"
-                    }
-                    refreshContent={refreshContent}
-                    share={share}
-                    isPublicView={false}
-                  />
-                ),
-              )}
+              {content.map(({ title, type, link, _id, share }: ContentType) => (
+                <Card
+                  key={_id}
+                  title={title}
+                  link={link}
+                  contentId={_id}
+                  type={type as "document" | "youtube" | "twitter" | "linkedin"}
+                  refreshContent={refreshContent}
+                  toggleShare={toggleShare}
+                  share={share}
+                  isPublicView={false}
+                />
+              ))}
             </div>
           )}
         </div>
