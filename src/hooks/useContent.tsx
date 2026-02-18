@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { BACKEND_URL } from "../config";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { type ContentType } from "../utils/Globaltypes";
+import api from "../api/axiosInstance";
+
 export const useContent = () => {
   const [allContent, setContent] = useState<ContentType[]>([]);
   const [isLoading, setLoading] = useState(true);
@@ -16,10 +16,7 @@ export const useContent = () => {
     try {
       setLoading(true);
 
-      const response = await axios.get(`${BACKEND_URL}/api/v1/mind/content`, {
-        withCredentials: true,
-      });
-
+      const response = await api.get("/api/v1/mind/content");
       if (
         response.data.success === false &&
         response.data.message === "Unauthorized"

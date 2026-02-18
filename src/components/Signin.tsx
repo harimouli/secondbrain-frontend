@@ -1,6 +1,4 @@
 import { useRef, useState } from "react";
-import axios from "axios";
-import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 import { Input } from "./Input";
 import { z } from "zod";
@@ -10,7 +8,7 @@ import { InputLabel } from "./InputLabel";
 import { InputWrapper } from "../ui/auth/InputWrapper";
 import { ErrorText } from "../ui/auth/ErrorText";
 import { AuthButtonBody } from "../ui/auth/AuthButtonBody";
-
+import api from "../api/axiosInstance";
 import { toast } from "react-toastify";
 
 export const Signin = () => {
@@ -72,13 +70,9 @@ export const Signin = () => {
     }
 
     try {
-      const response = await axios.post(
-        `${BACKEND_URL}/api/v1/auth/signin`,
-        userData,
-        {
-          withCredentials: true,
-        },
-      );
+      const response = await api.post(`/api/v1/auth/signin`, userData, {
+        withCredentials: true,
+      });
 
       localStorage.setItem("username", response.data.userDetails.username);
       localStorage.setItem(
@@ -106,7 +100,7 @@ export const Signin = () => {
           width="w-80"
           reference={emailRef}
           type="text"
-          placeholder="Demo1234@gmail.com"
+          placeholder="demo1234@gmail.com"
           required
         />
         {emailError !== "" && <ErrorText message={emailError} />}
@@ -119,7 +113,7 @@ export const Signin = () => {
           width="w-80"
           reference={passwordRef}
           type="password"
-          placeholder="Demo@1234"
+          placeholder="demo@1234"
           required
         />
         {passwordError !== "" && <ErrorText message={passwordError} />}

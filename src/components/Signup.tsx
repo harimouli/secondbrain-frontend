@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
-import axios from "axios";
-import { BACKEND_URL } from "../config";
+import api from "../api/axiosInstance";
 import { Input } from "./Input";
 import { Button } from "./Button";
 import { ButtonVariant, ButtonSize } from "../types/button";
@@ -98,10 +97,7 @@ export const Signup = ({ setAuthMode }: SignUpProps) => {
     setPasswordError("");
 
     try {
-      const response = await axios.post(
-        `${BACKEND_URL}/api/v1/auth/signup`,
-        userData,
-      );
+      const response = await api.post(`/api/v1/auth/signup`, userData);
 
       console.log(response);
       if (response.status === 201) {
@@ -166,7 +162,7 @@ export const Signup = ({ setAuthMode }: SignUpProps) => {
 
       {/* {signupError !=="" && <ErrorText message={signupError} />} */}
       <AuthButtonBody>
-<Button
+        <Button
           onClick={signup}
           variant={ButtonVariant.Primary}
           text="Signup"

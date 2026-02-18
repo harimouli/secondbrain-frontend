@@ -28,6 +28,7 @@
     "react-router-dom": "^7.6.1",
     "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5",
+    "run": "^1.5.0",
     "sabe": "^1.0.0",
     "save": "^2.9.0",
     "tailwind-merge": "^3.4.0",

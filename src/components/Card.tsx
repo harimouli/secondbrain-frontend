@@ -1,4 +1,3 @@
-import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { ExternalLink, Sparkles, Trash } from "lucide-react";
 import { FaYoutube, FaXTwitter } from "react-icons/fa6";
@@ -7,6 +6,7 @@ import { YoutubeEmbed } from "./YoutubeEmbed";
 import { toast } from "react-toastify";
 import { SquarePen } from "lucide-react";
 import { Switch, FormControlLabel } from "@mui/material";
+import api from "../api/axiosInstance";
 
 export interface CardProps {
   contentId: string;
@@ -31,7 +31,7 @@ export const Card = ({
 }: CardProps) => {
   const deleteCard = async () => {
     try {
-      await axios.delete(`${BACKEND_URL}/api/v1/mind/content/${contentId}`, {
+      await api.delete(`${BACKEND_URL}/api/v1/mind/content/${contentId}`, {
         withCredentials: true,
       });
       refreshContent?.();
@@ -43,7 +43,7 @@ export const Card = ({
 
   const makeShareable = async () => {
     try {
-      await axios.patch(
+      await api.patch(
         `${BACKEND_URL}/api/v1/mind/content/share/${contentId}`,
         { share: !share },
         {

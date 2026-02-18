@@ -6,9 +6,8 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
-import { BACKEND_URL } from "../config";
 import { MdOutlineContentCopy } from "react-icons/md";
-import axios from "axios";
+import api from "../api/axiosInstance";
 import { toast } from "react-toastify";
 
 const CopyField = () => {
@@ -25,12 +24,9 @@ const CopyField = () => {
       try {
         setLoading(true);
 
-        const response = await axios.get(
-          `${BACKEND_URL}/api/v1/contentshare/status`,
-          {
-            withCredentials: true,
-          },
-        );
+        const response = await api.get(`/api/v1/contentshare/status`, {
+          withCredentials: true,
+        });
         setLoading(false);
         localStorage.setItem(
           "isShareEnabled",
@@ -38,7 +34,7 @@ const CopyField = () => {
         );
         setIsPublic(response.data.isShareEnabled);
       } catch (err) {
-        console.log(err);
+        console.error("Error fetching sharing status:", err);
       }
     };
 
@@ -50,8 +46,8 @@ const CopyField = () => {
       if (isLoading) return;
       setLoading(true);
       const nextValue = !isPublic;
-      const response = await axios.post(
-        `${BACKEND_URL}/api/v1/contentshare/shareurl`,
+      const response = await api.post(
+        `/api/v1/contentshare/shareurl`,
         {
           isPublic: nextValue,
         },

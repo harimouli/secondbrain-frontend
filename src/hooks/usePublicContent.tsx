@@ -1,7 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { BACKEND_URL } from "../config";
-
+import api from "../api/axiosInstance";
 export const usePublicContent = (hash: string) => {
   const [publicData, setPublicData] = useState<Array<object> | null>(null);
 
@@ -13,9 +11,7 @@ export const usePublicContent = (hash: string) => {
   const refreshPublicData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `${BACKEND_URL}/api/v1/public-content/${hash}`,
-      );
+      const response = await api.get(`/api/v1/public-content/${hash}`);
       setPublicData(response.data.sharedContent ?? null);
     } catch (error) {
       console.error("Error fetching public content:", error);

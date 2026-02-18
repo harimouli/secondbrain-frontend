@@ -2,7 +2,9 @@ import { useState } from "react";
 import { TextField, Box } from "@mui/material";
 import { Button } from "./Button";
 import { z } from "zod";
-import axios from "axios";
+import api from "../api/axiosInstance";
+import { isAxiosError } from "axios";
+
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +12,7 @@ import { BrainModal } from "./BrainModel";
 import { BACKEND_URL } from "../config";
 import type { ModalProps } from "../utils/Globaltypes";
 import { ButtonVariant, ButtonSize } from "../types/button";
+
 const contentSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters"),
   link: z
@@ -37,7 +40,7 @@ export const AddContent = ({ open, onClose, refreshContent }: ModalProps) => {
     e.preventDefault();
 
     setErrors({});
-    const parsed = contentSchema.safeParse({ title, link });
+    const parsed = await contentSchema.safeParse({ title, link });
 
     if (!parsed.success) {
       const fieldErrors: { title?: string; link?: string } = {};
@@ -58,12 +61,12 @@ export const AddContent = ({ open, onClose, refreshContent }: ModalProps) => {
 
     try {
       setLoading(true);
-      await axios.post(
+
+      await api.post(
         `${BACKEND_URL}/api/v1/mind/content`,
         { ...parsed.data, type },
         { withCredentials: true },
       );
-
       toast.success("Content added successfully!");
       onClose(false);
       refreshContent?.();
@@ -71,7 +74,7 @@ export const AddContent = ({ open, onClose, refreshContent }: ModalProps) => {
       setLink("");
     } catch (err: unknown) {
       if (
-        axios.isAxiosError(err) &&
+        isAxiosError(err) &&
         (err.response?.status === 401 || err.response?.status === 403)
       ) {
         toast.error("Unauthorized");

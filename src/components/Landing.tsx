@@ -10,16 +10,17 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import api from "../api/axiosInstance";
 import dashboard from "../../assets/dashboard.png"; // Replace with your actual image path
 import { BACKEND_URL } from "../config";
-import axios from "axios";
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-useEffect(() => {
+  useEffect(() => {
     const verifyToken = async () => {
       try {
-        await axios.get(`${BACKEND_URL}/api/v1/auth/verifylogin`, {
+        await api.get(`${BACKEND_URL}/api/v1/auth/verifylogin`, {
           withCredentials: true,
         });
         navigate("/dashboard");
